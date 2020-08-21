@@ -1,0 +1,85 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Creates AWS IAM Roles required for the workshop at https://github.com/giuseppeporcelli/end-to-end-ml-application.'
+Resources:
+  SageMakerNotebookInstanceExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: "AmazonSageMaker-ExecutionRole-endtoendml"
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "sagemaker.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AmazonSageMakerFullAccess"
+        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+      Path: "/service-role/"
+      Policies:
+        - PolicyName: GlueFullAccess-endtoendml
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - glue:*
+                Resource: "*"
+        - PolicyName: AthenaFullAccess-endtoendml
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - athena:*
+                Resource: "*"
+  GlueServiceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: "GlueServiceRole-endtoendml"
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "glue.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+      Path: "/service-role/" 
+  LambdaInvokeSageMakerEndpointRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: "LambdaInvokeSageMakerEndpointRole-endtoendml"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: LambdaInvokeSageMakerEndpointPolicy-endtoendml
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sagemaker:InvokeEndpoint
+                Resource: "*"
+Outputs:
+  SageMakerNotebookInstanceExecutionRoleArn:
+    Description: The Amazon Resource Name of Amazon SageMaker Notebook Instance execution role that has been created
+    Value: !GetAtt SageMakerNotebookInstanceExecutionRole.Arn
+  GlueServiceRoleArn:
+    Description: The Amazon Resource Name of AWS Glue service role that has been created
+    Value: !GetAtt GlueServiceRole.Arn
+  LambdaInvokeSageMakerEndpointRoleArn:
+    Description: The Amazon Resource Name of AWS Lambda execution role that has been created
+    Value: !GetAtt LambdaInvokeSageMakerEndpointRole.Arn

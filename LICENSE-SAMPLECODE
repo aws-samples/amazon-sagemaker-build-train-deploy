@@ -1,14 +1,819 @@
-Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+<!DOCTYPE html>
+<html>
+<head>
+<title>LICENSE-SAMPLECODE - GithubAdminTools - Code Browser</title>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<meta content='true' name='use-sentry'>
+<meta name='request-id'>
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="YVGOppq5OkaBZ9FYK53HbFOuMF8lNC4EsaYrzZ8oT3BlR8G+4YOk5SsHv8lKfpYLbkEZq8GKow2sn1i7rEThQg==" />
+<meta content='IE=edge' http-equiv='X-UA-Compatible'>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this
-software and associated documentation files (the "Software"), to deal in the Software
-without restriction, including without limitation the rights to use, copy, modify,
-merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so.
+<link rel="shortcut icon" type="image/x-icon" href="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/favicon-c8c77da180d3e9e679dac48d5ae77858edd6974d6a2a78b1705dc0b499c1d7c2.ico" />
+<link rel="stylesheet" media="all" href="https://internal-cdn.amazon.com/oneg.amazon.com/assets/3.2.4/css/application.min.css" />
+<link rel="stylesheet" media="all" href="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/vendor-3cfceda6ba6cb995c2e751b58fb0acaeee186abcfb0fbae03024360120606069.css" />
+<link rel="stylesheet" media="all" href="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/application-oneg-6eaef580671582187c7907b8728d1c0febd2545b63a162355803b74c2d4c6a7f.css" />
+<link rel="stylesheet" media="all" href="https://internal-cdn.amazon.com/is-it-down.amazon.com/stylesheets/stripe.css" />
+<style>
+  /* line 1, (__TEMPLATE__) */
+  .absolute-time {
+    display: none; }
+  
+  /* line 3, (__TEMPLATE__) */
+  .relative-time {
+    display: auto; }
+</style>
+<style>
+  /* line 1, (__TEMPLATE__) */
+  .add_related_items {
+    display: none; }
+  
+  /* line 3, (__TEMPLATE__) */
+  #related_items {
+    min-height: 75px; }
+    /* line 5, (__TEMPLATE__) */
+    #related_items .error {
+      color: red; }
+</style>
+<link rel="stylesheet" media="screen" href="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/spiffy_diffy_assets/spiffy_diffy-21a1a3240dcb4bd1500349e41c651a2065e7ff594ee849bbe7aa1b09227b8d39.css" />
+<link rel="stylesheet" media="screen" href="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/blobs-061e7f23bbbcb6304112ba461f3dfee236247167c4a1a6ca3e2e2ddc47ef3740.css" />
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</head>
+<body>
+<nav class='navbar navbar-default hidden-print' role='navigation'>
+<div class='container-fluid'>
+<div class='navbar-header'>
+<a class='navbar-brand' href='/'>Code Browser</a>
+</div>
+<ul class='nav navbar-nav'>
+<li>
+<div class='advanced-search-hover-link'>
+<!-- / preserves query and redirects to advanced search -->
+<a class="fa fa-magic" href="/search?&amp;commit=Search"></a>
+</div>
+<form action='/search' class='form-inline navbar-search navbar-form'>
+<div class='search-spinner' style='display:none'>
+<img src='https://images-na.ssl-images-amazon.com/images/G/01/oneg/img/spinner.gif'>
+</div>
+<div class='input-append inline-elem'>
+<input accesskey='s' class='hinted input-medium autocomplete-packages search-query form-control search' data-autocomplete-url='/packages/autocomplete_package_id?vs=true' id='search_top' name='term' placeholder='Code Search' role='search' size='40' tabindex='1' title='Code Search' type='text'>
+</div>
+<a href='#'>
+<img src='https://internal-cdn.amazon.com/btk.amazon.com/img/icons-1.0/tooltip-bubble.png' target_popup='search-bar-hint'>
+</a>
+<div class='popover fade right in code-search-help-box nav' id='search-bar-hint'>
+<h3 class='popover-title'>Code Search Hints</h3>
+<div class='popover-content'>
+<p>
+<strong class='external text'>
+<a href='/search' rel='nofollow'>Advanced Search</a>
+</strong>
+</p>
+<p>
+<strong>Simple search:</strong>
+&lt;term&gt;
+</p>
+<p>
+<strong>Prefix search:</strong>
+&lt;at-least-three-chars&gt;*
+</p>
+<p>
+<strong>Find files with at least one of two terms:</strong>
+&lt;term1&gt; &lt;term2&gt;
+</p>
+<p>
+<strong>Find files with at least one of two terms but not a third term:</strong>
+&lt;term1&gt; &lt;term2&gt;&nbsp;!&lt;term3&gt;
+</p>
+<p>
+<strong>Find files with two terms in sequence:</strong>
+"&lt;term1&gt; &lt;term2&gt;"
+</p>
+<p>
+<strong>Filter to only one or more repository:</strong>
+&lt;term1&gt; rp:&lt;MyPackageName&gt; ...
+</p>
+<p>
+<strong>Filter to a particular file extension:</strong>
+&lt;term1&gt; path:.java
+</p>
+<p>
+<strong>Filter out a particular file extension (works w/ all filters):</strong>
+&lt;term1&gt; path:!.java
+</p>
+<p>
+<strong>Filter to a path: &lt;term1&gt;</strong>
+path:/my/path/to/consider*
+</p>
+<p>
+<strong>Filter by write permissions:</strong>
+group:&lt;some-ldap-posix-or-source-group&gt;
+</p>
+<p>
+<strong>Filter by package status:</strong>
+status:active:deprecated
+</p>
+<p>
+<strong>Filter by branch: branch:&lt;branch-name&gt;</strong>
+</p>
+<p>
+<strong>Filter by third party:</strong>
+third_party:true|false
+</p>
+<p>
+<strong>Filter by particular class in java files:</strong>
+class:&lt;class_name&gt;
+</p>
+<p>
+<strong>Filter by method declarations in java files:</strong>
+method:&lt;method_name&gt;
+</p>
+<p>
+<strong>Filter by method calls in java files:</strong>
+method_call:&lt;method_name&gt;
+</p>
+<p>
+<strong>Filter by interface declarations in java files:</strong>
+interface:&lt;interface_name&gt;
+</p>
+<p>
+<a class='external text' href='https://w.amazon.com/index.php/BuilderTools/Product/CodeSearch/User%20Guide' rel='nofollow'>Read more here</a>
+</p>
+<p>
+<i>(click on the speech bubble to close)</i>
+</p>
+</div>
+</div>
+
+</form>
+</li>
+<li>
+<a href="/permissions">Permissions</a>
+</li>
+<li>
+<a href="/workspaces/hpoonawa">Workspaces</a>
+</li>
+<li>
+<a href="/version-sets">Version Sets</a>
+</li>
+<li>
+<a data-target='#preferences_dialog' data-toggle='modal' id='preferences'>Preferences</a>
+<div class='modal fade' id='preferences_dialog' role='dialog'>
+<div class='modal-dialog modal-md'>
+<div class='modal-content'>
+<div class='modal-header'>
+<button class='close' data-dismiss='modal' type='button'>
+<i class='fa fa-times'></i>
+</button>
+<h4 class='modal-title'>User Preferences</h4>
+</div>
+<div class='modal-body'>
+<div class='text-center'>
+<i class='fa fa-spinner fa-spin'></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</li>
+</ul>
+<div class='nav navbar-nav navbar-right parent-tag-container'>
+<div class='tag-container'>
+<a class='tag-link' href='https://w.amazon.com/bin/view/BuilderTools/Groups/Codex/Hiring/' target='_blank'>We are hiring!</a>
+</div>
+</div>
+<ul class='nav navbar-nav navbar-right'>
+<li><a target="_blank" onclick="window.open('http://tiny/submit/url?opaque=1&name=' + encodeURIComponent(location.href)); return false;" href="#">Tiny Link <i class="fa fa-external-link"></i></a></li>
+</ul>
+</div>
+</nav>
+
+<div class='container-fluid'>
+<ol class='breadcrumb'>
+<li>
+<a href="/">Home</a>
+</li>
+<li><a href="/packages/GithubAdminTools">GithubAdminTools</a></li>
+<li><a href="/packages/GithubAdminTools/trees/mainline/--/">mainline</a></li>
+<li><a href="/packages/GithubAdminTools/trees/mainline/--/templates">templates</a></li>
+<li><a href="/packages/GithubAdminTools/trees/mainline/--/templates/DevGuide_CC_MIT">DevGuide_CC_MIT</a></li>
+<li class='.active'>LICENSE-SAMPLECODE</li>
+
+
+</ol>
+<div id='content'>
+</div>
+
+<div class='page-header'>
+<h1>
+<span>
+GithubAdminTools
+</span>
+<div class='star' data-package='GithubAdminTools'></div>
+<small class='hidden-print'>
+<a class='powertip autoselect pull-right' data-powertip='brazil ws use -p GithubAdminTools' id='bw_use'>
+<i class='glyphicon glyphicon-download-alt'></i>
+</a>
+</small>
+<small>
+<span class='clone subtext pull-right hidden-print'>
+<form class='form-inline'>
+Clone uri:
+<input class='form-control input-sm' type='text' value='ssh://git.amazon.com/pkg/GithubAdminTools'>
+</form>
+</span>
+
+</small>
+<small>
+<div class='pull-right hidden-print' id='code_search_box'>
+<form class="form-inline" action="/search_redirector" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+<div class='input-group search '><input type="text" name="search_term" id="search_term" placeholder="Search in this package" size="21" class="form-control input-sm" />
+<span class='input-group-btn'><button class='btn' type='submit'>Go</button></span></div><input type="hidden" name="package" id="package" value="GithubAdminTools" />
+<input type="hidden" name="path" id="path" value="templates/DevGuide_CC_MIT/LICENSE-SAMPLECODE" />
+</form>
+
+</div>
+
+</small>
+</h1>
+<div class='badges'>
+<div class='placeholder'>
+&nbsp
+</div>
+<span id='third_party' style='display: none;'>
+<span class='label label-info'>Third Party Package</span>
+</span>
+<div class='popover fade right in badge-helper-box' id='badge-hints'>
+<h3 class='popover-title'>Hint</h3>
+<div class='badge-helper-content popover-content'>
+<p>
+Package badge data is extracted from brazil metadata about a package.  Particularly, Code Browser finds the highest major version and fetches data about that package version from the latest build in the master version set.
+</p>
+<p>
+The metadata we have is based on following brazil conventions about where to place documentation and unit test (and coverage) output.  Here are a few other wiki pages that have more detailed information about these topics.
+</p>
+<ul>
+<li>
+Each
+<a class='external text' href='https://w.amazon.com/index.php/BrazilBuildSystem/BuildSystems' rel='nofollow'>build system</a>
+may have ways to configure build artifacts that the Brazil system recognizes.
+</li>
+<li>
+Java - if you use
+<a class='external text' href='https://w.amazon.com/index.php/BrazilBuildSystem/HappierTrails' rel='nofollow'>Happier Trails</a>
+you should get test, documentation, and coverage data out of the box.
+</li>
+<li>
+This
+<a class='external text' href='https://w.amazon.com/index.php/BrazilBuildSystem/Concepts/UnitTestingInBrazil/JavaUnitTesting' rel='nofollow'>Java Unit Testing</a>
+page describes the basic conventions underlying test output.  Most any language / build system can output usable information just by putting the right files in the right places.
+</li>
+</ul>
+<p>
+Here are some example packages for a few languages that are configured to expose this information to Brazil:
+</p>
+<ul>
+<li>
+Java -
+<a class='external text' href='https://code.amazon.com/packages/ToolsPermsService/blobs/mainline/--/build.xml' rel='nofollow'>ToolsPermsService</a>
+</li>
+<li>
+Ruby -
+<a class='external text' href='https://code.amazon.com/packages/CriticService/blobs/mainline/--/Rakefile' rel='nofollow'>CriticService</a>
+(
+<a class='external text' href='https://w.amazon.com/index.php/BuilderTools/Product/BrazilRake' rel='nofollow'>BrazilRake's</a>
+SimpleCov does most of the work)
+</li>
+<li>
+Python -
+<a class='external text' href='https://code.amazon.com/packages/Ducky/blobs/62906a55e2c53e9dc779a00770b39b0620d74c45/--/Config#line-48' rel='nofollow'>Ducky</a>
+</li>
+<li>
+Perl - ?
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+</div>
+<div class='row'>
+<div class='col-md-9'>
+<ul class='nav nav-pills bottom-buffer-small hidden-print'>
+<li class='active'><a href="/packages/GithubAdminTools">Source</a></li>
+<li><a href="/packages/GithubAdminTools/logs">Commits</a></li>
+<li><a href="/packages/GithubAdminTools/releases">Releases</a></li>
+<li><a href="/packages/GithubAdminTools/metrics/78a0b1e7818bbc5806241c8fc35302527b0c3702">Metrics</a></li>
+<li><a href="/packages/GithubAdminTools/permissions">Permissions</a></li>
+<li><a href="/gc/rules/for-package/GithubAdminTools">CRUX Rules</a></li>
+<li><a href="/packages/GithubAdminTools/repo-info">Repository Info</a></li>
+<li><a href="/packages/GithubAdminTools/replicas">CodeCommit Replicas</a></li>
+</ul>
+
+</div>
+<div class='col-md-3'>
+<div id='branch_and_search_box'>
+<div class='hidden-print' id='branch_dropdown'>
+<label for="branches">Branches: </label>
+<input id='branches' name='branches' type='hidden'>
+</div>
+
+</div>
+
+</div>
+</div>
+<div class='last_commit panel panel-default top-buffer-small'>
+<div class='last_commit_heading'>
+Last Commit
+<span class='subtext'>
+(<a class="commit-see-more" href="#">see more</a>)
+</span>
+</div>
+<div class='panel-body'>
+<ul class='last-commit-summary list-unstyled list-inline'>
+<li class='commiter'></li>
+<a href="https://code.amazon.com/users/hyandell/activity">Henri Yandell</a>
+<li class='time'></li>
+<span title='Committed on December 12, 2017 10:48:12 AM PST' class='relative-time hover_tooltip '>over 2 years ago</span><span class='absolute-time hover_tooltip '>2017-12-12 10:48:12 PST</span>
+<li class='commit_message'>
+<span class='refs'>
+</span>
+<a class='powertip commit black' data-commit-id='78a0b1e7818bbc5806241c8fc35302527b0c3702' href='/packages/GithubAdminTools/commits/78a0b1e7818bbc5806241c8fc35302527b0c3702'>
+Renamed templates for easier understanding
+</a>
+</li>
+<li><a class="mono powertip autoselect" data-powertip="78a0b1e7818bbc5806241c8fc35302527b0c3702" href="/packages/GithubAdminTools/commits/78a0b1e7818bbc5806241c8fc35302527b0c3702#templates/DevGuide_CC_MIT/LICENSE-SAMPLECODE">78a0b1e7</a></li>
+<li>
+<img src="https://pipelines.amazon.com/favicon.ico" alt="Favicon" />
+<a href="https://pipelines.amazon.com/changes/PKG/GithubAdminTools/mainline/GitFarm:78a0b1e7818bbc5806241c8fc35302527b0c3702">Track in pipelines</a>
+</li>
+</ul>
+
+<div class='swappable-with-brief-header'>
+<div class='commit_header'>
+<div class='portrait'><a href="https://code.amazon.com/users/hyandell/activity"><img class="" width="50" onerror="this.onerror=null; this.src=&#39;https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/default-user-b916c01d82910755cdba17db81688d35c994cf77a5907d721a6d93522961d007.gif&#39;" src="https://internal-cdn.amazon.com/badgephotos.amazon.com/phone-image.pl?uid=hyandell" alt="Phone image" /></a></div>
+<div class='details'>
+<div class='pull-right' id='track_pipeline_change' style='clear-right'>
+<ul class='list-unstyled'>
+<li>
+<img src="https://pipelines.amazon.com/favicon.ico" alt="Favicon" />
+<a href="https://pipelines.amazon.com/changes/PKG/GithubAdminTools/mainline/GitFarm:78a0b1e7818bbc5806241c8fc35302527b0c3702">Track in pipelines</a>
+<span class='subtext'>(mainline)</span>
+</li>
+</ul>
+</div>
+<div class='download-diff pull-right' style='clear: right'>
+<a href="/api/packages/GithubAdminTools/diff/78a0b1e7818bbc5806241c8fc35302527b0c3702">Download Diff</a>
+</div>
+<div class='pull-right' id='browse_source' style='clear: right'>
+<a href="/packages/GithubAdminTools/trees/78a0b1e7818bbc5806241c8fc35302527b0c3702">Browse source at this commit</a>
+</div>
+<div class='pull-right' id='child_link' style='clear: right'>
+<a href="/packages/GithubAdminTools/commits/78a0b1e7818bbc5806241c8fc35302527b0c3702.child">view child commit</a>
+</div>
+<ul class='list-unstyled pull-right' style='clear: right'>
+</ul>
+<div class='author'>
+<span class='name'><a href="https://code.amazon.com/users/hyandell/activity">Henri Yandell</a></span>
+<span class='sha1'>
+(<a class='powertip autoselect' data-powertip='78a0b1e7818bbc5806241c8fc35302527b0c3702' href='/packages/GithubAdminTools/commits/78a0b1e7818bbc5806241c8fc35302527b0c3702'>78a0b1e7</a>)
+</span>
+<div class='subtext'>
+authored: <span title='December 12, 2017 10:48:12 AM PST' class='relative-time hover_tooltip '>over 2 years ago</span><span class='absolute-time hover_tooltip '>2017-12-12 10:48:12 PST</span>, committed: <span title='December 12, 2017 10:48:12 AM PST' class='relative-time hover_tooltip '>over 2 years ago</span><span class='absolute-time hover_tooltip '>2017-12-12 10:48:12 PST</span>
+<div class='summaries'>
+<div class='summary'>
+Pushed to
+<span class='autoselect branch powertip ref' data-powertip='mainline'>mainline</span>
+by peddicor <span title='August 21, 2019 10:02:59 AM PDT' class='relative-time hover_tooltip year_old'>almost 1 year ago</span><span class='absolute-time hover_tooltip year_old'>2019-08-21 10:02:59 PDT</span> as part of <a class='powertip autoselect' data-powertip='b1ea660fc2baeaffaac2c3d215dc0f4db6e64e75' href='/packages/GithubAdminTools/commits/b1ea660fc2baeaffaac2c3d215dc0f4db6e64e75'>b1ea660f</a>
+</div>
+</div>
+
+
+</div>
+<p class='top-buffer'>
+<span class='subject'>
+<a href="/packages/GithubAdminTools/commits/78a0b1e7818bbc5806241c8fc35302527b0c3702">Renamed templates for easier understanding</a>
+</span>
+</p>
+</div>
+<div id='related_items'>
+<h3>Related Items</h3>
+<div class='fetching subtext'>
+Fetching...
+</div>
+<div class='msg subtext' style='display: none'>
+No related items found.
+</div>
+<ul data-bind='foreach: relatedItemsModel().relatedItems, visible: relatedItemsModel().relatedItems().length &gt; 0'>
+<li>
+<span data-bind='text: type'></span>
+<a data-bind='text: link.title, attr: {href: link.url}'></a>
+<a class='delete_relation' data-bind="attr: {href: '/delete-relation?eid=' + link.eid}" onclick='return confirm("Really delete this relation?")'>
+<span class='red'>&nbsp;x&nbsp;</span>
+</a>
+</li>
+</ul>
+<div class='add_relation_link'>
+<a href='#'>+ Add Relation</a>
+</div>
+<div class='add_related_items'>
+<form action="/create_relation" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="rK+g5AijLKYbiISOB+0gDShZlFAAixORYZWAZs8OUJGoue/8c5myBbHo6h9mDnFqFba9pOQ1nph8rPMQ/GL+ow==" />
+Relate this commit to url:
+<input name='relation' type='text'>
+<input type="hidden" name="package_id" id="package_id" value="GithubAdminTools" />
+<input type="hidden" name="commit_id" id="commit_id" value="78a0b1e7818bbc5806241c8fc35302527b0c3702" />
+<input type="submit" name="commit" value="Save" class="btn btn-default" />
+</form>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<div class='clear'></div>
+
+<div class='jump_to_file hidden-print'>
+<div class='jump_to_file_form'>
+<form class='form_inline' onSubmit='return false'>
+<input type="hidden" name="package_id" id="package_id" value="GithubAdminTools" />
+<input type="hidden" name="commit_id_for_file" id="commit_id_for_file" value="mainline" />
+<div class='input-append'>
+<input accesskey='j' class='hinted form-control search' id='filesearch' name='file' placeholder='Jump to a file' title='Jump to a file' type='text'>
+</div>
+<div class='jump_to_file_dismiss'></div>
+</form>
+</div>
+<div class='jump_to_file_popup'><a class='help helpPopup' data-content="Here you can enter the name of the file and it will provide suggestions with the matching file names and the path for the same.&lt;br/&gt; After selecting the required file, it will redirect to that file. The keyboard shortcut is 'CTRL+j'.">
+<img src='https://internal-cdn.amazon.com/btk.amazon.com/img/icons-1.0/tooltip-bubble.png'>
+</a>
+</div>
+<div class='jump_to_file_error'>
+The above file can not be found. Either the whole path is missing or the file is not in
+<br>this package. Please check the autosuggestions.</br>
+</div>
+</div>
+
+<!--
+mime_type: text/plain; charset=us-ascii
+-->
+<div class='file_header'>
+<div class='path_breadcrumbs'>
+<div class='path_breadcrumbs'>
+<span class='path_breadcrumb'><a href="/packages/GithubAdminTools">GithubAdminTools</a></span>/<span class='path_breadcrumb'><a href="/packages/GithubAdminTools/trees/mainline/--/">mainline</a></span>/<span class='path_breadcrumb'><a href="/packages/GithubAdminTools/trees/mainline/--/templates">templates</a></span>/<span class='path_breadcrumb'><a href="/packages/GithubAdminTools/trees/mainline/--/templates/DevGuide_CC_MIT">DevGuide_CC_MIT</a></span>/<span class='path_breadcrumb'>LICENSE-SAMPLECODE</span>
+</div>
+
+</div>
+<div class='hidden-print' id='file_actions'>
+<ul class='button_group'>
+<li>
+<a class="minibutton" href="/packages/GithubAdminTools/blobs/mainline/--/templates/DevGuide_CC_MIT/LICENSE-SAMPLECODE?raw=1">Raw</a>
+</li>
+<li>
+<a class="minibutton" href="/packages/GithubAdminTools/blobs/mainline/--/templates/DevGuide_CC_MIT/LICENSE-SAMPLECODE?download=1">Download</a>
+</li>
+<li>
+<a class="minibutton" href="/packages/GithubAdminTools/logs/mainline?path=templates%2FDevGuide_CC_MIT%2FLICENSE-SAMPLECODE">History</a>
+</li>
+<li>
+<a class="minibutton" href="/packages/GithubAdminTools/blobs/mainline/--/templates/DevGuide_CC_MIT/LICENSE-SAMPLECODE/edit_file_online">Edit</a>
+</li>
+<li class='permalink'>
+<a class="minibutton" href="/packages/GithubAdminTools/blobs/78a0b1e7818bbc5806241c8fc35302527b0c3702/--/templates/DevGuide_CC_MIT/LICENSE-SAMPLECODE">Permalink</a>
+</li>
+</ul>
+<span class='blame subtext'>
+<label>
+show blame:
+<input disabled type='checkbox'>
+</label>
+<span class='subtext'>Older</span>
+<span class='age0 ageKey'>&nbsp;</span>
+<span class='age20 ageKey'>&nbsp;</span>
+<span class='age40 ageKey'>&nbsp;</span>
+<span class='age60 ageKey'>&nbsp;</span>
+<span class='age80 ageKey'>&nbsp;</span>
+<span class='age100 ageKey'>&nbsp;</span>
+<span class='subtext'>Newer</span>
+</span>
+</div>
+<div class='clear'></div>
+<div class='highlighttable blob' ng_non_bindable>
+    <div class="js-syntax-highlight-wrapper">
+      <table class="code js-syntax-highlight">
+        <tbody>
+            <tr class="line_holder" id="L1">
+              <td class="line-num" data-linenumber="1">
+                <span class="linked-line" unselectable="on" data-linenumber="1"></span>
+              </td>
+              <td class="line_content">Copyright ${THIS_YEAR} Amazon.com, Inc. or its affiliates. All Rights Reserved.
+</td>
+            </tr>
+            <tr class="line_holder" id="L2">
+              <td class="line-num" data-linenumber="2">
+                <span class="linked-line" unselectable="on" data-linenumber="2"></span>
+              </td>
+              <td class="line_content">
+</td>
+            </tr>
+            <tr class="line_holder" id="L3">
+              <td class="line-num" data-linenumber="3">
+                <span class="linked-line" unselectable="on" data-linenumber="3"></span>
+              </td>
+              <td class="line_content">Permission is hereby granted, free of charge, to any person obtaining a copy of this
+</td>
+            </tr>
+            <tr class="line_holder" id="L4">
+              <td class="line-num" data-linenumber="4">
+                <span class="linked-line" unselectable="on" data-linenumber="4"></span>
+              </td>
+              <td class="line_content">software and associated documentation files (the "Software"), to deal in the Software
+</td>
+            </tr>
+            <tr class="line_holder" id="L5">
+              <td class="line-num" data-linenumber="5">
+                <span class="linked-line" unselectable="on" data-linenumber="5"></span>
+              </td>
+              <td class="line_content">without restriction, including without limitation the rights to use, copy, modify,
+</td>
+            </tr>
+            <tr class="line_holder" id="L6">
+              <td class="line-num" data-linenumber="6">
+                <span class="linked-line" unselectable="on" data-linenumber="6"></span>
+              </td>
+              <td class="line_content">merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+</td>
+            </tr>
+            <tr class="line_holder" id="L7">
+              <td class="line-num" data-linenumber="7">
+                <span class="linked-line" unselectable="on" data-linenumber="7"></span>
+              </td>
+              <td class="line_content">permit persons to whom the Software is furnished to do so.
+</td>
+            </tr>
+            <tr class="line_holder" id="L8">
+              <td class="line-num" data-linenumber="8">
+                <span class="linked-line" unselectable="on" data-linenumber="8"></span>
+              </td>
+              <td class="line_content">
+</td>
+            </tr>
+            <tr class="line_holder" id="L9">
+              <td class="line-num" data-linenumber="9">
+                <span class="linked-line" unselectable="on" data-linenumber="9"></span>
+              </td>
+              <td class="line_content">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+</td>
+            </tr>
+            <tr class="line_holder" id="L10">
+              <td class="line-num" data-linenumber="10">
+                <span class="linked-line" unselectable="on" data-linenumber="10"></span>
+              </td>
+              <td class="line_content">INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+</td>
+            </tr>
+            <tr class="line_holder" id="L11">
+              <td class="line-num" data-linenumber="11">
+                <span class="linked-line" unselectable="on" data-linenumber="11"></span>
+              </td>
+              <td class="line_content">PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+</td>
+            </tr>
+            <tr class="line_holder" id="L12">
+              <td class="line-num" data-linenumber="12">
+                <span class="linked-line" unselectable="on" data-linenumber="12"></span>
+              </td>
+              <td class="line_content">HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+</td>
+            </tr>
+            <tr class="line_holder" id="L13">
+              <td class="line-num" data-linenumber="13">
+                <span class="linked-line" unselectable="on" data-linenumber="13"></span>
+              </td>
+              <td class="line_content">OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+</td>
+            </tr>
+            <tr class="line_holder" id="L14">
+              <td class="line-num" data-linenumber="14">
+                <span class="linked-line" unselectable="on" data-linenumber="14"></span>
+              </td>
+              <td class="line_content">SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+
+</div>
+</div>
+
+
+</div>
+<nav class='navbar navbar-default footer' role='navigation'>
+<footer class='footer top-buffer' id='footer'>
+<div class='col-sm-9 col-md-8 main'>
+<h3>Packages</h3>
+<ul class='unstyled'>
+<li><a href="https://octane.amazon.com/package">Create Package</a></li>
+<li><a href="/packages/find_by_team_for_user">All packages for my team</a></li>
+</ul>
+<h3>Commit Notifications</h3>
+<ul class='unstyled'>
+<li><a href="https://w.amazon.com/index.php/BuilderTools/Product/RevisionControl/CommitNotifications">RSS</a></li>
+<li><a href="/commit-notifications">Email</a></li>
+</ul>
+</div>
+<div class='col-sm-3 col-md-4 sidebar'>
+<div class='business_card clearfix'>
+<h3>Need help?</h3>
+<ul class='unstyled'>
+<li><a target="_blank" href="https://tiny.amazon.com/1bxu90lx3/codeacbug">Submit an Issue (problems or suggestions)</a></li>
+<li><a target="_blank" href="https://w.amazon.com/index.php/BuilderTools/Product/CodeBrowser">Code Browser Documentation</a></li>
+<li><a target="_blank" href="https://w.amazon.com/index.php/BuilderTools/Product/CodeBrowser/CRUX">CRUX Documentation</a></li>
+<li><a target="_blank" href="https://w.amazon.com/index.php/BuilderTools/Product/CodeSearch/User%20Guide">Code Search Documentation</a></li>
+<li><a target="_blank" href="https://w.amazon.com/index.php/DTUX/Browser_Support_Policy">Browser Support Policy</a></li>
+</ul>
+</div>
+</div>
+</footer>
+</nav>
+
+<script>
+  var codeBrowserSpoofedUser = "hpoonawa"
+</script>
+<script src="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/vendor-part1-92632069e516323f9321984264819d16126dfe013a84267ba90241da0f10db5f.js"></script>
+<script src="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/vendor-part2-b949a32ba4ecf65053b6db63159faeaa9e70b1aadf5b6db628a05310036fce8c.js"></script>
+<script src="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/vendor-part3-a4dd41afd8703135f4e7a7ab54b431ecf4073c0fff5849873498cb47bf80b4aa.js"></script>
+<script src="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/vendor-part4-caf29714919a9cb48d6e2db3958aac4e4a8191d430466fc96629c855695d004c.js"></script>
+<script src="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/application-175ac2f17db9f2517c7e86ffe4f763135795f4d93be2b3e2b3ff8b1e3f48db06.js"></script>
+<script src="https://internal-cdn.amazon.com/is-it-down.amazon.com/javascripts/stripe.min.js"></script>
+<script>
+  (function() {
+    if (typeof isItDownStripe === 'function') {
+      $(function() {
+        return isItDownStripe('sourcecode', 1107, 1);
+      });
+    }
+  
+  }).call(this);
+</script>
+<script src="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/application_angular-eacbcce151fcc246a7f4d13afc9e4fa67a721bb2bda5280057d7c8d079ceadc4.js"></script>
+<script>
+  bootstrapNgApp('code-browser', 'markdown');
+</script>
+<script>
+  $(document).ready(function() {
+      $('#branches').select2({
+          width: "274px",
+          data: [{"text":"Official Branches","children":[{"text":"mainline (default)","id":"/packages/GithubAdminTools/blobs/heads/mainline/--/templates/DevGuide_CC_MIT/LICENSE-SAMPLECODE"}]}],
+          createSearchChoice: function(term, data) {
+            if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+              // This code fires if the user enters a string and hits return (rather than selecting the item
+              // from the dropdown.  This breaks when viewing commits (logs). Customize it accordingly.
+              if ('/packages/GithubAdminTools/blobs/'.match(/\/logs/)) {
+                var id_string = '/packages/GithubAdminTools/blobs//' + term;
+                if ('templates/DevGuide_CC_MIT/LICENSE-SAMPLECODE') {
+                  id_string += '/--/templates/DevGuide_CC_MIT/LICENSE-SAMPLECODE';
+                }
+                return {text:term, id: id_string};
+              }
+              return {text:term, id:'/packages/GithubAdminTools/blobs/' + term + '/--/templates/DevGuide_CC_MIT/LICENSE-SAMPLECODE'};
+            }
+          },
+      });
+      $('#branches').select2('data', null);
+      $('#branches').change(function() {
+        document.location = $(this).val();
+      });
+  });
+</script>
+<script>
+  (function() {
+    $(function() {
+      return $('.add_relation_link a').click(function() {
+        $('.add_related_items').show(500).find('input[name=relation]').delay(500).focus();
+        $(this).hide();
+        return false;
+      });
+    });
+  
+  }).call(this);
+</script>
+<script>
+  (function() {
+    $(function() {
+      return $('.commit-see-more').click(function() {
+        $('.commit-see-more').text($('.commit-see-more').text() === 'see more' ? 'see less' : 'see more');
+        $('.last-commit-summary, .commit_header').toggle();
+        return false;
+      });
+    });
+  
+  }).call(this);
+</script>
+<script>
+  (function() {
+    $('li.permalink a').click(function() {
+      window.location.href = this.href + location.hash;
+      return false;
+    });
+  
+  }).call(this);
+</script>
+<script>
+  (function() {
+    var relatedItems;
+  
+    relatedItems = new Codac.RelatedItemsModel("GithubAdminTools", "78a0b1e7818bbc5806241c8fc35302527b0c3702", 'mainline', '');
+  
+    Codac.model.relatedItemsModel(relatedItems);
+  
+  }).call(this);
+</script>
+<script>
+  (function() {
+    var onUrlChange, premalinkBtnEl, premalinkPath;
+  
+    (function() {
+      var anchor, anchorMatch, hash, hl_lines_match, path, ranges, search;
+      anchor = window.location.hash.split('#')[1] || '';
+      anchorMatch = anchor.match(/^line-(\d+)/);
+      if (anchorMatch) {
+        anchor = 'L' + anchorMatch[1];
+      }
+      search = window.location.search;
+      hl_lines_match = search.match(/hl_lines=([\d\-\,]+)/);
+      ranges = '';
+      if (hl_lines_match) {
+        ranges = hl_lines_match[1].split(',').map(function(range) {
+          return range.split('-').map(function(lineNum) {
+            return 'L' + lineNum;
+          }).join('-');
+        }).join(',');
+      }
+      hash = ranges;
+      if (anchorMatch) {
+        hash += '|' + anchor;
+      }
+      if (hash !== '') {
+        if (hash !== '') {
+          window.location.hash = '#' + hash;
+        }
+        path = window.location.pathname + window.location.hash;
+        return window.history.pushState(void 0, void 0, path);
+      }
+    })();
+  
+    premalinkBtnEl = $('#file_actions .permalink');
+  
+    premalinkPath = premalinkBtnEl.find('.minibutton').attr('href');
+  
+    onUrlChange = function() {
+      return premalinkBtnEl.hide();
+    };
+  
+    setTimeout((function() {
+      return (new Diff()).enableHighlighting({
+        basePath: premalinkPath,
+        onUrlChange: onUrlChange
+      });
+    }), 0);
+  
+  }).call(this);
+</script>
+<script src="https://internal-cdn.amazon.com/code.amazon.com/pub/assets/cdn/blame-d9243530d76709c9a0ccb382b4670667e98ac0fdfb28e896ac01d33959b811d7.js"></script>
+<script>
+  (function() {
+    $(function() {
+      var b;
+      Codac.CommitHover.setupHover('.blameLine .powertip');
+      b = new Codac.Blame({
+        "package": "GithubAdminTools",
+        sha1: "78a0b1e7818bbc5806241c8fc35302527b0c3702",
+        path: "templates/DevGuide_CC_MIT/LICENSE-SAMPLECODE",
+        show: false
+      });
+      return b.doBlame();
+    });
+  
+  }).call(this);
+</script>
+<script>
+  (function() {
+    $(function() {
+      return $('.navbar-search.navbar-form').submit(function() {
+        $(this).submit(function(e) {
+          e.preventDefault();
+          return false;
+        });
+        return $('.search-spinner').show();
+      });
+    });
+  
+  }).call(this);
+</script>
+
+</body>
+</html>
