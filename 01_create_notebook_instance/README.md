@@ -69,9 +69,9 @@ As a consequence, in this section we will clone the GitHub repository into the A
 
 	```bash
 	cd SageMaker/
-	git clone https://github.com/giuseppeporcelli/end-to-end-ml-sm.git
+	git clone https://github.com/aws-samples/amazon-sagemaker-build-train-deploy
 	```
-3. When the clone operation completes, close the terminal window and return to the Jupyter landing page. The folder **end-to-end-ml-sm** will appear automatically (if not, you can hit the **Refresh** button)
+3. When the clone operation completes, close the terminal window and return to the Jupyter landing page. The folder **amazon-sagemaker-build-train-deploy** will appear automatically (if not, you can hit the **Refresh** button)
 
 	<img src="images/jupyter_cloned_workshop_screen.png" alt="Jupyter Cloned Workshop Screen" width="700px" />
 	
