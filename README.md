@@ -28,7 +28,7 @@ The final architecture will be:
 
 ## The Machine Learning task
 
-We have been provided with a dataset (stored in an Amazon S3 bucket) containing data collected in a wind turbine plant, where each example includes several sensor measurements and a status indicating wheather the plant was healthy or not.
+We have been provided with a dataset (stored in an Amazon S3 bucket) containing data collected in a wind turbine plant, where each example includes several sensor measurements and a status indicating whether the plant was healthy or not.
 
 > ⚠️ **Note**: this is a synthetic dataset that oversimplifies the Predictive Maintenance task: however, it keeps this workshop easier to execute.
 
