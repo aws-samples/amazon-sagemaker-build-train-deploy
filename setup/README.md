@@ -52,4 +52,4 @@ Please execute the following steps:
 
 	<img src="images/cloudformation_check_stack_creation.png" alt="CloudFormation check stack creation" width="700px" />
 	
-10. Once the stack creation is completed, you can start the workshop from <a href="01_create_notebook_instance/">**Module 01**</a>.
+10. Once the stack creation is completed, you can start the workshop from <a href="../01_create_notebook_instance/">Module 01</a>
