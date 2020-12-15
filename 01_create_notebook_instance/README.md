@@ -76,3 +76,5 @@ As a consequence, in this section we will clone the GitHub repository into the A
 	<img src="images/jupyter_cloned_workshop_screen.png" alt="Jupyter Cloned Workshop Screen" width="700px" />
 	
 4. Browse to the folder **02\_data\_exploration\_and\_feature\_eng** and open the file **02\_data\_exploration\_and\_feature\_eng.ipynb** to start the data exploration, preparation and feature engineering steps.
+
+You can now proceed to <a href="../02_data_exploration_and_feature_eng/">Module 02</a>
