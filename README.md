@@ -54,7 +54,7 @@ This workshops consists of six modules:
 - <a href="02_data_exploration_and_feature_eng/">**Module 02**</a> - Using AWS Glue and Amazon Athena to execute data exploration, and then data preprocessing and feature engineering using Amazon SageMaker Processing and SKLearn.
 - <a href="03_train_model/">**Module 03**</a> - Training a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether a wind turbine plant requires maintenance. Use Sagemaker Debugger to monitor training progress with rules and visualize training metrics like accuracy and feature importance.
 - <a href="04_deploy_model/">**Module 04**</a> - Deploying the feature engineering and ML models as a pipeline using Amazon SageMaker hosting (inference pipelines). Use Sagemaker Model Monitor to track data drift violations against the training data baseline.
-- <a href="05_API_Gateway_and_Lambda/">**Module 05**</a> - Buiding a REST API using Amazon API Gateway and implementing an AWS Lambda function that will invoke the Amazon SageMaker endpoint for inference.
+- <a href="05_API_Gateway_and_Lambda/">**Module 05**</a> - Building a REST API using Amazon API Gateway and implementing an AWS Lambda function that will invoke the Amazon SageMaker endpoint for inference.
 - <a href="06_invoke_API/">**Module 06**</a> - Using a single-page demo application to invoke the REST API and get inferences.
 
 You must comply with the order of modules, since the outputs of a module are inputs of the following one.
