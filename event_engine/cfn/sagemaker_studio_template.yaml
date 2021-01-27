@@ -76,6 +76,7 @@ Resources:
   SageMakerExecutionRole:
     Type: "AWS::IAM::Role"
     Properties:
+      RoleName: "AmazonSageMaker-ExecutionRole-endtoendml"
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -85,9 +86,69 @@ Resources:
                 - sagemaker.amazonaws.com
             Action:
               - "sts:AssumeRole"
-      Path: /
+      Path: "/service-role/"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+      Policies:
+        - PolicyName: GlueFullAccess-endtoendml
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - glue:*
+                Resource: "*"
+        - PolicyName: AthenaFullAccess-endtoendml
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - athena:*
+                Resource: "*"
+
+  GlueServiceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: "GlueServiceRole-endtoendml"
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "glue.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+      Path: "/service-role/"
+
+  LambdaInvokeSageMakerEndpointRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: "LambdaInvokeSageMakerEndpointRole-endtoendml"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: LambdaInvokeSageMakerEndpointPolicy-endtoendml
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sagemaker:InvokeEndpoint
+                Resource: "*"
+
 
   StudioDomainFunction:
     Type: AWS::Lambda::Function
@@ -142,4 +203,3 @@ Resources:
       UserProfileName: !Ref UserProfileName
       UserSettings:
         ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
-
