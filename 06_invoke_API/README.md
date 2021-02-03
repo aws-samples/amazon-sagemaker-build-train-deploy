@@ -1,5 +1,3 @@
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. // SPDX-License-Identifier: CC-BY-SA-4.0
-
 # Invoke the API from a client application
 
 For the purpose of executing inferences from a client application we have built an Angular single-page application and hosted it on Amazon S3.

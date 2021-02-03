@@ -1,5 +1,3 @@
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. // SPDX-License-Identifier: CC-BY-SA-4.0
-
 # End to end Machine Learning with Amazon SageMaker
 
 ## Introduction
@@ -28,7 +26,7 @@ The final architecture will be:
 
 ## The Machine Learning task
 
-We have been provided with a dataset (stored in an Amazon S3 bucket) containing data collected in a wind turbine plant, where each example includes several sensor measurements and a status indicating whether the plant was healthy or not.
+We have been provided with a dataset (stored in an Amazon S3 bucket) containing data collected in a wind turbine plant, where each example includes several sensor measurements and a status indicating wheather the plant was healthy or not.
 
 > ⚠️ **Note**: this is a synthetic dataset that oversimplifies the Predictive Maintenance task: however, it keeps this workshop easier to execute.
 
@@ -50,11 +48,11 @@ After building the model, we can host it and expose as a REST API that will resp
 
 This workshops consists of six modules:
 
-- <a href="01_create_notebook_instance/">**Module 01**</a> - Creating an Amazon SageMaker managed Jupyter notebook instance.
+- <a href="01_configure_sagemaker_studio/">**Module 01**</a> - Configure Amazon SageMaker Studio and serverless Jupyter notebooks.
 - <a href="02_data_exploration_and_feature_eng/">**Module 02**</a> - Using AWS Glue and Amazon Athena to execute data exploration, and then data preprocessing and feature engineering using Amazon SageMaker Processing and SKLearn.
 - <a href="03_train_model/">**Module 03**</a> - Training a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether a wind turbine plant requires maintenance. Use Sagemaker Debugger to monitor training progress with rules and visualize training metrics like accuracy and feature importance.
 - <a href="04_deploy_model/">**Module 04**</a> - Deploying the feature engineering and ML models as a pipeline using Amazon SageMaker hosting (inference pipelines). Use Sagemaker Model Monitor to track data drift violations against the training data baseline.
-- <a href="05_API_Gateway_and_Lambda/">**Module 05**</a> - Building a REST API using Amazon API Gateway and implementing an AWS Lambda function that will invoke the Amazon SageMaker endpoint for inference.
+- <a href="05_API_Gateway_and_Lambda/">**Module 05**</a> - Buiding a REST API using Amazon API Gateway and implementing an AWS Lambda function that will invoke the Amazon SageMaker endpoint for inference.
 - <a href="06_invoke_API/">**Module 06**</a> - Using a single-page demo application to invoke the REST API and get inferences.
 
 You must comply with the order of modules, since the outputs of a module are inputs of the following one.
@@ -63,7 +61,7 @@ You must comply with the order of modules, since the outputs of a module are inp
 
 This workshop has been designed assuming that each participant is using an AWS account that has been provided and pre-configured by the workshop instructor(s). However, you can also choose to use your own AWS account, but you'll have to execute some preliminary configuration steps as described <a href="setup/">here</a>.
 
-Once you are ready to go, please start with <a href="01_create_notebook_instance/">**Module 01**</a>.
+Once you are ready to go, please start with <a href="01_configure_sagemaker_studio/">**Module 01**</a>.
 
 ## License
 

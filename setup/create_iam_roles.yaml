@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Creates AWS IAM Roles required for the workshop at https://github.com/giuseppeporcelli/end-to-end-ml-application.'
+Description: 'Creates AWS IAM Roles required for the workshop.'
 Resources:
   SageMakerNotebookInstanceExecutionRole:
     Type: "AWS::IAM::Role"
