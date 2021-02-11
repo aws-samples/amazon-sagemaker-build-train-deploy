@@ -64,4 +64,6 @@ In the File Browser, click `amazon-sagemaker-build-train-deploy` and open the fo
 
 Then, open the `02_data_exploration_and_feature_eng.ipynb` Jupyter notebook and start the workshop!
 
-![Open step 2 notebook](img/smstudio_open_notebook.jpg)
+![Open step 2 folder](img/smstudio_open_notebook.jpg)
+
+![Open step 2 notebook](img/smstudio_open_notebook2.jpg)
