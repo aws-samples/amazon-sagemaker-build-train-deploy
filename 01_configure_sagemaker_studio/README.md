@@ -52,13 +52,16 @@ In the AWS Console search bar, type `SageMaker` and select `Amazon SageMaker` to
 
 ## 4. Clone the GitHub Repo
 Click the Git icon (1 in the picture) and then select `Clone a repository` (step 2).
-Type in the URL of this repository (https://github.com/shneydor/amazon-sagemaker-build-train-deploy.git).
+
+Type in the URL of this repository (https://github.com/shneydor/amazon-sagemaker-build-train-deploy.git) and click `Clone`.
 
 
 ![Clone the repository](img/smstudio_clone_repo_steps.jpg)
 
 ## 5. Start the Workshop!
 
-Click the `rekognition_workshop.ipynb` in your Jupyter notebook and start the workshop!
+In the File Browser, click `amazon-sagemaker-build-train-deploy` and open the folder `02_data_exploration_and_feature_eng`
 
-![Start Workshop](img/start_workshop.png)
+Then, open the `02_data_exploration_and_feature_eng.ipynb` Jupyter notebook and start the workshop!
+
+![Open step 2 notebook](img/smstudio_open_notebook.jpg)
