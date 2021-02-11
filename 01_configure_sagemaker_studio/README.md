@@ -39,7 +39,7 @@ Double-check that your account name is similar to `TeamRole/MasterKey` as follow
 
 If not, please logout of your AWS Console in all browser tabs and re-run the steps above!
 
-## 3. Launch a SageMaker Notebook Instance
+## 3. Launch SageMaker Studio
 
 Open the [AWS Management Console](https://console.aws.amazon.com/console/home)
 
@@ -49,9 +49,6 @@ In the AWS Console search bar, type `SageMaker` and select `Amazon SageMaker` to
 
 ![SageMaker Console](img/setup_aws_console.png). 
 
-Select `Notebook instances`.
-
-![SageMaker Console](img/aws-sagemaker-dashboard.png).
 
 ## 4. Start the Jupyter Notebook
 You should see a Notebook instance in status `InService`.
