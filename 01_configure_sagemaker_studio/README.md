@@ -11,9 +11,7 @@ If you do not logout of existing AWS Consoles, things will not work properly.
 _Please logout of all AWS Console sessions in all browser tabs._
 
 ## 1. Login to the Workshop Portal (aka Event Engine). 
-Using the hash code you got by email,
-
-Paste the team-hash-login to a new browser window. 
+Using the hash code you got by email, paste the team-hash-login to a new browser window. 
 
 Choose the Accept Terms & Login. 
 
