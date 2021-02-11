@@ -50,12 +50,12 @@ In the AWS Console search bar, type `SageMaker` and select `Amazon SageMaker` to
 ![SageMaker Console](img/setup_aws_console.png). 
 
 
-## 4. Start the Jupyter Notebook
-You should see a Notebook instance in status `InService`.
+## 4. Clone the GitHub Repo
+Click the Git icon (1 in the picture) and then select `Clone a repository` (step 2).
+Type in the URL of this repository (https://github.com/shneydor/amazon-sagemaker-build-train-deploy.git).
 
-Select `Open Jupyter`. 
 
-![Start Jupyter](img/start_jupyter.png)
+![Clone the repository](img/smstudio_clone_repo_steps.jpg)
 
 ## 5. Start the Workshop!
 
