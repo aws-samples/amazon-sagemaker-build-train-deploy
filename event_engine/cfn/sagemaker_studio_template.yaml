@@ -1,77 +1,111 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: CloudFormation Templates for provisioning SageMaker Studio domain
 Parameters:
-  S3Bucket:
-    Type: String
-    Description: "S3 Bucket"
-    Default: "ee-assets-prod-us-east-1"
   UserProfileName:
     Type: String
     Description: "user profile name "
     Default: "DefaultUser"
 
 Resources:
-  LambdaExecutionRole:
-    Type: "AWS::IAM::Role"
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - lambda.amazonaws.com
-            Action:
-              - "sts:AssumeRole"
-      Path: /
 
-
-  LambdaExecutionPolicy:
-    Type: AWS::IAM::ManagedPolicy
+  myVPC:
+    Type: AWS::EC2::VPC
     Properties:
-      Path: /
-      PolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Sid: CloudWatchLogsPermissions
-            Effect: Allow
-            Action:
-              - logs:CreateLogGroup
-              - logs:CreateLogStream
-              - logs:PutLogEvents
-            Resource: !Sub "arn:${AWS::Partition}:logs:*:*:*"
-          - Sid: SageMakerDomainPermission
-            Effect: Allow
-            Action:
-              - sagemaker:CreateDomain
-              - sagemaker:DescribeDomain
-              - sagemaker:DeleteDomain
-              - sagemaker:UpdateDomain
-              - sagemaker:CreateUserProfile
-              - sagemaker:UpdateUserProfile
-              - sagemaker:DeleteUserProfile
-              - sagemaker:DescribeUserProfile
-            Resource:
-              - !Sub "arn:${AWS::Partition}:sagemaker:*:*:domain/*"
-              - !Sub "arn:${AWS::Partition}:sagemaker:*:*:user-profile/*"
-          - Sid: SageMakerExecPassRole
-            Effect: Allow
-            Action:
-              - iam:PassRole
-            Resource: !GetAtt  SageMakerExecutionRole.Arn
-          - Sid: DescribeVPC
-            Effect: Allow
-            Action:
-              - 'ec2:Describe*'
-            Resource: '*'
-          - Sid: ServiceLinkedRole
-            Effect: Allow
-            Action:
-              - iam:CreateServiceLinkedRole
-            Resource:
-              - !Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/aws-service-role/sagemaker.amazonaws.com/AWSServiceRoleForAmazonSageMakerNotebooks"
-      Roles:
-        - !Ref  LambdaExecutionRole
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+
+  myInternetGw:
+    Type: AWS::EC2::InternetGateway
+
+  IGWAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId:
+        Ref: myInternetGw
+      VpcId:
+        Ref: myVPC
+
+  mySubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: myVPC
+      CidrBlock: 10.0.0.0/24
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: !Ref 'AWS::Region'
+
+  mySubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: myVPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: !Select
+        - 1
+        - Fn::GetAZs: !Ref 'AWS::Region'
+
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref myVPC
+
+  myRoute:
+    Type: AWS::EC2::Route
+    DependsOn: myInternetGw
+    Properties:
+      RouteTableId:
+        Ref: RouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: myInternetGw
+
+  mySubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: mySubnet1
+      RouteTableId:
+        Ref: RouteTable
+
+  mySubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: mySubnet2
+      RouteTableId:
+        Ref: RouteTable
+
+  StudioDomain:
+    Type: AWS::SageMaker::Domain
+    Properties:
+      AuthMode: "IAM"
+      DefaultUserSettings:
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+      DomainName: "StudioDomain"
+      SubnetIds:
+        - !Ref mySubnet1
+        - !Ref mySubnet2
+      VpcId: !Ref myVPC
+
+  UserProfile:
+    Type: AWS::SageMaker::UserProfile
+    Properties:
+      DomainId: !Ref StudioDomain
+      UserProfileName: !Ref UserProfileName
+      UserSettings:
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+
+  StudioApp:
+    Type: AWS::SageMaker::App
+    DependsOn: UserProfile
+    Properties:
+      AppName: "defaultApp"
+      AppType: "JupyterServer"
+      DomainId: !Ref StudioDomain
+      UserProfileName: !Ref UserProfileName
+
 
   SageMakerExecutionRole:
     Type: "AWS::IAM::Role"
@@ -148,58 +182,3 @@ Resources:
                 Action:
                   - sagemaker:InvokeEndpoint
                 Resource: "*"
-
-
-  StudioDomainFunction:
-    Type: AWS::Lambda::Function
-    Properties:
-      Handler: domain_function.lambda_handler
-      Role: !GetAtt LambdaExecutionRole.Arn
-      Code:
-        S3Bucket: !Ref S3Bucket
-        S3Key: modules/a0456161c95f4c8b8ff79ce2659e4b4f/v1/domain_function.zip
-      Runtime: python3.8
-      Timeout: 900
-      Layers:
-        - !Ref CfnResponseLayer
-
-  CfnResponseLayer:
-    Type: AWS::Lambda::LayerVersion
-    Properties:
-      CompatibleRuntimes:
-        - python3.8
-      Content:
-        S3Bucket: !Ref S3Bucket
-        S3Key: modules/a0456161c95f4c8b8ff79ce2659e4b4f/v1/cfnResponse_layer.zip
-      Description: cfn_response layer
-      LayerName: cfn-response
-
-  UserProfileFunction:
-    Type: AWS::Lambda::Function
-    Properties:
-      Handler: UserProfile_function.lambda_handler
-      Role: !GetAtt LambdaExecutionRole.Arn
-      Code:
-        S3Bucket: !Ref S3Bucket
-        S3Key: modules/a0456161c95f4c8b8ff79ce2659e4b4f/v1/UserProfile_function.zip
-      Runtime: python3.8
-      Timeout: 900
-      Layers:
-        - !Ref CfnResponseLayer
-
-  StudioDomain:
-    Type: Custom::StudioDomain
-    Properties:
-      ServiceToken: !GetAtt StudioDomainFunction.Arn
-      DomainName: "MyDomainName"
-      DefaultUserSettings:
-        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
-
-  UserProfile:
-    Type: Custom::UserProfile
-    Properties:
-      ServiceToken: !GetAtt UserProfileFunction.Arn
-      DomainId: !GetAtt StudioDomain.DomainId
-      UserProfileName: !Ref UserProfileName
-      UserSettings:
-        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
