@@ -27,7 +27,7 @@ Let's get started by creating our rest API.
 
 <img src="images/img3.png" alt="Configure API Gateway" width="700px" />
 
-6. In the **Function code** section, replace the existing code with with the following snippet, making sure that the indentation is matching:
+6. You are now redirected to the Lambda function page. In the **Function code** section, double click "lambda_function.py" and replace the existing code with with the following snippet, making sure that the indentation is matching:
 
 > ⚠️ **Warning**: the **ENDPOINT_NAME** variable must be set to the name of the endpoint that was deployed in the previus module of this workshop.
 
@@ -78,6 +78,9 @@ def lambda_handler(event, context):
             return build_response(405, 'null')
 
 ```
+
+<img src="images/lambda_code_editor.png" alt="Configure API Gateway" width="700px" />
+
 The implementation is straightforward: the Lambda handler can manage both OPTIONS and POST requests, and when a POST is executed, the Amazon SageMaker endpoint is invoked with the _Body_ parameter set to the request body. Then, the response is returned to the caller.
 
 7. Click **Deploy** to save changes.
