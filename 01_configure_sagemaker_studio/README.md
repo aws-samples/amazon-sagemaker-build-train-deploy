@@ -71,9 +71,16 @@ Type in the URL of this repository (https://github.com/shneydor/amazon-sagemaker
 
 In the File Browser, click `amazon-sagemaker-build-train-deploy` and open the folder `02_data_exploration_and_feature_eng`
 
-Then, open the `02_data_exploration_and_feature_eng.ipynb` Jupyter notebook and start the workshop!
-Make sure you use the "Python 3 Data Science" Kernel when the pop-up appears, and wait until the kernel has started.
+Then, open the `02_data_exploration_and_feature_eng.ipynb` Jupyter notebook.
 
 ![Open step 2 folder](img/smstudio_open_notebook.jpg)
 
 ![Open step 2 notebook](img/smstudio_open_notebook2.jpg)
+
+
+Select the "Python 3 Data Science" Kernel by clicking "No Kernel" at the bottom. Then wait until the kernel has started, and start the workshop!
+
+![kernel_setup1](img/kernel_choice_1.png)
+![kernel_setup2](img/kernel_choice_2.png)
+![kernel_setup4](img/kernel_choice_4.png)
+
