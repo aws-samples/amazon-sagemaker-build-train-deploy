@@ -59,9 +59,11 @@ and click "Open Studio": (the first time you open SageMaker Studio, this step wi
 ## 4. Clone the GitHub Repo
 Click the Git icon (1 in the picture) and then select `Clone a repository` (step 2).
 
+![Clone the repository](img/smstudio_clone_repo_steps.jpg)
+
 Type in the URL of this repository (https://github.com/shneydor/amazon-sagemaker-build-train-deploy.git) and click `Clone`.
 
-![Clone the repository](img/smstudio_clone_repo_steps.jpg)
+![Clone the repository](img/clone_a_repo.png)
 
 
 
