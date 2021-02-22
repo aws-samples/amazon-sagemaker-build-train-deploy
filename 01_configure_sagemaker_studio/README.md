@@ -81,7 +81,10 @@ Then, open the `02_data_exploration_and_feature_eng.ipynb` Jupyter notebook.
 Select the "Python 3 Data Science" Kernel by clicking "No Kernel" at the bottom. Then wait until the kernel has started, and start the workshop!
 
 ![kernel_setup1](img/kernel_choice_1.png)
+
 ![kernel_setup2](img/kernel_choice_2.png)
+
 ![kernel_setup3](img/kernel_choice_4.png)
+
 ![kernel_setup4](img/kernel_choice_5.png)
 
