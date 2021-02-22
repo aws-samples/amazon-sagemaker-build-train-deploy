@@ -49,11 +49,11 @@ In the AWS Console search bar, type `SageMaker` and select `Amazon SageMaker` to
 
 Now, open SageMaker Studio:
 
-![SageMaker Studio](img/open_sm_studio1.png)
+![SageMaker Studio](img/open_sm_studio_1.png)
 
 and click "Open Studio": (the first time you open SageMaker Studio, this step will take a few minutes to launch)
 
-![SageMaker Studio](img/open_sm_studio2.png)
+![SageMaker Studio](img/open_sm_studio_2.png)
 
 
 ## 4. Clone the GitHub Repo
