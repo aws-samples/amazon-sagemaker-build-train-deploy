@@ -47,14 +47,23 @@ In the AWS Console search bar, type `SageMaker` and select `Amazon SageMaker` to
 
 ![SageMaker Console](img/setup_aws_console.png). 
 
+Now, open SageMaker Studio:
+
+![SageMaker Studio](img/open_sm_studio1.png)
+
+and click "Open Studio": (the first time you open SageMaker Studio, this step will take a few minutes to launch)
+
+![SageMaker Studio](img/open_sm_studio2.png)
+
 
 ## 4. Clone the GitHub Repo
 Click the Git icon (1 in the picture) and then select `Clone a repository` (step 2).
 
 Type in the URL of this repository (https://github.com/shneydor/amazon-sagemaker-build-train-deploy.git) and click `Clone`.
 
-
 ![Clone the repository](img/smstudio_clone_repo_steps.jpg)
+
+
 
 ## 5. Start the Workshop!
 
