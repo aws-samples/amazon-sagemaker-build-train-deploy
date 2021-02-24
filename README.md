@@ -22,7 +22,7 @@ In this workshop we will go through the steps required to build a fully-fledged 
 
 The final architecture will be:
 
-<img src="images/architecture.png" alt="Architecture" />
+<img src="images/architecture2.png" alt="Architecture" />
 
 ## The Machine Learning task
 
