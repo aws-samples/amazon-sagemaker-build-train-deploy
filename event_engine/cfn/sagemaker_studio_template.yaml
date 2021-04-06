@@ -101,7 +101,7 @@ Resources:
     Type: AWS::SageMaker::App
     DependsOn: UserProfile
     Properties:
-      AppName: "defaultApp"
+      AppName: "default"
       AppType: "JupyterServer"
       DomainId: !Ref StudioDomain
       UserProfileName: !Ref UserProfileName
