@@ -8,7 +8,7 @@ If you are going to use your own AWS Account, we assume that you have **administ
 ## Configure IAM Roles using AWS CloudFormation
 In this section, we will create the AWS IAM (Identity and Access Management) roles that are required to run this workshop. More specifically, we are going to use AWS CloudFormation to create the following roles:
 
-- **AmazonSageMaker-ExecutionRole-endtoendml** - The IAM role assumed by the Amazon SageMaker notebook instance.
+- **AmazonSageMaker-ExecutionRole-endtoendml** - The IAM role assumed by Amazon SageMaker Studio.
 - **GlueServiceRole-endtoendml** - The IAM role used by AWS Glue to access Amazon S3 and AWS Glue APIs.
 - **LambdaInvokeSageMakerEndpointRole-endtoendml** - The IAM role assumed by the AWS Lambda function that will invoke the Amazon SageMaker endpoint to get inferences.
 
