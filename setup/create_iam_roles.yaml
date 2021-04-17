@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Creates AWS IAM Roles required for the workshop at https://github.com/giuseppeporcelli/end-to-end-ml-application.'
+Description: 'Creates AWS IAM Roles required for the workshop.'
 Resources:
-  SageMakerNotebookInstanceExecutionRole:
+  SageMakerStudioExecutionRole:
     Type: "AWS::IAM::Role"
     Properties:
       RoleName: "AmazonSageMaker-ExecutionRole-endtoendml"
@@ -75,8 +75,8 @@ Resources:
                 Resource: "*"
 Outputs:
   SageMakerNotebookInstanceExecutionRoleArn:
-    Description: The Amazon Resource Name of Amazon SageMaker Notebook Instance execution role that has been created
-    Value: !GetAtt SageMakerNotebookInstanceExecutionRole.Arn
+    Description: The Amazon Resource Name of Amazon SageMaker Studio execution role that has been created
+    Value: !GetAtt SageMakerStudioExecutionRole.Arn
   GlueServiceRoleArn:
     Description: The Amazon Resource Name of AWS Glue service role that has been created
     Value: !GetAtt GlueServiceRole.Arn

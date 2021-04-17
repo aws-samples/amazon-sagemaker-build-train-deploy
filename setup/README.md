@@ -1,5 +1,3 @@
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. // SPDX-License-Identifier: CC-BY-SA-4.0
-
 # Setup your AWS Account
 
 > ⚠️ **Warning**: The following steps need to be executed **only** if you are going to use **your own AWS account** for the workshop. Please do not execute any action if an AWS account was provided by an AWS instructor.
@@ -52,4 +50,4 @@ Please execute the following steps:
 
 	<img src="images/cloudformation_check_stack_creation.png" alt="CloudFormation check stack creation" width="700px" />
 	
-10. Once the stack creation is completed, you can start the workshop from <a href="01_create_notebook_instance/">**Module 01**</a>.
+10. Once the stack creation is completed, you can start the workshop from <a href="01_configure_sagemaker_studio/">**Module 01**</a>.
