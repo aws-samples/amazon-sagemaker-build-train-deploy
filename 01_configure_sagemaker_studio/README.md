@@ -50,7 +50,7 @@ Amazon SageMaker Studio has been pre-configured in the AWS Account. In this sect
 2. Execute the following commands in the terminal
 
 	```bash
-	git clone https://github.com/giuseppeporcelli/end-to-end-ml-sm.git
+	git clone https://github.com/aws-samples/amazon-sagemaker-build-train-deploy.git
 	```
     The repository will be cloned to your use home and will appear in the file browser panel as shown below:
     
