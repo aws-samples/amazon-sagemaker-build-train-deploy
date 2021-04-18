@@ -1,0 +1,265 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudFormation Template for provisioning an Amazon SageMaker Studio domain, a user profile and two apps.
+Parameters:
+  UserProfileName:
+    Type: String
+    Description: "User profile name"
+    Default: "DefaultUser"
+
+Mappings: 
+  RegionMap: 
+    us-east-1: 
+      datascience: "arn:aws:sagemaker:us-east-1:081325390199:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:us-east-1:663277389841:image/sagemaker-data-wrangler-1.0"
+    us-east-2:
+      datascience: "arn:aws:sagemaker:us-east-2:429704687514:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:us-east-2:415577184552:image/sagemaker-data-wrangler-1.0"      
+    us-west-1: 
+      datascience: "arn:aws:sagemaker:us-west-1:742091327244:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:us-west-1:926135532090:image/sagemaker-data-wrangler-1.0"
+    us-west-2: 
+      datascience: "arn:aws:sagemaker:us-west-2:236514542706:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:us-west-2:174368400705:image/sagemaker-data-wrangler-1.0"
+    af-south-1:
+      datascience: "arn:aws:sagemaker:af-south-1:559312083959:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:af-south-1:143210264188:image/sagemaker-data-wrangler-1.0"    
+    ap-east-1:
+      datascience: "arn:aws:sagemaker:ap-east-1:493642496378:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:ap-east-1:707077482487:image/sagemaker-data-wrangler-1.0"
+    ap-south-1:
+      datascience: "arn:aws:sagemaker:ap-south-1:394103062818:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:ap-south-1:089933028263:image/sagemaker-data-wrangler-1.0"  
+    ap-northeast-2:
+      datascience: "arn:aws:sagemaker:ap-northeast-2:806072073708:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:ap-northeast-2:131546521161:image/sagemaker-data-wrangler-1.0"
+    ap-southeast-1:
+      datascience: "arn:aws:sagemaker:ap-southeast-1:492261229750:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:ap-southeast-1:119527597002:image/sagemaker-data-wrangler-1.0"      
+    ap-southeast-2:
+      datascience: "arn:aws:sagemaker:ap-southeast-2:452832661640:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:ap-southeast-2:422173101802:image/sagemaker-data-wrangler-1.0"
+    ap-northeast-1: 
+      datascience: "arn:aws:sagemaker:ap-northeast-1:102112518831:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:ap-northeast-1:649008135260:image/sagemaker-data-wrangler-1.0"
+    ca-central-1:
+      datascience: "arn:aws:sagemaker:ca-central-1:310906938811:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:ca-central-1:557239378090:image/sagemaker-data-wrangler-1.0"
+    eu-central-1: 
+      datascience: "arn:aws:sagemaker:eu-central-1:936697816551:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:eu-central-1:024640144536:image/sagemaker-data-wrangler-1.0"
+    eu-west-1:
+      datascience: "arn:aws:sagemaker:eu-west-1:470317259841:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:eu-west-1:245179582081:image/sagemaker-data-wrangler-1.0"
+    eu-west-2:
+      datascience: "arn:aws:sagemaker:eu-west-2:712779665605:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:eu-west-2:894491911112:image/sagemaker-data-wrangler-1.0"
+    eu-west-3:
+      datascience: "arn:aws:sagemaker:eu-west-3:615547856133:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:eu-west-3:807237891255:image/sagemaker-data-wrangler-1.0"
+    eu-north-1:
+      datascience: "arn:aws:sagemaker:eu-north-1:243637512696:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:eu-north-1:054986407534:image/sagemaker-data-wrangler-1.0"
+    eu-south-1:
+      datascience: "arn:aws:sagemaker:eu-south-1:488287956546:image/sagemaker-data-wrangler-1.0"
+      datawrangler: "arn:aws:sagemaker:eu-south-1:592751261982:image/datascience-1.0"
+    sa-east-1:
+      datascience: "arn:aws:sagemaker:sa-east-1:782484402741:image/datascience-1.0"
+      datawrangler: "arn:aws:sagemaker:sa-east-1:424196993095:image/sagemaker-data-wrangler-1.0"
+
+Resources:
+
+  myVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+
+  myInternetGw:
+    Type: AWS::EC2::InternetGateway
+
+  IGWAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId:
+        Ref: myInternetGw
+      VpcId:
+        Ref: myVPC
+
+  mySubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: myVPC
+      CidrBlock: 10.0.0.0/24
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: !Ref 'AWS::Region'
+
+  mySubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: myVPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: !Select
+        - 1
+        - Fn::GetAZs: !Ref 'AWS::Region'
+
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref myVPC
+
+  myRoute:
+    Type: AWS::EC2::Route
+    DependsOn: myInternetGw
+    Properties:
+      RouteTableId:
+        Ref: RouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: myInternetGw
+
+  mySubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: mySubnet1
+      RouteTableId:
+        Ref: RouteTable
+
+  mySubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: mySubnet2
+      RouteTableId:
+        Ref: RouteTable
+
+  StudioDomain:
+    Type: AWS::SageMaker::Domain
+    Properties:
+      AuthMode: "IAM"
+      DefaultUserSettings:
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+      DomainName: "StudioDomain"
+      SubnetIds:
+        - !Ref mySubnet1
+        - !Ref mySubnet2
+      VpcId: !Ref myVPC
+
+  UserProfile:
+    Type: AWS::SageMaker::UserProfile
+    Properties:
+      DomainId: !Ref StudioDomain
+      UserProfileName: !Ref UserProfileName
+      UserSettings:
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+
+  JupyterServerApp:
+    Type: AWS::SageMaker::App
+    DependsOn: UserProfile
+    Properties:
+      AppName: "default"
+      AppType: "JupyterServer"
+      DomainId: !Ref StudioDomain
+      UserProfileName: !Ref UserProfileName
+
+  DataScienceApp:
+    Type: AWS::SageMaker::App
+    DependsOn: UserProfile
+    Properties: 
+      AppName: instance-event-engine-datascience-ml-t3-medium
+      AppType: KernelGateway
+      DomainId: !GetAtt StudioDomain.DomainId
+      ResourceSpec: 
+        InstanceType: ml.t3.medium
+        SageMakerImageArn: !FindInMap
+          - RegionMap
+          - !Ref 'AWS::Region'
+          - datascience
+      UserProfileName: !Ref UserProfileName
+
+  SageMakerExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: "AmazonSageMaker-ExecutionRole-endtoendml"
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - sagemaker.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      Path: "/service-role/"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+      Policies:
+        - PolicyName: GlueFullAccess-endtoendml
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - glue:*
+                Resource: "*"
+        - PolicyName: AthenaFullAccess-endtoendml
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - athena:*
+                Resource: "*"
+
+  GlueServiceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: "GlueServiceRole-endtoendml"
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "glue.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+      Path: "/service-role/"
+
+  LambdaInvokeSageMakerEndpointRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: "LambdaInvokeSageMakerEndpointRole-endtoendml"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: LambdaInvokeSageMakerEndpointPolicy-endtoendml
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sagemaker:InvokeEndpoint
+                Resource: "*"
+Outputs:
+  StudioDomainArn:
+    Description: The Amazon Resource Name of Amazon SageMaker Studio domain
+    Value: !GetAtt StudioDomain.DomainArn
+  UserProfileArn:
+    Description: The Amazon Resource Name of the Amazon SageMaker Studio user profile
+    Value: !GetAtt UserProfile.UserProfileArn
