@@ -42,7 +42,7 @@ def output_fn(prediction, accept):
     elif accept == 'text/csv':
         return worker.Response(encoders.encode(prediction, accept), mimetype=accept)
     else:
-        raise RuntimeException("{} accept type is not supported by this script.".format(accept))
+        raise RuntimeException("{} accept type is not supported.".format(accept))
 
 def model_fn(model_dir):
     preprocessor = joblib.load(os.path.join(model_dir, "model.joblib"))

@@ -1,5 +1,3 @@
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. // SPDX-License-Identifier: CC-BY-SA-4.0
-
 # Invoke the API from a client application
 
 For the purpose of executing inferences from a client application we have built an Angular single-page application and hosted it on Amazon S3.
@@ -23,9 +21,9 @@ For example, with the following inputs we obtain that maintenance is required wi
 
 <h2>Well done!</h2>
 
-By executing this step you have completed the module and the workshop.
+By executing this step you have completed the module and the main flow of the workshop.
 <br/>
-We hope you enjoyed it and we are happy to help addressing any doubt/question!
+You can now move to <a href="../07_workflow/">**Module 07**</a> to start looking at the model build workflow.
 
 
 

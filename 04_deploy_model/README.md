@@ -1,5 +1,3 @@
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. // SPDX-License-Identifier: CC-BY-SA-4.0
-
 # Deploy model
 
-This module must be executed from the fully-managed notebook instance provided by Amazon SageMaker; please check <a href="../01_create_notebook_instance/">Module 01</a> for additional information.
+This module must be executed from the serverless notebook environment provided by Amazon SageMaker Studio; please check <a href="../01_configure_sagemaker_studio/">Module 01</a> for additional information.

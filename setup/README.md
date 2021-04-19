@@ -1,18 +1,17 @@
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. // SPDX-License-Identifier: CC-BY-SA-4.0
-
 # Setup your AWS Account
 
 > ⚠️ **Warning**: The following steps need to be executed **only** if you are going to use **your own AWS account** for the workshop. Please do not execute any action if an AWS account was provided by an AWS instructor.
 
 ## Prerequisites
-If you are going to use your own AWS Account, we assume that you have **administrator privileges** on the account. If this is not the case, please double-check with an AWS instructor before moving to next section.
+If you are going to use your own AWS Account, we assume that you have **administrator privileges** on the account. If this is not the case, please double-check with your AWS system administrator before moving to next section.
 
-## Configure IAM Roles using AWS CloudFormation
-In this section, we will create the AWS IAM (Identity and Access Management) roles that are required to run this workshop. More specifically, we are going to use AWS CloudFormation to create the following roles:
+## Create an Amazon SageMaker Studio domain with AWS CloudFormation
+In this section, we will create the Amazon SageMaker Studio domain and a user profile required to run this workshop. More specifically, we are going to use AWS CloudFormation to create the following resources:
 
-- **AmazonSageMaker-ExecutionRole-endtoendml** - The IAM role assumed by the Amazon SageMaker notebook instance.
-- **GlueServiceRole-endtoendml** - The IAM role used by AWS Glue to access Amazon S3 and AWS Glue APIs.
-- **LambdaInvokeSageMakerEndpointRole-endtoendml** - The IAM role assumed by the AWS Lambda function that will invoke the Amazon SageMaker endpoint to get inferences.
+- An Amazon SageMaker Studio domain
+- An Amazon SageMaker Studio user profile
+- A Data Science app for the user profile
+- The IAM roles required to run the workshop
 
 Please execute the following steps:
 
@@ -31,9 +30,9 @@ Please execute the following steps:
 5. In the **Create stack** screen, select **Template is ready** and **Amazon S3 URL** as shown below, then copy/paste the following URL in the **Amazon S3 URL** text box:
 
 	```
-	https://gianpo-public.s3-eu-west-1.amazonaws.com/endtoendml/create_iam_roles.yaml
+	https://gianpo-public.s3-eu-west-1.amazonaws.com/endtoendml/create_studio_domain.yaml
 	```
-	> **Note**: the URL targets the AWS CloudFormation template which creates the AWS IAM Roles defined above. The template is also available in this GitHub repository for your reference <a href="create_iam_roles.yaml">here</a>.
+	> **Note**: the URL targets the AWS CloudFormation template which creates the resources defined above. The template is also available in this GitHub repository for your reference <a href="create_studio_domain.yaml">here</a>.
 	
 	Finally, press the **Next** button at the bottom of the screen.
 	
@@ -52,4 +51,4 @@ Please execute the following steps:
 
 	<img src="images/cloudformation_check_stack_creation.png" alt="CloudFormation check stack creation" width="700px" />
 	
-10. Once the stack creation is completed, you can start the workshop from <a href="01_create_notebook_instance/">**Module 01**</a>.
+10. Once the stack creation is completed, you can start the workshop from <a href="01_configure_sagemaker_studio/">**Module 01**</a>.
