@@ -66,7 +66,9 @@ if __name__=='__main__':
     X_train, X_val, y_train, y_val = train_test_split(features, labels, test_size=split_ratio, random_state=0)
 
     print('Train features shape after preprocessing: {}'.format(X_train.shape))
+    print('Train labels shape after preprocessing: {}'.format(y_train.shape))
     print('Validation features shape after preprocessing: {}'.format(X_val.shape))
+    print('Validation labels shape after preprocessing: {}'.format(y_val.shape))
     
     # Saving outputs.
     train_features_output_path = os.path.join('/opt/ml/processing/train', 'train_features.csv')

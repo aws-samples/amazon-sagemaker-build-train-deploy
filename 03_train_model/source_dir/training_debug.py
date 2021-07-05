@@ -42,18 +42,23 @@ def main():
     val_labels_path = os.path.join(args.validation, 'val_labels.csv')
     
     print('Loading training dataframes...')
-    df_train_features = pd.read_csv(train_features_path)
-    df_train_labels = pd.read_csv(train_labels_path)
+    df_train_features = pd.read_csv(train_features_path, header=None)
+    df_train_labels = pd.read_csv(train_labels_path, header=None)
     
     print('Loading validation dataframes...')
-    df_val_features = pd.read_csv(val_features_path)
-    df_val_labels = pd.read_csv(val_labels_path)
+    df_val_features = pd.read_csv(val_features_path, header=None)
+    df_val_labels = pd.read_csv(val_labels_path, header=None)
     
     X = df_train_features.values
-    y = df_train_labels.values
+    y = df_train_labels.values.reshape(-1)
     
     val_X = df_val_features.values
-    val_y = df_val_labels.values
+    val_y = df_val_labels.values.reshape(-1)
+    
+    print('Train features shape: {}'.format(X.shape))
+    print('Train labels shape: {}'.format(y.shape))
+    print('Validation features shape: {}'.format(val_X.shape))
+    print('Validation labels shape: {}'.format(val_y.shape))
 
     dtrain = xgboost.DMatrix(X, label=y)
     dval = xgboost.DMatrix(val_X, label=val_y)
