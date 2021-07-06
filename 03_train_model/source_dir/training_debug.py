@@ -20,7 +20,9 @@ def parse_args():
     parser.add_argument("--gamma", type=int, default=4)
     parser.add_argument("--min_child_weight", type=int, default=6)
     parser.add_argument("--silent", type=int, default=0)
-    parser.add_argument("--objective", type=str, default="reg:logistic")
+    parser.add_argument("--objective", type=str, default="binary:logistic")
+    parser.add_argument("--scale_pos_weight", type=float, default=1)
+    parser.add_argument("--eval_metric", type=str, default="auc")
     parser.add_argument("--num_round", type=int, default=10)
     
     parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAIN'))
@@ -75,7 +77,9 @@ def main():
         "gamma": args.gamma,
         "min_child_weight": args.min_child_weight,
         "silent": args.silent,
-        "objective": args.objective
+        "objective": args.objective,
+        "scale_pos_weight": args.scale_pos_weight,
+        "eval_metric": args.eval_metric
     }
 
     bst = xgboost.train(
