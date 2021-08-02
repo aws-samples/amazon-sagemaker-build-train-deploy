@@ -181,6 +181,21 @@ Resources:
           - datascience
       UserProfileName: !Ref UserProfileName
 
+  DataWranglerApp:
+    Type: AWS::SageMaker::App
+    DependsOn: UserProfile
+    Properties: 
+      AppName: instance-event-engine-datawrangler-ml-m5-4xlarge
+      AppType: KernelGateway
+      DomainId: !GetAtt StudioDomain.DomainId
+      ResourceSpec: 
+        InstanceType: ml.m5.4xlarge
+        SageMakerImageArn: !FindInMap
+          - RegionMap
+          - !Ref 'AWS::Region'
+          - datawrangler
+      UserProfileName: !Ref UserProfileName
+
   SageMakerExecutionRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -214,6 +229,15 @@ Resources:
               - Effect: Allow
                 Action:
                   - athena:*
+                Resource: "*"
+        - PolicyName: PassRole-endtoendml
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - iam:GetRole
+                  - iam:PassRole
                 Resource: "*"
 
   GlueServiceRole:
@@ -256,6 +280,7 @@ Resources:
                 Action:
                   - sagemaker:InvokeEndpoint
                 Resource: "*"
+
 Outputs:
   StudioDomainArn:
     Description: The Amazon Resource Name of Amazon SageMaker Studio domain
