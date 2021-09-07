@@ -1,4 +1,6 @@
+import os
 import time
+import boto3
 import sagemaker
 
 from sagemaker.processing import ProcessingInput, ProcessingOutput
@@ -19,23 +21,58 @@ from sagemaker.workflow.steps import (
 from sagemaker.workflow.step_collections import RegisterModel
 from sagemaker.workflow.pipeline import Pipeline
 
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
-def build_pipeline(role: str, bucket_name: str, prefix: str, sagemaker_session: sagemaker.Session) -> Pipeline:
+def get_sagemaker_client(region):
+     boto_session = boto3.Session(region_name=region)
+     sagemaker_client = boto_session.client("sagemaker")
+     return sagemaker_client
+
+def get_pipeline_custom_tags(new_tags, region, sagemaker_project_arn=None):
+    try:
+        sm_client = get_sagemaker_client(region)
+        response = sm_client.list_tags(
+            ResourceArn=sagemaker_project_arn)
+        project_tags = response["Tags"]
+        for project_tag in project_tags:
+            new_tags.append(project_tag)
+    except Exception as e:
+        print(f"Error getting project tags: {e}")
+    return new_tags
+
+def get_session(region, default_bucket):
+    boto_session = boto3.Session(region_name=region)
+
+    sagemaker_client = boto_session.client("sagemaker")
+    runtime_client = boto_session.client("sagemaker-runtime")
+    return sagemaker.session.Session(
+        boto_session=boto_session,
+        sagemaker_client=sagemaker_client,
+        sagemaker_runtime_client=runtime_client,
+        default_bucket=default_bucket,
+    )
+
+def get_pipeline(region,
+                 sagemaker_project_arn=None,
+                 role=None,
+                 bucket_name=None,
+                 prefix='') -> Pipeline:
     """
-    Builds the SM Pipeline.
+    Gets the SM Pipeline.
 
     :param role: The execution role.
     :param bucket_name: The bucket where pipeline artifacts are stored.
     :param prefix: The prefix where pipeline artifacts are stored.
-    :param sagemaker_session: The current sagemaker session.
     :return: A Pipeline instance.
     """
 
+    sagemaker_session = get_session(region, bucket_name)
+    
     # ---------------------
     # Processing parameters
     # ---------------------
     # The path to the raw data.
-    raw_data_path = 's3://{0}/{1}/data/raw/'.format(bucket_name, prefix)
+    raw_data_path = 's3://gianpo-public/endtoendml/data/raw/windturbine_raw_data_header.csv'.format(bucket_name, prefix)
     raw_data_path_param = ParameterString(name="raw_data_path", default_value=raw_data_path)
     # The output path to the training data.
     train_data_path = 's3://{0}/{1}/data/preprocessed/train/'.format(bucket_name, prefix)
@@ -93,7 +130,7 @@ def build_pipeline(role: str, bucket_name: str, prefix: str, sagemaker_session: 
                                 source='/opt/ml/processing/val', destination=val_data_path_param),
                ProcessingOutput(output_name='model',
                                 source='/opt/ml/processing/model', destination=model_path_param)]
-    code_path = '../02_data_exploration_and_feature_eng/source_dir/preprocessor.py'
+    code_path = os.path.join(BASE_DIR, 'dataprep/preprocess.py')
     processing_step = ProcessingStep(
         name='Processing',
         code=code_path,
@@ -116,8 +153,8 @@ def build_pipeline(role: str, bucket_name: str, prefix: str, sagemaker_session: 
         "scale_pos_weight": scale_pos_weight_param,
         "eval_metric": eval_metric_param
     }
-    entry_point = 'training.py'
-    source_dir = '../03_train_model/source_dir/'
+    entry_point = 'train.py'
+    source_dir = os.path.join(BASE_DIR, 'train/')
     code_location = 's3://{0}/{1}/code'.format(bucket_name, prefix)
     estimator = XGBoost(
         entry_point=entry_point,
@@ -157,7 +194,7 @@ def build_pipeline(role: str, bucket_name: str, prefix: str, sagemaker_session: 
                                  model_data=processing_step.properties.ProcessingOutputConfig.Outputs[
                                      'model'].S3Output.S3Uri,
                                  entry_point='inference.py',
-                                 source_dir='../04_deploy_model/sklearn_source_dir/',
+                                 source_dir=os.path.join(BASE_DIR, 'deploy/sklearn/'),
                                  code_location=code_location,
                                  role=role,
                                  sagemaker_session=sagemaker_session,
@@ -167,7 +204,7 @@ def build_pipeline(role: str, bucket_name: str, prefix: str, sagemaker_session: 
     xgboost_model = XGBoostModel(name='end-to-end-ml-sm-xgb-model-{0}'.format(str(int(time.time()))),
                                  model_data=training_step.properties.ModelArtifacts.S3ModelArtifacts,
                                  entry_point='inference.py',
-                                 source_dir='../04_deploy_model/xgboost_source_dir/',
+                                 source_dir=os.path.join(BASE_DIR, 'deploy/xgboost/'),
                                  code_location=code_location,
                                  framework_version='0.90-2',
                                  py_version='py3',
@@ -253,9 +290,12 @@ if __name__ == "__main__":
     session = sagemaker.Session()
     bucket = session.default_bucket()
     object_prefix = 'endtoendmlsm'
+    
+    boto_session = boto3.session.Session()
+    region = boto_session.region_name
 
     # Build pipeline.
-    end_to_end_pipeline = build_pipeline(execution_role, bucket, object_prefix, session)
+    end_to_end_pipeline = get_pipeline(region, None, execution_role, bucket, object_prefix)
 
     # Set parameters.
     execution_parameters = {
