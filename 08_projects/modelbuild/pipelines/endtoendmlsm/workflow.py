@@ -55,8 +55,10 @@ def get_session(region, default_bucket):
 def get_pipeline(region,
                  sagemaker_project_arn=None,
                  role=None,
-                 bucket_name=None,
-                 prefix='') -> Pipeline:
+                 default_bucket='',
+                 pipeline_name='end-to-end-ml-sagemaker-pipeline',
+                 model_package_group_name='end-to-end-ml-sm-model-package-group',
+                 base_job_prefix='endtoendmlsm') -> Pipeline:
     """
     Gets the SM Pipeline.
 
@@ -66,6 +68,8 @@ def get_pipeline(region,
     :return: A Pipeline instance.
     """
 
+    bucket_name = default_bucket
+    prefix = 'endtoendmlsm'
     sagemaker_session = get_session(region, bucket_name)
     
     # ---------------------
@@ -218,12 +222,12 @@ def get_pipeline(region,
             sklearn_model,
             xgboost_model],
         sagemaker_session=sagemaker_session)
-    model_package_group_name = 'end-to-end-ml-sm-model-package-group'
+
     register_model_step = RegisterModel(
         name='RegisterModel',
         content_types=['text/csv'],
         response_types=['application/json', 'text/csv'],
-        inference_instances=[deploy_instance_type_param],
+        inference_instances=[deploy_instance_type_param, 'ml.m5.large'],
         transform_instances=['ml.c5.4xlarge'],
         model_package_group_name=model_package_group_name,
         approval_status=model_approval_status_param,
@@ -232,7 +236,7 @@ def get_pipeline(region,
     # --------------------------
     # Pipeline
     # --------------------------
-    pipeline_name = 'end-to-end-ml-sagemaker-pipeline'
+
     pipeline = Pipeline(
         name=pipeline_name,
         parameters=[
@@ -289,13 +293,12 @@ if __name__ == "__main__":
     execution_role = sagemaker.get_execution_role()
     session = sagemaker.Session()
     bucket = session.default_bucket()
-    object_prefix = 'endtoendmlsm'
     
     boto_session = boto3.session.Session()
     region = boto_session.region_name
 
     # Build pipeline.
-    end_to_end_pipeline = get_pipeline(region, None, execution_role, bucket, object_prefix)
+    end_to_end_pipeline = get_pipeline(region, None, execution_role, bucket)
 
     # Set parameters.
     execution_parameters = {
