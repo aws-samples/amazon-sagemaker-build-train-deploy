@@ -15,7 +15,7 @@ def invoke_endpoint(endpoint_name):
     
     logger.info("Executing test inference.")
 
-    payload = "TID008,HAWT,64,80,46,21,55,55,7,34,SE"
+    payload = "L,298.4,308.2,1582,70.7,216"
     
     response = sm_runtime_client.invoke_endpoint(
         EndpointName=endpoint_name,

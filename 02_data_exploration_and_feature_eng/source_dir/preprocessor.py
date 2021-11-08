@@ -13,14 +13,16 @@ from smexperiments.tracker import Tracker
 
 from sklearn.externals import joblib
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
-from sklearn.compose import make_column_transformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
 
 from sklearn.exceptions import DataConversionWarning
 warnings.filterwarnings(action='ignore', category=DataConversionWarning)
 
-columns = ['turbine_id', 'turbine_type', 'wind_speed', 'rpm_blade', 'oil_temperature',
-           'oil_level', 'temperature', 'humidity', 'vibrations_frequency', 'pressure', 'wind_direction', 'breakdown']
+columns = ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]', 'Machine failure']
+cat_columns = ['Type']
+num_columns = ['Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
+target_column = 'Machine failure'
 
 if __name__=='__main__':
     
@@ -36,35 +38,28 @@ if __name__=='__main__':
     print('Received arguments {}'.format(args))
 
     # Read input data into a Pandas dataframe.
-    input_data_path = os.path.join('/opt/ml/processing/input', 'windturbine_raw_data_header.csv')
+    input_data_path = os.path.join('/opt/ml/processing/input', 'predmain_raw_data_header.csv')
     print('Reading input data from {}'.format(input_data_path))
-    df = pd.read_csv(input_data_path)
-    df.columns = columns
+    df = pd.read_csv(input_data_path, usecols=columns)
     
-    # Replacing certain null values.
-    df['turbine_type'] = df['turbine_type'].fillna("HAWT")
-    tracker.log_parameter('default-turbine-type', 'HAWT')
-    
-    df['oil_temperature'] = df['oil_temperature'].fillna(37.0)
-    tracker.log_parameter('default-oil-temperature', 37.0)
-    
-    # Defining one-hot encoders.
-    transformer = make_column_transformer(
-        (['turbine_id', 'turbine_type', 'wind_direction'], OneHotEncoder(sparse=False)), remainder="passthrough"
-    )
-    
-    X = df.drop('breakdown', axis=1)
-    y = df['breakdown']
-    
-    featurizer_model = transformer.fit(X)
-    features = featurizer_model.transform(X)
-    labels = LabelEncoder().fit_transform(y)
+    X = df.drop(target_column, axis=1)
+    y = df[target_column]
     
     # Splitting.
     split_ratio = args.train_test_split_ratio
     print('Splitting data into train and validation sets with ratio {}'.format(split_ratio))
-    X_train, X_val, y_train, y_val = train_test_split(features, labels, test_size=split_ratio, random_state=0)
-
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=split_ratio, 
+                                                      random_state=0,
+                                                      stratify=y)
+    
+    transformer = ColumnTransformer(transformers=[('numeric', StandardScaler(), num_columns),
+                                                  ('categorical', OneHotEncoder(), cat_columns)],
+                                    remainder='passthrough')
+    
+    featurizer_model = transformer.fit(X_train)
+    X_train = featurizer_model.transform(X_train)
+    X_val = featurizer_model.transform(X_val)
+    
     print('Train features shape after preprocessing: {}'.format(X_train.shape))
     print('Train labels shape after preprocessing: {}'.format(y_train.shape))
     print('Validation features shape after preprocessing: {}'.format(X_val.shape))

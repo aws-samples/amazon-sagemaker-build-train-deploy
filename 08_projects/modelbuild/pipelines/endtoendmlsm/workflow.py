@@ -76,7 +76,7 @@ def get_pipeline(region,
     # Processing parameters
     # ---------------------
     # The path to the raw data.
-    raw_data_path = 's3://gianpo-public/endtoendml/data/raw/windturbine_raw_data_header.csv'.format(bucket_name, prefix)
+    raw_data_path = 's3://gianpo-public/endtoendml/data/raw/predmain_raw_data_header.csv'.format(bucket_name, prefix)
     raw_data_path_param = ParameterString(name="raw_data_path", default_value=raw_data_path)
     # The output path to the training data.
     train_data_path = 's3://{0}/{1}/data/preprocessed/train/'.format(bucket_name, prefix)
@@ -103,7 +103,6 @@ def get_pipeline(region,
     min_child_weight_param = ParameterString(name="min_child_weight", default_value='1')
     objective_param = ParameterString(name="objective", default_value='binary:logistic')
     num_round_param = ParameterString(name="num_round", default_value='10')
-    scale_pos_weight_param = ParameterString(name="scale_pos_weight", default_value='6.32')
     eval_metric_param = ParameterString(name="eval_metric", default_value='auc')
     # The instance type for the training job.
     training_instance_type_param = ParameterString(name="training_instance_type", default_value='ml.m5.xlarge')
@@ -154,7 +153,6 @@ def get_pipeline(region,
         "silent": 0,
         "objective": objective_param,
         "num_round": num_round_param,
-        "scale_pos_weight": scale_pos_weight_param,
         "eval_metric": eval_metric_param
     }
     entry_point = 'train.py'
@@ -253,7 +251,6 @@ def get_pipeline(region,
             min_child_weight_param,
             objective_param,
             num_round_param,
-            scale_pos_weight_param,
             eval_metric_param,
             training_instance_type_param,
             training_instance_count_param,

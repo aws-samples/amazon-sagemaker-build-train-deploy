@@ -13,8 +13,7 @@ from sklearn.externals import joblib
 from sagemaker_containers.beta.framework import (
     content_types, encoders, env, modules, transformer, worker)
 
-feature_columns_names = ['turbine_id', 'turbine_type', 'wind_speed', 'rpm_blade', 'oil_temperature',
-                         'oil_level', 'temperature', 'humidity', 'vibrations_frequency', 'pressure', 'wind_direction']
+feature_columns_names = ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
 
 def input_fn(input_data, content_type):
     print(input_data)
