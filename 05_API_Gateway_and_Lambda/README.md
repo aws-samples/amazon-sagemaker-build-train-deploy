@@ -95,4 +95,4 @@ The implementation is straightforward: the Lambda handler can manage both OPTION
 
 
 ### Invoke the API from an Angular single-page application
-You can now proceed to <a href="../06_invoke_API/">Module 06</a> to invoke the API Gateway endpoint from an Angular single-page application.
+You can now proceed to <a href="../06_invoke_API/">Module 06</a> to invoke the API Gateway endpoint from a web client application.
