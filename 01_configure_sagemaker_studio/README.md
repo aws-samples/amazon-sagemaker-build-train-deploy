@@ -10,15 +10,27 @@ In this section, we will walk you through accessing the AWS Console, Amazon Sage
 
 ## Access the AWS Console
 
-1. Sign into the **AWS Management Console** using the Event Engine dashboard at <a href="https://dashboard.eventengine.run" target="_blank">https://dashboard.eventengine.run</a> and **the hashcode provided by the workshop instructors**. [Or access it at <a href="https://console.aws.amazon.com/" target="_blank">https://console.aws.amazon.com/</a> if you are using your own AWS account].
+If you are not at an AWS instructor-led event (workshop, etc.) and you are using your own AWS account, just access the AWS Console at <a href="https://console.aws.amazon.com/" target="_blank">https://console.aws.amazon.com/</a>. Otherwise, please follow the instructions below.
+
+1. Access the Event Engine dashboard at <a href="https://dashboard.eventengine.run" target="_blank">https://dashboard.eventengine.run</a> and input **the hashcode provided by the workshop instructors**. Then click on **Accept Terms & Login**.
 
 	<img src="images/event_engine_login.png" alt="Event Engine login" width="500px" />
-    
+
+2. Follow the Event Engine authentication process using your email and receiving a one-time password as shown below:
+
+	<img src="images/event_engine_auth_1.png" alt="Event Engine Auth 1" width="400px" />
+	
+	<img src="images/event_engine_auth_2.png" alt="Event Engine Auth 2" width="400px" />
+	
+	<img src="images/event_engine_auth_3.png" alt="Event Engine Auth 3" width="400px" />
+
+3. After successful sign-in, you will be redirected to the **Team Dashboard**. Click on the **AWS Console** button and then on **Open AWS Console** to access the AWS Console as shown below:
+	
 	<img src="images/event_engine_dashboard.png" alt="Event Engine dashboard" width="500px" />
     
 	<img src="images/event_engine_console_login.png" alt="Event Engine console login" width="500px" />
 
-2. In the upper-right corner of the AWS Management Console, confirm you are in the desired AWS region. For the instructions of these workshop we will assume using the **EU West (Ireland)** [eu-west-1], but feel free to change the region at your convenience.
+4. In the upper-right corner of the AWS Management Console, confirm you are in the desired AWS region. For the instructions of these workshop we will assume using the **EU West (Ireland)** [eu-west-1], but feel free to change the region at your convenience.
 
 	> The only constraints for changing AWS region are that we keep consistent the region settings for all services used and services are available in the selected region (please check in case you plan to execute this workshop in another AWS region).
 
@@ -30,11 +42,15 @@ Amazon SageMaker Studio has been pre-configured in the AWS Account. In this sect
 	
 	<img src="images/aws_console_search_sm.png" alt="Search SageMaker" width="700px" />
 
-2. You’ll be placed in the Amazon SageMaker dashboard. Click on **Amazon SageMaker Studio** in the left menu and then on the **Open Studio** button associated to the defaultuser.
+2. You’ll be placed in the Amazon SageMaker dashboard. Click on **SageMaker Doman > Studio** in the left menu.
 	
-	<img src="images/studio_console.png" alt="Studio dashboard" width="700px" />
+	<img src="images/studio_console_1.png" alt="Studio console 1" width="700px" />
 	
-3. Amazon SageMaker Studio will load (it can take a few minutes). Then you will be redirected to the Studio interface.
+3. In the next screen, click on the **Launch App** dropdown button associated to __defaultuser__, then right-click on **Studio** and open the link in a new tab.
+
+	<img src="images/studio_console_2.png" alt="Studio console 2" width="700px" />
+	
+3. Amazon SageMaker Studio will load. Then you will be redirected to the Studio interface.
 
 	<img src="images/studio_landing.png" alt="Studio interface" width="700px" />
 
@@ -60,7 +76,7 @@ Amazon SageMaker Studio has been pre-configured in the AWS Account. In this sect
 
     <img src="images/studio_select_second_notebook.png" alt="Studio select second nb" width="700px" />
     
-4. If a kernel is not automatically selected for your notebook, choose the kernel by clicking on the **Kernel** button on the top-right and them selecting the **Python 3 (Data Science)** kernel as shown below:
+4. If a kernel is not automatically selected for your notebook, choose the kernel by clicking on the **Kernel** button on the top-right and them selecting the **Data Science** image and **Python 3** kernel as shown below:
 
     <img src="images/studio_select_kernel_button.png" alt="Studio select kernel button" width="700px" />
     
