@@ -52,7 +52,7 @@ Amazon SageMaker Studio has been pre-configured in the AWS Account. In this sect
 	
 3. Amazon SageMaker Studio will load. Then you will be redirected to the Studio interface.
 
-	<img src="images/studio_landing.png" alt="Studio interface" width="700px" />
+	<img src="images/sagemaker_studio_home.png" alt="Studio interface" width="700px" />
 
 
 ## Clone the repository
@@ -72,12 +72,13 @@ Amazon SageMaker Studio has been pre-configured in the AWS Account. In this sect
     
     <img src="images/studio_clone_repo.png" alt="Studio clone repo" width="700px" />
 	
-3. Browse to the folder **02\_data\_exploration\_and\_feature\_eng** and open the file **02\_data\_exploration\_and\_feature\_eng.ipynb** to start the data exploration, preparation and feature engineering steps.
-
-    <img src="images/studio_select_second_notebook.png" alt="Studio select second nb" width="700px" />
+3. Browse to the folder **01_configure_sagemaker_studio** and open the file **01_configure_sagemaker_studio.ipynb**. 
+    <img src="images/studio_select_first_notebook.png" alt="Studio select second nb" width="700px" />
     
-4. If a kernel is not automatically selected for your notebook, choose the kernel by clicking on the **Kernel** button on the top-right and them selecting the **Data Science** image and **Python 3** kernel as shown below:
+4. If a kernel is not automatically selected for your notebook, choose the kernel by clicking on the **Kernel** button on the top-right and them selecting the **Data Science 3.0** image and **Python 3** kernel as shown below:
 
     <img src="images/studio_select_kernel_button.png" alt="Studio select kernel button" width="700px" />
     
     <img src="images/studio_select_kernel.png" alt="Studio select kernel" width="500px" />
+
+5. Follow the instructions in the notebook.
