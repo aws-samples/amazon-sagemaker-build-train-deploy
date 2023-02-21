@@ -7,19 +7,23 @@ If you are going to use your own AWS Account, we assume that you have **administ
 
 ## Create resources using AWS CloudFormation
 Amazon SageMaker Studio allows you to configure networking in two modes:
-- **Public internet only**: Non-EFS traffic goes through a SageMaker managed VPC, which allows internet access. Only traffic between the Domain and your Amazon EFS volume is through the specified VPC.
-- **VPC only**: All SageMaker traffic is through the specified VPC and subnets. Internet access is disabled by default, but you can provide internet access using a NAT Gateway or a Transit Gateway.
+- **Default communication with the internet:** Only traffic to Amazon EFS volume goes through the specified VPC. Non-EFS traffic goes through a VPC managed by SageMaker, which allows internet access. 
+- **VPC only communication with the internet:** All traffic goes through the specified VPC. To allow the Studio notebook to access SageMaker API and runtime and other AWS services, you should  create VPC interface endpoints or provide access to the internet using a NAT gateway or via an AWS Transit Gateway that has a route to the internet.  
 
-For this workshop, we provide AWS CloudFormation templates for both modes in two separate folders: `public_internet_only_mode` and `vpc_only_mode`.
+For this workshop, you have two options for configuring internet access. Use the folder with the corresponding name:
+- **direct_mode:** Use the "default communication with the internet" to allow SageMaker domain to access the internet directly. Create a VPC for the traffic to the EFS volume.
+- **vpc_mode:** Use the "VPC only communication with the internet". Create a VPC for all traffic. The traffic to the EFS volume goes through the VPC. The VPC uses interface endpoints for SageMaker API and some other AWS services. The traffic to the internet goes through an AWS Network Firewall deployed in the same VPC. The outbound traffic to the internet is not allowed unless it is allowed by AWS Network Firewall's rule groups.
+	<img src="images/vpc_mode_architecture.png" alt="Create CloudFormation stack" width="700px" />
+
 
 You will create the resources needed for the workshop using two CloudFormation templates:
 - `01_networking.yaml` will create the core networking resources such as VPCs and subnets
 - `02_sagemaker_studio.yaml`, will create the SageMaker Studio resources such as a SageMaker Studio domain, user profile, and applications.
 
 ### Create the core networking resources
-In this section, we will create the networking resources. If you choose the `public_internet_only_mode` folder, the networking template will create a VPC, two public subnets, an Internet Gateway with the relevant route table and routes. If you choose the `vpc_only_mode` folder, the networking template will create two public and two private subnets, a NAT Gateway, and the appropriate route table and routes.
+First, you will create the networking resources. If you use the `direct_mode` folder, the networking template will create a VPC, two public subnets, an Internet Gateway with the relevant route table and routes. If you use the `vpc_mode` folder, the networking template will create two public and four private subnets, a NAT Gateway, an AWS Network Firewall, and the appropriate route table and routes.
 
-Please execute the following steps:
+Follow these steps:
 
 1. Sign into the [**AWS Management Console**](https://console.aws.amazon.com/)
 
