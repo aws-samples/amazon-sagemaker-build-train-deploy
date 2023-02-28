@@ -28,7 +28,7 @@ Resources:
       VpcId:
         Ref: SageMakerVPC
 
-  SageMakerSubnet1:
+  SageMakerPublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId:
@@ -39,9 +39,9 @@ Resources:
         - Fn::GetAZs: !Ref 'AWS::Region'
       Tags:
         - Key: Name
-          Value: !Sub '${AWS::StackName}-subnet1'
+          Value: !Sub '${AWS::StackName}-public-subnet1'
 
-  SageMakerSubnet2:
+  SageMakerPublicSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId:
@@ -52,40 +52,40 @@ Resources:
         - Fn::GetAZs: !Ref 'AWS::Region'
       Tags:
         - Key: Name
-          Value: !Sub '${AWS::StackName}-subnet2'
+          Value: !Sub '${AWS::StackName}-public-subnet2'
 
-  SageMakerRouteTable:
+  SageMakerPublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref SageMakerVPC
       Tags:
         - Key: Name
-          Value: !Sub '${AWS::StackName}-routetable'
+          Value: !Sub '${AWS::StackName}-public-routetable'
 
-  InternetRoute:
+  SageMakerPublicRoute:
     Type: AWS::EC2::Route
     Properties:
       RouteTableId:
-        Ref: SageMakerRouteTable
+        Ref: SageMakerPublicRouteTable
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId:
         Ref: SageMakerInternetGateway
 
-  SageMakerSubnet1RouteTableAssociation:
+  SageMakerPublicSubnet1RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId:
-        Ref: SageMakerSubnet1
+        Ref: SageMakerPublicSubnet1
       RouteTableId:
-        Ref: SageMakerRouteTable
+        Ref: SageMakerPublicRouteTable
 
-  SageMakerSubnet2RouteTableAssociation:
+  SageMakerPublicSubnet2RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId:
-        Ref: SageMakerSubnet2
+        Ref: SageMakerPublicSubnet2
       RouteTableId:
-        Ref: SageMakerRouteTable
+        Ref: SageMakerPublicRouteTable
 
 Outputs:
   SageMakerVPC:
@@ -93,11 +93,10 @@ Outputs:
     Export:
       Name: !Sub '${AWS::StackName}-VPC'
   SageMakerSubnet1:
-    Value: !Ref SageMakerSubnet1
+    Value: !Ref SageMakerPublicSubnet1
     Export:
       Name: !Sub '${AWS::StackName}-Subnet1'
   SageMakerSubnet2:
-    Value: !Ref SageMakerSubnet2
+    Value: !Ref SageMakerPublicSubnet2
     Export:
       Name: !Sub '${AWS::StackName}-Subnet2'
-    

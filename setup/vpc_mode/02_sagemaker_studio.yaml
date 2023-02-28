@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Provision an Amazon SageMaker Studio domain, a user profile, and two apps.
+Description: VPC Mode Provision an Amazon SageMaker Studio domain, a user profile, and two apps.
 Parameters:
   UserProfileName:
     Type: String
@@ -56,8 +56,12 @@ Resources:
     Type: AWS::SageMaker::Domain
     Properties:
       AuthMode: IAM
+      AppNetworkAccessType: "VpcOnly"
       DefaultUserSettings:
         ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+        SecurityGroups: 
+          - Fn::ImportValue:
+              !Sub '${CoreNetworkingStackName}-SecurityGroup'
       DomainName: !Sub '${AWS::StackName}'
       SubnetIds:
         - Fn::ImportValue:
