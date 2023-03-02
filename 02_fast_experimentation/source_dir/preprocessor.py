@@ -6,7 +6,7 @@ import pandas as pd
 import tarfile
 from pathlib import Path
 
-from sklearn.externals import joblib
+import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
