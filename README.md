@@ -17,7 +17,7 @@ The process can be represented with the following diagram:
 
 After a model has been deployed, we might want to integrate it with our own application to provide insights to end users.
 
-In this workshop we will go through the steps required to build a fully-fledged machine learning application on AWS. We will execute an iteration of the Machine Learning process to build, train and deploy a model using Amazon SageMaker, and then we will deploy a REST inference API with Amazon API Gateway to execute inferences from a web client. Finally we will also look at how to automate the ML workflow and how to implement ML CI/CD.
+In this workshop, we will go through the steps required to build a fully-fledged machine learning application on AWS. We will execute an iteration of the Machine Learning process to build, train and deploy a model using Amazon SageMaker, and then we will deploy a REST inference API with Amazon API Gateway to execute inferences from a web client. Finally we will cover automation of the ML workflow.
 
 The final architecture will be:
 
@@ -29,9 +29,9 @@ We are going to use the <a href="https://archive.ics.uci.edu/ml/datasets/AI4I+20
 
 The dataset consists of 10000 records and 14 features, representing some measurements that have been collected on the machinery, plus the indication of failure, if any.
 
-> ⚠️ **Note**: this is a basic dataset that oversimplifies the Predictive Maintenance task: however, it keeps this workshop very easy to execute while well representative of the various steps of the ML workflow.
+> ⚠️ **Note**: This is a basic dataset that oversimplifies the Predictive Maintenance task. However, it keeps this workshop easy to follow while while being a good representative of the various steps of the ML workflow.
 
-Our goal is building a simple Machine Learning model that will predict whether the machinery is going to fail (<b>Predictive Maintenance</b>).
+Our goal is to buildi a simple Machine Learning model that will predict whether a piece of machinery is going to fail (<b>Predictive Maintenance</b>).
 
 Following is an excerpt from the dataset:
 
@@ -44,26 +44,26 @@ Following is an excerpt from the dataset:
 
 The target variable is the **Machine failure** attribute, which is binary and suggests implementing a binary classification model.
 
-After building the model, we can host it and expose as a REST API that will respond to inference requests from client-side applications.
+After building the model, we will host it and expose as a REST API that will respond to inference requests from client applications.
 
 ## Modules
 
 This workshops consists of seven modules:
 
 - <a href="01_configure_sagemaker_studio/">**Module 01**</a> - Open Amazon SageMaker Studio and clone the repository.
-- <a href="02_data_exploration_and_feature_eng/">**Module 02**</a> - Using Amazon SageMaker Studio Notebooks and standard Python libraries to execute data exploration, and then data preprocessing and feature engineering using Amazon SageMaker Processing and SKLearn. [Optional] Use AWS Glue and Amazon Athena for data exploration.
-- <a href="03_train_model/">**Module 03**</a> - Training a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether the machinery is going to fail. [Optional] Use Sagemaker Debugger to monitor training progress with rules and visualize training metrics like accuracy and feature importance.
-- <a href="04_deploy_model/">**Module 04**</a> - Deploying the feature engineering and ML models as a pipeline using Amazon SageMaker hosting (inference pipelines). [Optional] Use Sagemaker Model Monitor to track data drift violations against the training data baseline.
-- <a href="05_API_Gateway_and_Lambda/">**Module 05**</a> - Buiding a REST API using Amazon API Gateway and implementing an AWS Lambda function that will invoke the Amazon SageMaker endpoint for inference.
-- <a href="06_invoke_API/">**Module 06**</a> - Using a web client to invoke the REST API and get inferences.
-- <a href="07_workflow/">**Module 07**</a> - Use Amazon SageMaker Pipelines to orchestrate the model build workflow and store models in model registry.
-- <a href="08_projects/">**Module 08**</a> - Use Amazon SageMaker Projects to enable ML CI/CD. At the time being, only the code to add to the default model build and model deploy repositories is provided, based on the default project template for model building, training and deployment. Additional info: https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-projects-templates-sm.html
+- <a href="02_data_exploration/">**Module 02**</a> - Use Amazon SageMaker Studio Notebooks and standard Python libraries to execute data exploration.
+- <a href="03_feature_engineering/">**Module 03**</a> - Perform data preprocessing and feature engineering using Amazon SageMaker Processing and SKLearn.
+- <a href="04_train_model/">**Module 04**</a> - Train a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether the machinery is going to fail. [Optional] Use Sagemaker Debugger to monitor training progress with rules and visualize training metrics like accuracy and feature importance.
+- <a href="05_deploy_model/">**Module 05**</a> - Deploy the feature engineering and ML models as a pipeline using Amazon SageMaker hosting (inference pipelines). [Optional] Use Sagemaker Model Monitor to track data drift violations against the training data baseline.
+- <a href="06_API_Gateway_and_Lambda/">**Module 06**</a> - Build a REST API using Amazon API Gateway create an AWS Lambda function that invokes the Amazon SageMaker endpoint for inference.
+- <a href="07_invoke_API/">**Module 07**</a> - Use a web client to invoke the REST API and get inferences.
+- <a href="08_workflow/">**Module 08**</a> - Use Amazon SageMaker Pipelines to orchestrate the model build workflow and store models in model registry.
 
 You must comply with the order of modules, since the outputs of a module are inputs of the following one.
 
 ## Getting started
 
-This workshop has been designed assuming that each participant is using an AWS account that has been provided and pre-configured by the workshop instructor(s). However, you can also choose to use your own AWS account, but you'll have to execute some preliminary configuration steps as described <a href="setup/">here</a>.
+We have designed this workshop assuming that each participant is using an AWS account provided and pre-configured by the workshop instructor(s). However, you can also choose to use your own AWS account, but you'll have to execute some preliminary configuration steps as described <a href="setup/">here</a>.
 
 Once you are ready to go, please start with <a href="01_configure_sagemaker_studio/">**Module 01**</a>.
 
@@ -77,6 +77,7 @@ Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ic
 
 ## Authors
 
-[Giuseppe A. Porcelli](https://it.linkedin.com/in/giuporcelli) - Principal, ML Specialist Solutions Architect - Amazon Web Services EMEA<br />
-[Antonio Duma](https://it.linkedin.com/in/antoniod82) - Sr. Startup Solutions Architect - Amazon Web Services EMEA <br />
-[Hasan Poonawala](https://www.linkedin.com/in/hasanp) - ML Specialist Solution Architect - Amazon Web Services EMEA <br />
+[Giuseppe A. Porcelli](https://it.linkedin.com/in/giuporcelli) - Principal ML Specialist Solutions Architect - Amazon Web Services EMEA<br />
+[Antonio Duma](https://it.linkedin.com/in/antoniod82) - Senior Startup Solutions Architect - Amazon Web Services EMEA <br />
+[Hasan Poonawala](https://www.linkedin.com/in/hasanp) - Senior ML Specialist Solutions Architect - Amazon Web Services EMEA <br />
+[Mehran Nikoo](https://www.linkedin.com/in/mnikoo/) - Senior Digital Native Business Solutions Architect - Amazon Web Services EMEA <br />
