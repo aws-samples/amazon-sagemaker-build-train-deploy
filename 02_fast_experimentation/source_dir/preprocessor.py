@@ -1,23 +1,6 @@
 import argparse
-import os
-import warnings
 
-import pandas as pd
-import tarfile
-from pathlib import Path
 
-import joblib
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-
-from sklearn.exceptions import DataConversionWarning
-warnings.filterwarnings(action='ignore', category=DataConversionWarning)
-
-columns = ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]', 'Machine failure']
-cat_columns = ['Type']
-num_columns = ['Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
-target_column = 'Machine failure'
 
 def save_data_locally(output_path, fileName, df):
     if not os.path.exists(output_path):
@@ -30,23 +13,10 @@ def save_data_locally(output_path, fileName, df):
     return path
 
 
-if __name__=='__main__':
-    
-    # Read the arguments passed to the script
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--train-val-split-ratio', type=float, default=0.2)
-    parser.add_argument('--file-path', type=Path)
-    parser.add_argument('--output-path', type=Path)
-    parser.add_argument('--model-path', type=Path)
-    parser.add_argument('--s3-prefix')
-    
-    args, _ = parser.parse_known_args()
 
     split_ratio = args.train_val_split_ratio
     input_path = args.file_path
-    model_dir = args.model_path
     output_path = args.output_path
-    s3_prefix = args.s3_prefix
     
     print(input_path)
     
