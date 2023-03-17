@@ -13,7 +13,8 @@ from sklearn.metrics import recall_score
 if __name__=='__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--local-data-path', default='/opt/ml/processing')
+    parser.add_argument('--preprocessed-data-dir')
+    parser.add_argument('--model-dir')
     parser.add_argument('--max-depth', default='3', type=int)
     parser.add_argument('--eta', default='0.1', type=float)
     parser.add_argument('--gamma', default='0.0', type=float)
@@ -27,7 +28,8 @@ if __name__=='__main__':
 
     print('Received arguments {}'.format(args))
     
-    local_data_path = args.local_data_path
+    preprocessed_data_dir = args.preprocessed_data_dir
+    model_dir = args.model_dir
     max_depth = args.max_depth
     eta = args.eta
     gamma = args.gamma
@@ -37,11 +39,11 @@ if __name__=='__main__':
     eval_metric = args.eval_metric
     num_boost_round = args.num_boost_round
     
-    train_features_path = os.path.join(local_data_path, 'train_features.csv')
-    train_labels_path = os.path.join(local_data_path, 'train_labels.csv')
+    train_features_path = os.path.join(preprocessed_data_dir, 'train_features.csv')
+    train_labels_path = os.path.join(preprocessed_data_dir, 'train_labels.csv')
     
-    val_features_path = os.path.join(local_data_path, 'val_features.csv')
-    val_labels_path = os.path.join(local_data_path, 'val_labels.csv')
+    val_features_path = os.path.join(preprocessed_data_dir, 'val_features.csv')
+    val_labels_path = os.path.join(preprocessed_data_dir, 'val_labels.csv')
     
     print('Loading training data...')
     df_train_features = pd.read_csv(train_features_path, header=None)
@@ -65,8 +67,6 @@ if __name__=='__main__':
     dtrain = xgboost.DMatrix(X, label=y)
     dval = xgboost.DMatrix(val_X, label=val_y)
     watchlist = [(dtrain, "train"), (dval, "validation")]
-    
-    print('Starting new trial: {}'.format(trial_name))
        
     print ('Starting training...')
     
@@ -86,9 +86,8 @@ if __name__=='__main__':
         num_boost_round=num_boost_round)
 
     print('Training complete. Saving model...')
-    model_dir = '/opt/ml/model/'
     if not os.path.exists(model_dir):
-            os.makedirs(model_dir)
+        os.makedirs(model_dir)
     model_name = 'xgboost_model_{}.model'.format(str(int(time.time())))
     model_key = 'xgboost_model{}.joblib'.format(str(int(time.time())))
     model_path = os.path.join(model_dir, model_name)
