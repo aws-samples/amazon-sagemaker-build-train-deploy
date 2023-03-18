@@ -21,6 +21,11 @@ cat_columns = ['Type']
 num_columns = ['Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
 target_column = 'Machine failure'
 
+training_ratio = 0.8
+validation_ratio = 0.1
+test_ratio = 0.1
+    
+
 def save_dataframe_to_file(output_path, fileName, df):
     if not os.path.exists(output_path):
             os.makedirs(output_path)
@@ -36,7 +41,6 @@ if __name__=='__main__':
     
     # Read the arguments passed to the script
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train-val-split-ratio', type=float)
     parser.add_argument('--input-data-path')
     parser.add_argument('--output-data-dir')
     parser.add_argument('--featurizer-model-dir')
@@ -45,13 +49,13 @@ if __name__=='__main__':
     
     args, _ = parser.parse_known_args()
 
-    train_val_split_ratio = args.train_val_split_ratio
     input_data_path = args.input_data_path
     output_data_dir = args.output_data_dir
     featurizer_model_dir = args.featurizer_model_dir
     s3_bucket_name = args.s3_bucket_name
     s3_key_prefix = args.s3_key_prefix
     
+
     print(f'Input path is {input_data_path}')
     
     # Read input data into a Pandas dataframe
@@ -59,11 +63,10 @@ if __name__=='__main__':
     X = df.drop(target_column, axis=1)
     y = df[target_column]
 
-    # Split data set
-    print('Splitting data into train and test sets with ratio {}'.format(train_val_split_ratio))
+    print(f'Splitting data training ({training_ratio}), validation ({validation_ratio}), and test ({test_ratio}) sets ')
     
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0, stratify=y)
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=train_val_split_ratio, random_state=2, stratify=y_train)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_ratio, random_state=0, stratify=y)
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=validation_ratio/(validation_ratio+training_ratio), random_state=2, stratify=y_train)
     
     #Apply transformations
     transformer = ColumnTransformer(transformers=[('numeric', StandardScaler(), num_columns),
@@ -74,8 +77,9 @@ if __name__=='__main__':
     X_val = featurizer_model.transform(X_val)
     X_test = featurizer_model.transform(X_test)
     
-    print('Train features shape after preprocessing: {}'.format(X_train.shape))
-    print('Validation features shape after preprocessing: {}'.format(X_val.shape))
+    print(f'Shape of train features after preprocessing: {X_train.shape}')
+    print(f'Shape of validation features after preprocessing: {X_val.shape}')
+    print(f'Shape of test features after preprocessing: {X_test.shape}')
     
     print(f'Output dir is {output_data_dir}')
                                                                 
@@ -110,7 +114,7 @@ if __name__=='__main__':
     s3.upload_file(val_features_output_path, s3_bucket_name, val_data_key)
     
     test_data_key = f'{s3_key_prefix}/data/preprocessed/test/test_features.csv'
-    s3.upload_file(train_labels_output_path, s3_bucket_name, test_data_key)
+    s3.upload_file(test_features_output_path, s3_bucket_name, test_data_key)
             
     train_labels_key = f'{s3_key_prefix}/data/preprocessed/train/train_labels.csv'
     s3.upload_file(train_labels_output_path, s3_bucket_name, train_labels_key)
@@ -119,4 +123,4 @@ if __name__=='__main__':
     s3.upload_file(val_labels_output_path, s3_bucket_name, val_labels_key)
 
     test_labels_key = f'{s3_key_prefix}/data/preprocessed/test/test_labels_csv'
-    s3.upload_file(val_labels_output_path, s3_bucket_name, val_labels_key)
+    s3.upload_file(test_labels_output_path, s3_bucket_name, val_labels_key)

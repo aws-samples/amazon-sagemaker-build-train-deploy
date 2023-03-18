@@ -24,6 +24,10 @@ cat_columns = ['Type']
 num_columns = ['Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
 target_column = 'Machine failure'
 
+training_ratio = 0.8
+validation_ratio = 0.1
+test_ratio = 0.1
+
 if __name__=='__main__':
     
     # Read the arguments passed to the script.
@@ -38,20 +42,18 @@ if __name__=='__main__':
     print('Received arguments {}'.format(args))
 
     # Read input data into a Pandas dataframe.
-    input_data_path = os.path.join('/opt/ml/processing/input', 'predmain_raw_data_header.csv')
+    input_data_path = os.path.join('/opt/ml/processing/input', 'predictive_maintenance_raw_data_header.csv')
     print('Reading input data from {}'.format(input_data_path))
     df = pd.read_csv(input_data_path, usecols=columns)
     
     X = df.drop(target_column, axis=1)
     y = df[target_column]
     
-    # Splitting.
-    split_ratio = args.train_test_split_ratio
-    print('Splitting data into train and validation sets with ratio {}'.format(split_ratio))
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=split_ratio, 
-                                                      random_state=0,
-                                                      stratify=y)
+    print(f'Splitting data training ({training_ratio}), validation ({validation_ratio}), and test ({test_ratio}) sets ')
     
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_ratio, random_state=0, stratify=y)
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=validation_ratio/(validation_ratio+training_ratio), random_state=2, stratify=y_train)
+        
     transformer = ColumnTransformer(transformers=[('numeric', StandardScaler(), num_columns),
                                                   ('categorical', OneHotEncoder(), cat_columns)],
                                     remainder='passthrough')
@@ -59,11 +61,14 @@ if __name__=='__main__':
     featurizer_model = transformer.fit(X_train)
     X_train = featurizer_model.transform(X_train)
     X_val = featurizer_model.transform(X_val)
+    X_test = featurizer_model.transform(X_test)
     
-    print('Train features shape after preprocessing: {}'.format(X_train.shape))
-    print('Train labels shape after preprocessing: {}'.format(y_train.shape))
-    print('Validation features shape after preprocessing: {}'.format(X_val.shape))
-    print('Validation labels shape after preprocessing: {}'.format(y_val.shape))
+    print(f'Shape of training features after preprocessing: {X_train.shape}')
+    print(f'Shape of training labels after preprocessing: {y_train.shape}')
+    print(f'Shape of validation features after preprocessing: {X_val.shape}')
+    print(f'Shape of validation labels after preprocessing: {y_val.shape}')
+    print(f'Shape of test features after preprocessing: {X_test.shape}')
+    print(f'Shape of test labels after preprocessing: {y_test.shape}')
     
     # Saving outputs.
     train_features_output_path = os.path.join('/opt/ml/processing/train', 'train_features.csv')
@@ -71,20 +76,29 @@ if __name__=='__main__':
     
     val_features_output_path = os.path.join('/opt/ml/processing/val', 'val_features.csv')
     val_labels_output_path = os.path.join('/opt/ml/processing/val', 'val_labels.csv')
+
+    test_features_output_path = os.path.join('/opt/ml/processing/test', 'test_features.csv')
+    test_labels_output_path = os.path.join('/opt/ml/processing/test', 'test_labels.csv')
     
-    print('Saving training features to {}'.format(train_features_output_path))
+    print(f'Saving training features to {train_features_output_path}')
     pd.DataFrame(X_train).to_csv(train_features_output_path, header=False, index=False)
     
-    print('Saving validation features to {}'.format(val_features_output_path))
+    print(f'Saving validation features to {val_features_output_path}')
     pd.DataFrame(X_val).to_csv(val_features_output_path, header=False, index=False)
     
-    print('Saving training labels to {}'.format(train_labels_output_path))
+    print(f'Saving test features to {test_features_output_path}')
+    pd.DataFrame(X_test).to_csv(test_features_output_path, header=False, index=False)    
+    
+    print(f'Saving training labels to {train_labels_output_path}')
     pd.DataFrame(y_train).to_csv(train_labels_output_path, header=False, index=False)
     
-    print('Saving validation labels to {}'.format(val_labels_output_path))
+    print(f'Saving validation labels to {val_labels_output_path}')
     pd.DataFrame(y_val).to_csv(val_labels_output_path, header=False, index=False)
     
-    # Saving model.
+    print(f'Saving test labels to {test_labels_output_path}')
+    pd.DataFrame(y_test).to_csv(test_labels_output_path, header=False, index=False)    
+    
+    # Save the model
     model_path = os.path.join('/opt/ml/processing/model', 'model.joblib')
     model_output_path = os.path.join('/opt/ml/processing/model', 'model.tar.gz')
     
