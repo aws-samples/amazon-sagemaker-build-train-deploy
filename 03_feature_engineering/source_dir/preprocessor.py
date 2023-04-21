@@ -2,14 +2,13 @@ import argparse
 import os
 import warnings
 
-import subprocess
-subprocess.call(['pip', 'install', 'sagemaker-experiments'])
+os.system("pip install -U sagemaker")
 
 import pandas as pd
 import numpy as np
 import tarfile
 
-from smexperiments.tracker import Tracker
+import boto3
 
 from sklearn.externals import joblib
 from sklearn.model_selection import train_test_split
@@ -17,6 +16,10 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 
 from sklearn.exceptions import DataConversionWarning
+
+from sagemaker.session import Session
+from sagemaker.experiments.run import load_run
+
 warnings.filterwarnings(action='ignore', category=DataConversionWarning)
 
 columns = ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]', 'Machine failure']
@@ -29,15 +32,16 @@ validation_ratio = 0.1
 test_ratio = 0.1
 
 if __name__=='__main__':
-    
+          
     # Read the arguments passed to the script.
     parser = argparse.ArgumentParser()
     parser.add_argument('--train-test-split-ratio', type=float, default=0.3)
     args, _ = parser.parse_known_args()
-    
-    # Tracking specific parameter value during job.
-    tracker = Tracker.load()
-    tracker.log_parameter('train-test-split-ratio', args.train_test_split_ratio)
+   
+    session = Session(boto3.session.Session(region_name=os.environ["REGION"]))
+    with load_run(sagemaker_session=session) as run:
+
+        run.log_parameter('train-test-split-ratio', args.train_test_split_ratio)
     
     print('Received arguments {}'.format(args))
 
@@ -108,4 +112,3 @@ if __name__=='__main__':
     tar.add(model_path, arcname="model.joblib")
     tar.close()
     
-    tracker.close()
