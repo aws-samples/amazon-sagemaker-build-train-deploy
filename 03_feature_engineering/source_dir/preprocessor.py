@@ -27,24 +27,24 @@ cat_columns = ['Type']
 num_columns = ['Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
 target_column = 'Machine failure'
 
-training_ratio = 0.8
-validation_ratio = 0.1
-test_ratio = 0.1
-
 if __name__=='__main__':
           
-    # Read the arguments passed to the script.
     parser = argparse.ArgumentParser()
     parser.add_argument('--train-test-split-ratio', type=float, default=0.3)
     args, _ = parser.parse_known_args()
    
     session = Session(boto3.session.Session(region_name=os.environ["REGION"]))
-    with load_run(sagemaker_session=session) as run:
 
-        run.log_parameter('train-test-split-ratio', args.train_test_split_ratio)
-    
     print('Received arguments {}'.format(args))
 
+    train_ratio = args.train_test_split_ratio
+    test_ratio = val_ratio = (1 - training_ratio) / 2
+    
+    with load_run(sagemaker_session=session) as run:
+        run.log_parameter('train-ratio', train_ratio)
+        run.log_parameter('val-ratioo', args.val_ratio)
+        run.log_parameter('test-ratio', args.test_ratio)
+    
     # Read input data into a Pandas dataframe.
     input_data_path = os.path.join('/opt/ml/processing/input', 'predictive_maintenance_raw_data_header.csv')
     print('Reading input data from {}'.format(input_data_path))
@@ -56,7 +56,7 @@ if __name__=='__main__':
     print(f'Splitting data training ({training_ratio}), validation ({validation_ratio}), and test ({test_ratio}) sets ')
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_ratio, random_state=0, stratify=y)
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=validation_ratio/(validation_ratio+training_ratio), random_state=2, stratify=y_train)
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=val_ratio/(val_ratio+train_ratio), random_state=2, stratify=y_train)
         
     transformer = ColumnTransformer(transformers=[('numeric', StandardScaler(), num_columns),
                                                   ('categorical', OneHotEncoder(), cat_columns)],
@@ -74,7 +74,7 @@ if __name__=='__main__':
     print(f'Shape of test features after preprocessing: {X_test.shape}')
     print(f'Shape of test labels after preprocessing: {y_test.shape}')
     
-    # Saving outputs.
+    # Save outputs
     train_features_output_path = os.path.join('/opt/ml/processing/train', 'train_features.csv')
     train_labels_output_path = os.path.join('/opt/ml/processing/train', 'train_labels.csv')
     
