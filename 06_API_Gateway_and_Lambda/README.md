@@ -1,37 +1,41 @@
 # Build a REST API with Amazon API Gateway and AWS Lambda
 
-Once we have trained our model and deployed to an Amazon SageMaker fully-managed endpoint, we are ready to build a REST API that will be invoked by client applications to get inferences.
-Although the Amazon SageMaker HTTPs endpoint might be called directly, using Amazon API Gateway for our REST API provides more control on things like user authorization, usage profiles, throttling, API versioning, etc. 
+After training the model and deploying it to a fully-managed Amazon SageMaker endpoint, you are ready to build a HTTP API that will be invoked by client applications to get inferences.
+Although you can call the Amazon SageMaker HTTPs endpoint directly, creating an HTTP API in Amazon API Gateway provides more control on user authorization, usage profiles, throttling, API versioning, etc. 
 
-The request flow would be:
+After building the API, the request flow would be as follows:
 
-1. The client application executes a POST request to the Amazon API Gateway endpoint
-2. An AWS Lambda function processes the request and calls the Amazon SageMaker HTTPs endpoint where our model is hosted
-3. The inference response is returned by the Amazon SageMaker endpoint and sent back to the client via Amazon API Gateway
+1. The client application send a HTTP POST request to the Amazon API Gateway endpoint.
+2. An AWS Lambda function processes the request and calls the Amazon SageMaker HTTPS endpoint where the model is hosted
+3. Lambda function receives the inference response from Amazon SageMaker endpoint and send it back to the client via Amazon API Gateway
 
-Let's get started by creating our rest API.
+Let's start building the HTTP API.
 
 ## Create AWS Lambda function and Amazon API Gateway HTTP API
 
-1. Open your **AWS Console** and open **Lambda**
-2. In the **Functions** section, click on **Create function**
-3. Select **Use a blueprint** and search for **microservice-http-endpoint-python**. Select it and click **Configure**
+1. Open **AWS Console** and go to the **Lambda** service.
+2. In the **Functions** section, click on **Create function**.
+3. Select **Author from scratch**.
 
 <img src="images/lambda_1.png" alt="select blueprint" width="700px" />
 
-4. Type **endtoendmllambdafunction** in the function name textbox. Select _Use an existing role_ and then choose the IAM role **_LambdaInvokeSageMakerEndpointRole-endtoendml_** from the **Existing Role** dropdown. This will allow the function to invoke the Amazon SageMaker endpoint.
+4. Type **end-to-end-ml-lambda-function** in the function name textbox. Select _Use an existing role_ and then choose the IAM role **_LambdaInvokeSageMakerEndpointRole-endtoendml_** from the **Existing Role** dropdown. This will allow the function to invoke the Amazon SageMaker endpoint.
 
 <img src="images/lambda_2.png" alt="Select IAM role" width="700px" />
 
-5. In the section **API Gateway trigger** choose **Create an API** and select **HTTP API**. From the **Security** dropdown choose **Open**. Then click **Create function**
+5. In **Function overview**, choose **Add trigger** and select **API Gateway** as the source.
 
 <img src="images/lambda_3.png" alt="Configure API Gateway" width="700px" />
 
-6. You are now redirected to the Lambda function page. In the **Function code** section, double click "lambda_function.py":
+6. Choose **Create a new API** and keep the API Type as **HTTP API**. In the **Security** section, choose **Open**, then choose **Add**.
 
-<img src="images/lambda_code_editor.png" alt="Configure API Gateway" width="700px" />
+<img src="images/lambda_4.png" alt="Configure API Gateway" width="700px" />
 
-and replace the existing code with with the following snippet, making sure that the indentation is matching:
+7. You are now redirected to the Lambda function page. In the **Function code** section, double click "lambda_function.py":
+
+<img src="images/lambda_5.png" alt="Configure API Gateway" width="700px" />
+
+8. Replace the existing code with with the following snippet, making sure that the indentation is matching:
 
 > ⚠️ **Warning**: the **ENDPOINT_NAME** variable must be set to the name of the endpoint that was deployed in the previus module of this workshop.
 
@@ -64,10 +68,10 @@ def lambda_handler(event, context):
     print("Received event: " + json.dumps(event, indent=2))
     
     if 'requestContext' in event:
-        if event['requestContext']['http']['method'] == 'OPTIONS':
+        if event['httpMethod'] == 'OPTIONS':
             return build_response(200, '')
 
-        elif event['requestContext']['http']['method'] == 'POST':
+        elif event['httpMethod'] == 'POST':
             turbine_data = event['body']
             
             response = runtime.invoke_endpoint(EndpointName=ENDPOINT_NAME,
@@ -83,16 +87,13 @@ def lambda_handler(event, context):
 
 ```
 
+The implementation is straightforward: the Lambda handler responds to OPTIONS and POST requests. When it receives a POST request, it invokes the Amazon SageMaker endpoint with the _Body_ parameter set to the request body, and when it receives the inference results, it sends the response to the caller.
+
+9. Click **Deploy** to save changes.
+10. Back in the **Function overview** section at the top, click on the **API Gateway** trigger and from the **Configuration** tab, make a note of _API endpoint_. You will need this in the next module.
+
+<img src="images/lambda_6.png" alt="Configure API Gateway" width="700px" />
 
 
-The implementation is straightforward: the Lambda handler can manage both OPTIONS and POST requests, and when a POST is executed, the Amazon SageMaker endpoint is invoked with the _Body_ parameter set to the request body. Then, the response is returned to the caller.
-
-7. Click **Deploy** to save changes.
-8. In the **Designer** section, click on **API Gateway** and then expand **Details**. Copy the _API endpoint_
-
-<img src="images/lambda_4.png" alt="Select trigger" width="700px" />
-<img src="images/lambda_5.png" alt="Expand details" width="700px" />
-
-
-### Invoke the API from an Angular single-page application
-You can now proceed to <a href="../06_invoke_API/">Module 06</a> to invoke the API Gateway endpoint from a web client application.
+### Invoke the API from a web page
+You can now proceed to <a href="../07_invoke_API/">Module 07</a> to invoke the API Gateway endpoint from a web client application.
