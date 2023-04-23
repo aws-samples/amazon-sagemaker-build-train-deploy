@@ -5,7 +5,7 @@
 ## Prerequisites
 If you are going to use your own AWS Account, we assume that you have **administrator privileges** in that account. If this is not the case, please double-check with your AWS system administrator before moving to next section.
 
-## Create resources using AWS CloudFormation
+## Choose the networking mode
 Amazon SageMaker Studio allows you to configure networking in two modes:
 - **Default communication with the internet:** Only traffic to Amazon EFS volume goes through the specified VPC. Non-EFS traffic goes through a VPC managed by SageMaker, which allows internet access. 
 - **VPC only communication with the internet:** All traffic goes through the specified VPC. To allow the Studio notebook to access SageMaker API and runtime and other AWS services, you should  create VPC interface endpoints or provide access to the internet using a NAT gateway or via an AWS Transit Gateway that has a route to the internet.  
