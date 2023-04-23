@@ -16,10 +16,19 @@ For this workshop, you have two options for configuring internet access. Use the
 
 <img src="images/vpc_mode_architecture.png" alt="Create CloudFormation stack" width="700px" />
 
-
-You will create the resources needed for the workshop using two CloudFormation templates:
+Based on the networking mode you choose, you will create Workshop resources using two CloudFormation templates from the relevant folder in this repo:
 - `01_networking.yaml` will create the core networking resources such as VPCs and subnets
 - `02_sagemaker_studio.yaml`, will create the SageMaker Studio resources such as a SageMaker Studio domain, user profile, and applications.
+
+## Create the resources using AWS CloudFormation
+
+### Clone the repository
+You will be using the AWS Management Console and SageMaker Studio for most of the workshop steps. The only exception is this initial step where you will need to upload the two CloudFormation templates from your computer. 
+
+1. Clone this repository to your computer. 
+2. Check the structure of the repository. Locate the `setup` folder, and navigate to the folder that represents the networking mode you have chosen. 
+3. You will find two files: `01_networking.yaml` and `02_sagemaker_studio.yaml`. You will upload these files later in the setup process.
+
 
 ### Create the core networking resources
 First, you will create the networking resources. If you use the `direct_mode` folder, the networking template will create a VPC, two public subnets, an Internet Gateway with the relevant route table and routes. If you use the `vpc_mode` folder, the networking template will create two public and four private subnets, a NAT Gateway, an AWS Network Firewall, and the appropriate route table and routes.
