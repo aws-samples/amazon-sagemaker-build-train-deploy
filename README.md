@@ -51,7 +51,7 @@ After building the model, we will host it and expose as a REST API that will res
 This workshops consists of seven modules:
 
 - <a href="01_configure_sagemaker_studio/">**Module 01**</a> - Open Amazon SageMaker Studio and clone the repository.
-- <a href="02_data_exploration/">**Module 02**</a> - Use Amazon SageMaker Studio Notebooks and standard Python libraries to execute data exploration.
+- <a href="02_fast_experimentation/">**Module 02**</a> - Use Amazon SageMaker Studio Notebooks and standard Python libraries to execute data exploration.
 - <a href="03_feature_engineering/">**Module 03**</a> - Perform data preprocessing and feature engineering using Amazon SageMaker Processing and SKLearn.
 - <a href="04_train_model/">**Module 04**</a> - Train a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether the machinery is going to fail. [Optional] Use Sagemaker Debugger to monitor training progress with rules and visualize training metrics like accuracy and feature importance.
 - <a href="05_deploy_model/">**Module 05**</a> - Deploy the feature engineering and ML models as a pipeline using Amazon SageMaker hosting (inference pipelines). [Optional] Use Sagemaker Model Monitor to track data drift violations against the training data baseline.
