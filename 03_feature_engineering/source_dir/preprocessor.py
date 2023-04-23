@@ -2,8 +2,6 @@ import argparse
 import os
 import warnings
 
-os.system("pip install -U sagemaker")
-
 import pandas as pd
 import numpy as np
 import tarfile
@@ -16,9 +14,6 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 
 from sklearn.exceptions import DataConversionWarning
-
-from sagemaker.session import Session
-from sagemaker.experiments.run import load_run
 
 warnings.filterwarnings(action='ignore', category=DataConversionWarning)
 
@@ -39,19 +34,12 @@ def parse_args():
 if __name__=='__main__':
           
     args = parse_args()
-   
-    session = Session(boto3.session.Session(region_name=os.environ["REGION"]))
 
     print('Received arguments {}'.format(args))
 
     train_ratio = (1 - args.train_test_split_ratio)
     val_ratio = test_ratio = args.train_test_split_ratio / 2
-    
-    with load_run(sagemaker_session=session) as run:
-        run.log_parameter('train-ratio', train_ratio)
-        run.log_parameter('val-ratio', val_ratio)
-        run.log_parameter('test-ratio', test_ratio)
-    
+
     # Read input data into a Pandas dataframe.
     input_data_path = os.path.join('/opt/ml/processing/input', 'predictive_maintenance_raw_data_header.csv')
     print('Reading input data from {}'.format(input_data_path))
