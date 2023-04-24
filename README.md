@@ -61,7 +61,7 @@ Please follow the order of modules because some of the modules depend on the out
 
 ## Getting started
 
-We have designed this workshop assuming that each participant is using an AWS account provided and pre-configured by the workshop instructor(s). However, you can also choose to use your own AWS account, but you'll have to execute some preliminary configuration steps as described <a href="setup/">here</a>. If you are using your own AWS account, note that running this workshop will incur costs. You will need to delete the resources you create to avoid incurring further costs after you have completed running the workshop.
+We have designed this workshop assuming that each participant is using an AWS account provided and pre-configured by the workshop instructor(s). However, you can also choose to use your own AWS account, but you'll have to execute some preliminary configuration steps as described in the <a href="setup/">setup</a> directory. If you are using your own AWS account, note that running this workshop will incur costs. You will need to delete the resources you create to avoid incurring further costs after you have completed running the workshop.
 
 Once you are ready to go, please start with <a href="01_configure_sagemaker_studio/">**Module 01**</a>.
 
