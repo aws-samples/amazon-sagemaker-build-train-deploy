@@ -141,22 +141,6 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
         - arn:aws:iam::aws:policy/AmazonS3FullAccess
       Policies:
-        - PolicyName: !Sub 'GlueFullAccessPolicy-${AWS::StackName}'
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 'glue:*'
-                Resource: '*'
-        - PolicyName: !Sub 'AthenaFullAccessPolicy-${AWS::StackName}'
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 'athena:*'
-                Resource: '*'
         - PolicyName: !Sub 'PassRolePolicy-${AWS::StackName}'
           PolicyDocument:
             Version: '2012-10-17'
@@ -180,23 +164,6 @@ Resources:
                       - "arn:aws:sagemaker:*:*:image/sagemaker-data-science-310-v1"
                       - "arn:aws:sagemaker:*:*:image/jupyter-server-3"
 
-  GlueServiceRole:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: !Sub 'GlueServiceRole-${AWS::StackName}'
-      AssumeRolePolicyDocument:
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - glue.amazonaws.com
-            Action:
-              - sts:AssumeRole
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
-        - arn:aws:iam::aws:policy/AmazonS3FullAccess
-      Path: /service-role/
-
   LambdaInvokeSageMakerEndpointRole:
     Type: AWS::IAM::Role
     Properties:
@@ -211,6 +178,8 @@ Resources:
             Action:
               - sts:AssumeRole
       Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
       Policies:
         - PolicyName: !Sub 'LambdaInvokeSageMakerEndPointPolicy-${AWS::StackName}'
           PolicyDocument:

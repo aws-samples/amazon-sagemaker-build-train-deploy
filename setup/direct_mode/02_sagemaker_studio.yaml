@@ -56,6 +56,7 @@ Resources:
     Type: AWS::SageMaker::Domain
     Properties:
       AuthMode: IAM
+      AppNetworkAccessType: "PublicInternetOnly "      
       DefaultUserSettings:
         ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
       DomainName: !Sub '${AWS::StackName}'
