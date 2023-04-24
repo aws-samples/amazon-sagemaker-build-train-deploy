@@ -54,7 +54,7 @@ This workshops consists of eight modules:
 - <a href="04_train_model/">**Module 04**</a>: Train a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether the machinery is going to fail. [Optional] Use Sagemaker Debugger to monitor training progress with rules and visualize training metrics like accuracy and feature importance.
 - <a href="05_deploy_model/">**Module 05**</a>: Deploy the feature engineering and ML models as a pipeline using Amazon SageMaker hosting (inference pipelines). [Optional] Use Sagemaker Model Monitor to track data drift violations against the training data baseline.
 - <a href="06_API_Gateway_and_Lambda/">**Module 06**</a>: Build a HTTP API using Amazon API Gateway and create an AWS Lambda function that invokes the Amazon SageMaker endpoint for inference.
-- <a href="07_invoke_API/">**Module 07**</a>: Use a web client to invoke the REST API and get inferences.
+- <a href="07_invoke_API/">**Module 07**</a>: Use a web client to invoke the HTTP API and get inferences.
 - <a href="08_workflow/">**Module 08**</a>: Use Amazon SageMaker Pipelines to orchestrate the model build workflow and store models in model registry.
 
 Please follow the order of modules because some of the modules depend on the outputs from the previous modules.
