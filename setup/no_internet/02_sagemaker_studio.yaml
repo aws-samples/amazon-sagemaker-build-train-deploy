@@ -66,6 +66,8 @@ Resources:
       SubnetIds:
         - Fn::ImportValue:
             !Sub '${CoreNetworkingStackName}-Subnet1'
+        - Fn::ImportValue:
+            !Sub '${CoreNetworkingStackName}-Subnet2'
       VpcId:
         Fn::ImportValue:
           !Sub '${CoreNetworkingStackName}-VPC'
