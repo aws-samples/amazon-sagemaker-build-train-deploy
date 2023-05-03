@@ -81,4 +81,4 @@ Amazon SageMaker Studio has been pre-configured in the AWS Account. In this sect
     
     <img src="images/studio_select_kernel.png" alt="Studio select kernel" width="500px" />
 
-5. Follow the instructions in the notebook.
+5. Follow the instructions in the notebook **01_configure_sagemaker_studio.ipynb**.
