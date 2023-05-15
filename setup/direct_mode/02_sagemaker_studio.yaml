@@ -1,0 +1,244 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Provision an Amazon SageMaker Studio domain, a user profile, and two apps.
+Parameters:
+  KMSAlias:
+    Type: String
+    Description: Alias associated to the KMS Key
+    Default: kms-defaults
+  UserProfileName:
+    Type: String
+    Description: User profile name
+    Default: default-user
+  CoreNetworkingStackName:
+    Description: Name of the networking stack you created earlier
+    Type: String
+
+Mappings: 
+  SageMakerImageRegionToAccountMap: 
+    us-east-1: 
+      accountid: '081325390199'
+    us-east-2:
+      accountid: '429704687514'
+    us-west-1: 
+      accountid: '742091327244'
+    us-west-2: 
+      accountid: '236514542706'
+    af-south-1:
+      accountid: '559312083959'
+    ap-east-1:
+      accountid: '493642496378'
+    ap-south-1:
+      accountid: '394103062818'
+    ap-northeast-2:
+      accountid: '806072073708'
+    ap-southeast-1:
+      accountid: '492261229750'
+    ap-southeast-2:
+      accountid: '452832661640'
+    ap-northeast-1: 
+      accountid: '102112518831'
+    ca-central-1:
+      accountid: '310906938811'
+    eu-central-1: 
+      accountid: '936697816551'
+    eu-west-1:
+      accountid: '470317259841'
+    eu-west-2:
+      accountid: '712779665605'
+    eu-west-3:
+      accountid: '615547856133'
+    eu-north-1:
+      accountid: '243637512696'
+    eu-south-1:
+      accountid: '592751261982'
+    sa-east-1:
+      accountid: '782484402741'
+
+Resources:
+
+  KmsS3Key:
+    Type: AWS::KMS::Key
+    Properties:
+      EnableKeyRotation: true
+      Enabled: true
+      KeyPolicy:
+        Id: !Ref AWS::StackName
+        Statement:
+          - Sid: Enable administration of the key
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Action:
+              - "kms:*"
+            Resource: "*"
+
+  KmsS3KeyAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: !Sub alias/${KMSAlias}
+      TargetKeyId: !Ref KmsS3Key
+
+  StudioDomain:
+    Type: AWS::SageMaker::Domain
+    Properties:
+      AuthMode: IAM
+      AppNetworkAccessType: "PublicInternetOnly "      
+      DefaultUserSettings:
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+      DomainName: !Sub '${AWS::StackName}'
+      SubnetIds:
+        - Fn::ImportValue:
+            !Sub '${CoreNetworkingStackName}-Subnet1'
+        - Fn::ImportValue:
+            !Sub '${CoreNetworkingStackName}-Subnet2'
+      VpcId:
+        Fn::ImportValue:
+          !Sub '${CoreNetworkingStackName}-VPC'
+
+  UserProfile:
+    Type: AWS::SageMaker::UserProfile
+    Properties:
+      DomainId: !Ref StudioDomain
+      UserProfileName: !Ref UserProfileName
+      UserSettings:
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+        JupyterServerAppSettings: 
+          DefaultResourceSpec:
+            InstanceType: system
+            SageMakerImageArn:
+              Fn::Sub:
+                - 'arn:aws:sagemaker:${AWS::Region}:${AccountId}:image/jupyter-server-3'
+                - AccountId: !FindInMap [SageMakerImageRegionToAccountMap, !Ref 'AWS::Region', accountid]            
+        KernelGatewayAppSettings: 
+          DefaultResourceSpec:
+            InstanceType: ml.t3.medium
+            SageMakerImageArn: 
+              Fn::Sub:
+                - 'arn:aws:sagemaker:${AWS::Region}:${AccountId}:image/sagemaker-data-science-310-v1'
+                - AccountId: !FindInMap [SageMakerImageRegionToAccountMap, !Ref 'AWS::Region', accountid]      
+
+  JupyterServerApp:
+    Type: AWS::SageMaker::App
+    DependsOn: UserProfile
+    Properties:
+      AppName: default
+      AppType: JupyterServer
+      DomainId: !Ref StudioDomain
+      UserProfileName: !Ref UserProfileName
+      ResourceSpec: 
+        SageMakerImageArn: 
+          Fn::Sub:
+            - 'arn:aws:sagemaker:${AWS::Region}:${AccountId}:image/jupyter-server-3'
+            - AccountId: !FindInMap [SageMakerImageRegionToAccountMap, !Ref 'AWS::Region', accountid]
+   
+  DataScienceApp:
+    Type: AWS::SageMaker::App
+    DependsOn: UserProfile
+    Properties: 
+      AppName: datascience-3-ml-t3-medium
+      AppType: KernelGateway
+      DomainId: !GetAtt StudioDomain.DomainId
+      ResourceSpec: 
+        InstanceType: ml.t3.medium
+        SageMakerImageArn: 
+          Fn::Sub:
+            - 'arn:aws:sagemaker:${AWS::Region}:${AccountId}:image/sagemaker-data-science-310-v1'
+            - AccountId: !FindInMap [SageMakerImageRegionToAccountMap, !Ref 'AWS::Region', accountid]
+      UserProfileName: !Ref UserProfileName
+
+  SageMakerExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub 'AmazonSageMakerExecutionRole-${AWS::StackName}'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - sagemaker.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /service-role/
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+      Policies:
+        - PolicyName: !Sub 'PassRolePolicy-${AWS::StackName}'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - iam:GetRole
+                  - iam:PassRole
+                Resource: '*'
+        - PolicyName: !Sub 'DenyIncorrectImages-${AWS::StackName}'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Deny
+                Action:
+                  - sagemaker:CreateApp
+                Resource: '*'
+                Condition:
+                  ForAnyValue:StringNotLike:
+                    sagemaker:ImageArns:
+                      - "arn:aws:sagemaker:*:*:image/sagemaker-data-science-310-v1"
+                      - "arn:aws:sagemaker:*:*:image/jupyter-server-3"
+        - PolicyName: !Sub 'KMSUser-${AWS::StackName}'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - kms:CreateGrant
+                  - kms:Decrypt
+                  - kms:DescribeKey
+                  - kms:Encrypt
+                  - kms:ReEncrypt*
+                  - kms:GenerateDataKey
+                  - kms:ListKeys
+                  - kms:ListAliases
+                Resource: '*'
+
+  LambdaInvokeSageMakerEndpointRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub 'LambdaInvokeSageMakerEndPointRole-${AWS::StackName}'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: !Sub 'LambdaInvokeSageMakerEndPointPolicy-${AWS::StackName}'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sagemaker:InvokeEndpoint
+                Resource: '*'
+
+Outputs:
+  KMSKey:
+    Description: KMS Key with Alias
+    Value: !Sub "arn:aws:kms:${AWS::Region}:${AWS::AccountId}:alias/${KMSAlias}"
+  SageMakerExecutionRoleArn:
+    Description: IAM Role ARN for SageMaker
+    Value: !GetAtt SageMakerExecutionRole.Arn
+  StudioDomainArn:
+    Description: The Amazon Resource Name of the Amazon SageMaker Studio domain
+    Value: !GetAtt StudioDomain.DomainArn
+  UserProfileArn:
+    Description: The Amazon Resource Name of the Amazon SageMaker Studio user profile
+    Value: !GetAtt UserProfile.UserProfileArn
