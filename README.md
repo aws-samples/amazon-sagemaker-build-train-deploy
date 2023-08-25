@@ -27,9 +27,7 @@ The final architecture is shown below:
 
 You will use the <a href="https://archive.ics.uci.edu/ml/datasets/AI4I+2020+Predictive+Maintenance+Dataset">AI4I 2020 Predictive Maintenance Dataset</a> from the UCI Machine Learning Repository. This synthetic dataset reflects real predictive maintenance data encountered in industry.
 
-The dataset consists of 10000 records and 14 features, representing some measurements that have been collected on the machinery, plus the indication of failure, if any.
-
-> ⚠️ **Note**: This is a basic dataset that oversimplifies the Predictive Maintenance task. However, it keeps this workshop easy to follow while while being a good representative of the various steps of the ML workflow.
+The dataset consists of 10,000 records and 14 features, representing some measurements that have been collected on the machinery, plus the indication of failure, if any. This is a basic dataset that oversimplifies the Predictive Maintenance task. However, it keeps this workshop easy to follow while being a good representative of the various steps of the machine learning workflow.
 
 Your goal is to build a simple machine learning model that predicts whether a piece of machinery is going to fail (<b>Predictive Maintenance</b>).
 
