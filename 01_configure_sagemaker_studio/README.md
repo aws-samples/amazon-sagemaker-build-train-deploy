@@ -83,12 +83,13 @@ Amazon SageMaker Studio has been pre-configured in the AWS Account. In this sect
 
 	This will open a terminal window in the Jupyter interface.
 
-2. Execute the following commands in the terminal
+2. Execute the following command in the terminal:
 
-	```bash
-	git clone https://github.com/aws-samples/amazon-sagemaker-build-train-deploy.git
 	```
-    The repository will be cloned to your use home and will appear in the file browser panel as shown below:
+		git clone https://github.com/aws-samples/amazon-sagemaker-build-train-deploy.git
+	```
+
+    The repository will be cloned to your user home and will appear in the file browser panel as shown below:
     
     <img src="images/studio_clone_repo.png" alt="Studio clone repo" width="700px" />
 	
