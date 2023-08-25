@@ -2,22 +2,22 @@
 
 ## Introduction
 
-The Machine Learning process is an iterative process that consists of several steps:
+The Machine Learning process is an iterative process consisting of several steps:
 
-- Identifying a business problem and the related Machine Learning problem
+- Identifying a business problem and the related machine learning problem
 - Data ingestion, integration and preparation
 - Data visualization and analysis, feature engineering, model training and model evaluation
 - Model deployment, model monitoring and debugging
 
-The previous steps are generally repeated multiple times to better meet business goals after the source data changes or performance of the model drops, for example.
+These steps are usually repeated multiple times to better meet business goals after the source data changes or performance of the model drops, for example.
 
-The process can be represented with the following diagram:
+The following diagram shows how the process works:
 
 <img src="images/ml_process.png" alt="ML Process" />
 
-After you deploy a model, you can integrate it with your own application to provide insights to end users.
+After you deploy a model, you can integrate it with your own application to provide insights to the end users.
 
-In this workshop, you will go through the steps required to build a machine learning application on AWS. You will perform an iteration of the Machine Learning process to build, train and deploy a model using Amazon SageMaker. You will then deploy a HTTP API using Amazon API Gateway to perform inferences from a web client. In the last module, you will automate the ML workflow using Amazon SageMaker Pipelines..
+In this workshop, you will go through the steps required to build, train, and deploy a machine learning application on AWS using Amazon SageMaker. You will then deploy a HTTP API using Amazon API Gateway to receive inference requests from a web client and send it to an AWS Lambda function, which performs inference against the model. In the last module, you will automate the workflow using Amazon SageMaker Pipelines.
 
 The final architecture is shown below:
 
@@ -57,13 +57,18 @@ This workshops consists of eight modules:
 - <a href="07_invoke_API/">**Module 07**</a>: Use a web client to invoke the HTTP API and get inferences.
 - <a href="08_workflow/">**Module 08**</a>: Use Amazon SageMaker Pipelines to orchestrate the model build workflow and store models in model registry.
 
-Please follow the order of modules because some of the modules depend on the outputs from the previous modules.
+Please follow the order of modules because the modules depend on the results from the previous modules.
 
 ## Getting started
 
-We have designed this workshop assuming that each participant is using an AWS account provided and pre-configured by the workshop instructor(s). However, you can also choose to use your own AWS account, but you'll have to execute some preliminary configuration steps as described in the <a href="setup/">setup</a> directory. If you are using your own AWS account, note that running this workshop will incur costs. You will need to delete the resources you create to avoid incurring further costs after you have completed running the workshop.
+### AWS Event using Workshop Studio
+The temporary AWS account provided configures the environment for you. Proceed to <a href="./01_configure_sagemaker_studio/README.md">**Module 01**</a>.
 
-Once you are ready to go, please start with <a href="01_configure_sagemaker_studio/">**Module 01**</a>.
+### Self-paced using your AWS account
+If you want to use your own AWS account, you'll have to execute some preliminary configuration steps as described in the <a href="./setup/README.md">setup guide</a>. Once you have completed the setup steps, go to <a href="./01_configure_sagemaker_studio/README.md">**Module 01**</a>.
+
+:warning: **Running this workshop in your AWS account will incur costs**. You will need to delete the resources you create to avoid incurring further costs after you have completed the workshop. Follow the [clean up steps](./cleanup/README.md).
+
 
 ## License
 
@@ -78,6 +83,6 @@ Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ic
 [Giuseppe A. Porcelli](https://it.linkedin.com/in/giuporcelli) - Principal ML Specialist Solutions Architect - Amazon Web Services EMEA<br />
 [Antonio Duma](https://it.linkedin.com/in/antoniod82) - Senior Startup Solutions Architect - Amazon Web Services EMEA <br />
 [Hasan Poonawala](https://www.linkedin.com/in/hasanp) - Senior ML Specialist Solutions Architect - Amazon Web Services EMEA <br />
-[Mehran Nikoo](https://www.linkedin.com/in/mnikoo/) - Senior Digital Native Business Solutions Architect - Amazon Web Services EMEA <br />
+[Mehran Nikoo](https://www.linkedin.com/in/mnikoo/) - Senior Digital Native Solutions Architect - Amazon Web Services EMEA <br />
 [Bruno Pistone](https://www.linkedin.com/in/bpistone) - AI/ML Specialist Solutions Architect - Amazon Web Services WW<br />
 [Durga Sury](https://www.linkedin.com/in/durgasury) - ML Solution Architect - Amazon Web Services<br />

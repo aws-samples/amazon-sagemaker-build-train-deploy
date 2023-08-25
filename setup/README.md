@@ -1,6 +1,8 @@
 # Setup your AWS Account
 
-> ⚠️ **Warning**: The following steps need to be executed **only** if you are going to use **your own AWS account** for the workshop. Please do not execute any action if an AWS account was provided by an AWS instructor.
+> ⚠️ **Running this workshop in your AWS account will incur costs**. You will need to delete the resources you create to avoid incurring further costs after you have completed the workshop. Follow the [clean up steps](cleanup/README.md).
+
+The following steps need to be executed **only** if you are going to use **your own AWS account** for the workshop. Please do not execute any action if an AWS account is provided in a workshop run by AWS.
 
 ## Prerequisites
 If you are going to use your own AWS Account, we assume that you have **administrator privileges** in that account. If this is not the case, please double-check with your AWS system administrator before moving to next section.
@@ -81,7 +83,7 @@ Please execute the following steps:
 	
 	<img src="images/cloudformation_create_stack2_step_1.png" alt="CloudFormation create stack screen 1" width="700px" />
 	
-3. On the **Specify stack details** screen, input a stack name like _endtoendml-workshop-sagemaker_. Enter the name of the stack you created earlier (_endtoendml-workshop-networking_ if you used the value we suggested) and enter a user profile name or accept the default value. Finally, press **Next**.
+3. On the **Specify stack details** screen, enter a name like _endtoendml-workshop-sagemaker_ as the Stack name. For the **CoreNetworkingStackName** parameter, enter the name of the stack you created earlier (_endtoendml-workshop-networking_ if you used the value we suggested) and enter a user profile name or accept the default value. Finally, press **Next**.
 	
 	<img src="images/cloudformation_create_stack2_step_2.png" alt="CloudFormation create stack screen 2" width="700px" />
 	
@@ -98,4 +100,4 @@ Please execute the following steps:
 
 ## Proceed to the first module
 
-1.  Start the workshop from <a href="../01_configure_sagemaker_studio/">**Module 01**</a>.
+1.  Start the workshop from <a href="../01_configure_sagemaker_studio/README.md">**Module 01**</a>.
