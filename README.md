@@ -65,7 +65,7 @@ Please follow the order of modules because the modules depend on the results fro
 The temporary AWS account provided configures the environment for you. Proceed to <a href="./01_configure_sagemaker_studio/README.md">**Module 01**</a>.
 
 ### Self-paced using your AWS account
-If you want to use your own AWS account, you'll have to execute some preliminary configuration steps as described in the <a href="./setup/README.md">setup guide</a>. Once you have completed the setup steps, go to <a href="./01_configure_sagemaker_studio/README.md">**Module 01**</a>.
+If you want to use your own AWS account, you'll have to execute some preliminary configuration steps as described in the **<a href="./setup/README.md">Setup Guide</a>**.
 
 :warning: **Running this workshop in your AWS account will incur costs**. You will need to delete the resources you create to avoid incurring further costs after you have completed the workshop. Follow the [clean up steps](./cleanup/README.md).
 

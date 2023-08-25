@@ -100,4 +100,4 @@ Please execute the following steps:
 
 ## Proceed to the first module
 
-1.  Start the workshop from <a href="../01_configure_sagemaker_studio/README.md">**Module 01**</a>.
+The setup is now complete. Proceed to <a href="./01_configure_sagemaker_studio/README.md">**Module 01**</a>.
