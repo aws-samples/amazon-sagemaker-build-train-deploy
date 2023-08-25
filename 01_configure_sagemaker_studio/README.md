@@ -1,4 +1,4 @@
-# Open Amazon SageMaker Studio and clone the repository
+# Configure Amazon SageMaker Studio
 
 ## Overview
 
@@ -6,34 +6,54 @@ Amazon SageMaker is a fully-managed service that enables developers and data sci
 
 Amazon SageMaker removes the complexity that holds back developer success with each of these steps; indeed, it includes modules that can be used together or independently to build, train, and deploy your machine learning models.
 
-In this section, we will walk you through accessing the AWS Console, Amazon SageMaker Studio, and cloning this repository for executiong next modules.
+In this section, you will access AWS Console and Amazon SageMaker Studio, and clone this repository in your SageMaker Studio environment.
 
 ## Access the AWS Console
 
-If you are not at an AWS instructor-led event (workshop, etc.) and you are using your own AWS account, just access the AWS Console at <a href="https://console.aws.amazon.com/" target="_blank">https://console.aws.amazon.com/</a>. Otherwise, please follow the instructions below.
+### Self-paced using your AWS account
+Open AWS Console by navigating to <a href="https://console.aws.amazon.com/" target="_blank">https://console.aws.amazon.com/</a>, then follow the steps in the [Open SageMaker Studio](#open-amazon-sagemaker-studio) section further down on this page. 
 
-1. Access the Event Engine dashboard at <a href="https://dashboard.eventengine.run" target="_blank">https://dashboard.eventengine.run</a> and input **the hashcode provided by the workshop instructors**. Then click on **Accept Terms & Login**.
+### AWS Event using Workshop Studio
+If you're running these labs as part of an AWS led event, we will be using Workshop Studio to provision temporary accounts for you, with everything you need to complete the workshop pre-provisioned. While there are some limits to these accounts, we do encourage you experiment and try out a few things!
 
-	<img src="images/event_engine_login.png" alt="Event Engine login" width="500px" />
+1. Browse to [**Workshop Studio**](https://catalog.us-east-1.prod.workshops.aws/), and click **Get Started**. Alternatively, use the direct URL provided by your facilitator to access the event.
 
-2. Follow the Event Engine authentication process using your email and receiving a one-time password as shown below:
+2. Select **Email one-time password (OTP)**, then enter your email address. Your facilitator should have whitelisted your email address and/or email domain to allow access to the event. Click **Send passcode**.
+<p align="center">
+	<img src="./images/ws_signin.jpeg" alt="Event Engine login" width="400px" />
+</p>
 
-	<img src="images/event_engine_auth_1.png" alt="Event Engine Auth 1" width="400px" />
-	
-	<img src="images/event_engine_auth_2.png" alt="Event Engine Auth 2" width="400px" />
-	
-	<img src="images/event_engine_auth_3.png" alt="Event Engine Auth 3" width="400px" />
+3. When you receive the email, copy the passcode into the text box, and click **Sign In**.
 
-3. After successful sign-in, you will be redirected to the **Team Dashboard**. Click on the **AWS Console** button and then on **Open AWS Console** to access the AWS Console as shown below:
-	
-	<img src="images/event_engine_dashboard.png" alt="Event Engine dashboard" width="500px" />
-    
-	<img src="images/event_engine_console_login.png" alt="Event Engine console login" width="500px" />
+<p align="center">
+	<img src="./images/ws_otp.jpeg" alt="Event Engine login" width="300px" />
+</p>
 
-4. In the upper-right corner of the AWS Management Console, confirm you are in the desired AWS region. For the instructions of these workshop we will assume using the **EU West (Ireland)** [eu-west-1], but feel free to change the region at your convenience.
+4. If you've been provided with a direct URL, you can skip this step. Otherwise, enter the event code provided by your facilitator.
 
-	> The only constraints for changing AWS region are that we keep consistent the region settings for all services used and services are available in the selected region (please check in case you plan to execute this workshop in another AWS region).
+<p align="center">
+	<img src="./images/ws_code.jpeg" alt="Event Engine login" width="600px" />
+</p>
 
+5. Review the Terms and Conditions, mark the checkbox next to I agree... and click Join event
+
+<p align="center">
+	<img src="./images/ws_review.jpeg" alt="Event Engine login" width="600px" />
+</p>
+
+6. You'll see the steps for the workshop on the left. To access your AWS account, click **Open AWS console** in the bottom left hand corner. You may want to copy this sign-in url and open the console in a new window or browser.
+
+<p align="center">
+	<img src="images/ws_accountaccess.png" alt="Event Engine login" width="200px" />
+</p>
+
+You should now have access to your temporary AWS account. Note that this is a temporary account and will be cleaned up when the event is terminated. In Workshop Studio, you should see a notice with the time remaining for the account.
+
+<p align="center">
+	<img src="images/ws_eventtimer.png" alt="Event Engine login" width="500px" />
+</p>
+
+4. In the upper-right corner of the AWS Management Console, make sure you are in the **US East (N. Virginia) [us-east-1]** AWS region.
 
 ## Open Amazon SageMaker Studio
 Amazon SageMaker Studio has been pre-configured in the AWS Account. In this section we will open Studio and clone the repository.
@@ -81,4 +101,4 @@ Amazon SageMaker Studio has been pre-configured in the AWS Account. In this sect
     
     <img src="images/studio_select_kernel.png" alt="Studio select kernel" width="500px" />
 
-5. Follow the instructions in the notebook **01_configure_sagemaker_studio.ipynb**.
+5. Follow the instructions in the notebook [**01_configure_sagemaker_studio.ipynb**](./01_configure_sagemaker_studio.ipynb).
