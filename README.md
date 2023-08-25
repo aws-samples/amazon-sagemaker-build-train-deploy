@@ -46,14 +46,14 @@ The target variable, **Machine failure**, is a binary attributes, so it suggests
 
 This workshops consists of eight modules:
 
-- <a href="01_configure_sagemaker_studio/">**Module 01**</a>: Prepare Amazon SageMaker Studio and clone the GitHub repository.
-- <a href="02_fast_experimentation/">**Module 02**</a>: Use Amazon SageMaker Studio Notebooks and standard Python libraries to perform fast experimentation.
-- <a href="03_feature_engineering/">**Module 03**</a>: Perform data preprocessing and feature engineering using Amazon SageMaker Processing and SKLearn.
-- <a href="04_train_model/">**Module 04**</a>: Train a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether the machinery is going to fail. [Optional] Use Sagemaker Debugger to monitor training progress with rules and visualize training metrics like accuracy and feature importance.
-- <a href="05_deploy_model/">**Module 05**</a>: Deploy the feature engineering and ML models as a pipeline using Amazon SageMaker hosting (inference pipelines). [Optional] Use Sagemaker Model Monitor to track data drift violations against the training data baseline.
-- <a href="06_API_Gateway_and_Lambda/">**Module 06**</a>: Build a HTTP API using Amazon API Gateway and create an AWS Lambda function that invokes the Amazon SageMaker endpoint for inference.
-- <a href="07_invoke_API/">**Module 07**</a>: Use a web client to invoke the HTTP API and get inferences.
-- <a href="08_workflow/">**Module 08**</a>: Use Amazon SageMaker Pipelines to orchestrate the model build workflow and store models in model registry.
+- **Module 01**>: Prepare Amazon SageMaker Studio and clone the GitHub repository.
+- **Module 02**: Use Amazon SageMaker Studio Notebooks and standard Python libraries to perform fast experimentation.
+- **Module 03**: Perform data preprocessing and feature engineering using Amazon SageMaker Processing and SKLearn.
+- **Module 04**: Train a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether the machinery is going to fail. [Optional] Use Sagemaker Debugger to monitor training progress with rules and visualize training metrics like accuracy and feature importance.
+- **Module 05**: Deploy the feature engineering and ML models as an (inferebce) pipeline using Amazon SageMaker hosting. Optional: Use Sagemaker Model Monitor to track data drift violations against the training data baseline.
+- **Module 06**: Build a HTTP API using Amazon API Gateway and an AWS Lambda function that invokes the Amazon SageMaker endpoint for inference.
+- **Module 07**: Use a web client to invoke the HTTP API and perform inference.
+- **Module 08**: Use Amazon SageMaker Pipelines to orchestrate the model build workflow and store models in model registry.
 
 Please follow the order of modules because the modules depend on the results from the previous modules.
 
