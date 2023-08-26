@@ -49,4 +49,7 @@ In this module, you will open Amazon SageMaker Studio and clone this GitHub repo
     
     <img src="images/studio_select_kernel.png" alt="Select kernel in SageMaker Studio" width="500px" />
 
-5. Follow the instructions in [**01_configure_sagemaker_studio.ipynb**](./01_configure_sagemaker_studio.ipynb) and continue with the workshop steps in the SageMaker Studio environment.ß
+
+## Continue the workshop in the SageMaker Studio environment
+
+From here, you continue the workshop by following the instructions in **01_configure_sagemaker_studio.ipynb** in the SageMaker Studio environment.
