@@ -1,6 +1,6 @@
 # End to end Machine Learning with Amazon SageMaker
 
-## Introduction
+## The Machine Learning Process
 
 The Machine Learning process is an iterative process consisting of several steps:
 
@@ -16,6 +16,14 @@ The following diagram shows how the process works:
 <img src="images/ml_process.png" alt="ML Process" />
 
 After you deploy a model, you can integrate it with your own application to provide insights to the end users.
+
+## Amazon SageMaker
+
+Amazon SageMaker is a fully-managed service that enables developers and data scientists to quickly and easily build, train, and deploy machine learning models at any scale.
+
+Amazon SageMaker removes the complexity that holds back developer success with each of these steps; indeed, it includes modules that can be used together or independently to build, train, and deploy your machine learning models.
+
+## About this workshop
 
 In this workshop, you will go through the steps required to build, train, and deploy a machine learning application on AWS using Amazon SageMaker. You will then deploy a HTTP API using Amazon API Gateway to receive inference requests from a web client and send it to an AWS Lambda function, which performs inference against the model. In the last module, you will automate the workflow using Amazon SageMaker Pipelines.
 
@@ -46,14 +54,15 @@ The target variable, **Machine failure**, is a binary attributes, so it suggests
 
 This workshops consists of eight modules:
 
-- **Module 01**>: Prepare Amazon SageMaker Studio and clone the GitHub repository.
-- **Module 02**: Use Amazon SageMaker Studio Notebooks and standard Python libraries to perform fast experimentation.
-- **Module 03**: Perform data preprocessing and feature engineering using Amazon SageMaker Processing and SKLearn.
-- **Module 04**: Train a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether the machinery is going to fail.
-- **Module 05**: Deploy the feature engineering and ML models as an (inference) pipeline using Amazon SageMaker hosting. Optional: Use Sagemaker Model Monitor to track data drift violations against the training data baseline.
-- **Module 06**: Build a HTTP API using Amazon API Gateway and an AWS Lambda function that invokes the Amazon SageMaker endpoint for inference.
-- **Module 07**: Use a web client to invoke the HTTP API and perform inference.
-- **Module 08**: Use Amazon SageMaker Pipelines to orchestrate the model build workflow and store models in model registry.
+- **Module 0**: Access the AWS Console.
+- **Module 1**: Configure Amazon SageMaker Studio and clone the GitHub repository.
+- **Module 2**: Use Amazon SageMaker Studio Notebooks and standard Python libraries to perform fast experimentation.
+- **Module 3**: Perform data preprocessing and feature engineering using Amazon SageMaker Processing and SKLearn.
+- **Module 4**: Train a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether the machinery is going to fail.
+- **Module 5**: Deploy the feature engineering and ML models as an (inference) pipeline using Amazon SageMaker hosting. Optional: Use Sagemaker Model Monitor to track data drift violations against the training data baseline.
+- **Module 6**: Build a HTTP API using Amazon API Gateway and an AWS Lambda function that invokes the Amazon SageMaker endpoint for inference.
+- **Module 7**: Use a web client to invoke the HTTP API and perform inference.
+- **Module 8**: Use Amazon SageMaker Pipelines to orchestrate the model build workflow and store models in model registry.
 
 Please follow the order of modules because the modules depend on the results from the previous modules.
 
