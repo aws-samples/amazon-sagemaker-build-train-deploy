@@ -39,7 +39,7 @@ In this module, you will open Amazon SageMaker Studio and clone this GitHub repo
     
     <img src="images/studio_clone_repo.png" alt="Clone repo in SageMaker Studio" width="800px" />
 	
-3. Browse to the folder **01_configure_sagemaker_studio** and open the filße **01_configure_sagemaker_studio.ipynb**. 
+3. Browse to the folder **01_configure_sagemaker_studio** and open the file **01_configure_sagemaker_studio.ipynb**. 
 
     <img src="images/studio_select_first_notebook.png" alt="Open the first notebook in SageMaker Studio" width="800px" />
     
