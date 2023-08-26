@@ -12,7 +12,7 @@ In this module, you will open Amazon SageMaker Studio and clone this GitHub repo
 	
 	<img src="images/studio_console_1.png" alt="Studio console 1" width="800px" />
 
-3. On the next screen, click on the **Launch App** dropdown button associated to __default-user__, then right-click on **Studio** and open the link in a new tab.
+3. On the next screen, click on the **Launch App** dropdown button associated with __default-user__, then choose the **Studio** link.
 
 	<img src="images/studio_console_2.png" alt="Studio console 2" width="800px" />
 	
