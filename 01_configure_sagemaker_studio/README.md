@@ -8,15 +8,15 @@ In this module, you will open Amazon SageMaker Studio and clone this GitHub repo
 	
 	<img src="images/aws_console_search_sm.png" alt="Search SageMaker" width="700px" />
 
-2. You’ll be taken to the Amazon SageMaker dashboard. Click on **SageMaker Domain > Studio** in the left menu.
+2. You’ll be taken to the Amazon SageMaker dashboard. Click on **Domains** in the left menu. From the Domains list, choose **endtoendml-workshop-domain**.
 	
-	<img src="images/studio_console_1.png" alt="Studio console 1" width="700px" />
-	
-3. In the next screen, click on the **Launch App** dropdown button associated to __default-user__, then right-click on **Studio** and open the link in a new tab.
+	<img src="images/studio_console_1.png" alt="Studio console 1" width="800px" />
 
-	<img src="images/studio_console_2.png" alt="Studio console 2" width="700px" />
+3. On the next screen, click on the **Launch App** dropdown button associated to __default-user__, then right-click on **Studio** and open the link in a new tab.
+
+	<img src="images/studio_console_2.png" alt="Studio console 2" width="800px" />
 	
-3. Amazon SageMaker Studio will load. Then you will be redirected to the Studio interface.
+4. Amazon SageMaker Studio will load. Then you will be redirected to the Studio interface.
 
 	<img src="images/sagemaker_studio_home.png" alt="Studio interface" width="700px" />
 
@@ -52,4 +52,4 @@ In this module, you will open Amazon SageMaker Studio and clone this GitHub repo
 
 ## Continue the workshop in the SageMaker Studio environment
 
-From here, you continue the workshop by following the instructions in **01_configure_sagemaker_studio.ipynb** in the SageMaker Studio environment.
+From here, you continue the workshop by following the instructions in **01_configure_sagemaker_studio.ipynb** in the SageMaker Studio environment instead of this browser window.

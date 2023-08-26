@@ -96,13 +96,13 @@ Please execute the following steps:
 	
 	<img src="images/cloudformation_create_stack2_step_1.png" alt="CloudFormation create stack screen 1" width="700px" />
 	
-3. On the **Specify stack details** screen, enter a name like _endtoendml-workshop-sagemaker_ as the Stack name. For the **CoreNetworkingStackName** parameter, enter the name of the stack you created earlier (_endtoendml-workshop-networking_ if you used the value we suggested) and enter a user profile name or accept the default value. Finally, press **Next**.
+3. On the **Specify stack details** screen, enter a name like _endtoendml-workshop-domain as the Stack name. For the **CoreNetworkingStackName** parameter, enter the name of the stack you created earlier (_endtoendml-workshop-networking_ if you used the value we suggested) and enter a user profile name or accept the default value. Finally, press **Next**.
 	
 	<img src="images/cloudformation_create_stack2_step_2.png" alt="CloudFormation create stack screen 2" width="700px" />
 	
 4. Don't make any changes on the **Configure stack options** screen and just press **Next**.
    
-5. On the final **Review endtoendml-workshop-sagemaker** screen, scroll to the bottom, check the checkbox informing that AWS Cloudformation might create IAM resources with custom names and click the **Create Stack** button.
+5. On the final **Review endtoendml-workshop-domain** screen, scroll to the bottom, check the checkbox informing that AWS Cloudformation might create IAM resources with custom names and click the **Create Stack** button.
 
 	<img src="images/cloudformation_create_stack2_step_4.png" alt="CloudFormation create stack screen 4" width="700px" />
    
