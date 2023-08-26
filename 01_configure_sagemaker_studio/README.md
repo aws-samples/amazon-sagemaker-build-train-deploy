@@ -52,4 +52,4 @@ In this module, you will open Amazon SageMaker Studio and clone this GitHub repo
 
 ## Continue the workshop in the SageMaker Studio environment
 
-From here, you continue the workshop by following the instructions in **01_configure_sagemaker_studio.ipynb** in the SageMaker Studio environment instead of this browser window.
+From here, you continue the workshop by following the instructions in **01_configure_sagemaker_studio.ipynb** notebook you just opened in the SageMaker Studio environment.
