@@ -99,6 +99,6 @@ The implementation is straightforward: the Lambda handler responds to OPTIONS an
 
 You have now created an HTTP API that accepts inference requests. 
 
-> :warning: **Module 7 does not have a Jupyter Notebook.**. 
+> ⚠️  **Module 7 does not have a Jupyter Notebook.**. 
 
 Open **README.md** in module 7 to test the new HTTP API endpoint from a browser.
