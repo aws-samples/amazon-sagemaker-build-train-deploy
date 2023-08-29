@@ -1,6 +1,6 @@
-# Invoke the API from a client
+# Module 7: Invoke the API from a browser
 
-To perform inference from a client application, you will use a web tool called **ReqBin**, which allows to send HTTP requests to APIs.
+To perform inference, you will use a web tool called **ReqBin** to send requests to new HTTP API. 
 
 - Access ReqBin at https://reqbin.com/
 - Configure the client as shown in the following screenshot:
@@ -15,12 +15,11 @@ Make sure you:
 
 Then, click on **Send** to execute the request and get the inference result.
 
-<h2>Well done!</h2>
+## You have completed Module 7 
 
-By executing this step, you have completed the module and the main flow of the workshop.
-<br/>
-You can now move to <a href="../08_workflow/">**Module 08**</a> to start looking at the model build workflow.
+By finishing this module, you have completed the main flow of the workshop.
 
+Open **08_workflow.ipynb** in module 8 to build a an Amazon SageMaker Pipeline for preprocessing and training jobs. 
 
 
 

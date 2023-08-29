@@ -1,11 +1,26 @@
 # Setup your AWS Account
 
-> ⚠️ **Warning**: The following steps need to be executed **only** if you are going to use **your own AWS account** for the workshop. Please do not execute any action if an AWS account was provided by an AWS instructor.
+> ⚠️ **Running this workshop in your AWS account will incur costs**. You will need to delete the resources you create to avoid incurring further costs after you have completed the workshop. Follow the [clean up steps](cleanup/README.md).
 
-## Prerequisites
-If you are going to use your own AWS Account, we assume that you have **administrator privileges** in that account. If this is not the case, please double-check with your AWS system administrator before moving to next section.
+## AWS Event using Workshop Studio
+The environment is already set up for you. Proceed to <a href="../01_configure_sagemaker_studio/README.md">**Module 01**</a>.
 
-## Choose the networking mode
+## Self-paced using your AWS account
+
+> :warning: **Run this workshop in sandbox/playground AWS accounts only**. This workshop is meant to be used in sandbox/playground environments only. Do not deploy the resources or grant permissions described below in controlled or production environments.
+
+If you are going to use your own AWS Account, we assume you have the following permissions in the sandbox AWS account you are going to use for the workshop:
+```
+      - "arn:aws:iam::aws:policy/ReadOnlyAccess"
+      - "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
+      - "arn:aws:iam::aws:policy/AmazonSageMakerFullAccess"
+      - "arn:aws:iam::aws:policy/AmazonAPIGatewayAdministrator"
+      - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+      - "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+```
+If this is not the case, contact your AWS system administrator and ask for these permissions before moving to next section.
+
+### Choose the networking mode
 Amazon SageMaker Studio allows you to configure networking in two modes:
 - **Default communication with the internet:** Only traffic to Amazon EFS volume goes through the specified VPC. Non-EFS traffic goes through a VPC managed by SageMaker, which allows internet access. 
 - **VPC only communication with the internet:** All traffic goes through the specified VPC. To allow the Studio notebook to access SageMaker API and runtime and other AWS services, you should  create VPC interface endpoints or provide access to the internet using a NAT gateway or via an AWS Transit Gateway that has a route to the internet.  
@@ -20,9 +35,9 @@ Based on the networking mode you choose, you will create Workshop resources usin
 - `01_networking.yaml` will create the core networking resources such as VPCs and subnets
 - `02_sagemaker_studio.yaml`, will create the SageMaker Studio resources such as a SageMaker Studio domain, user profile, and applications.
 
-## Create the resources using AWS CloudFormation
+### Create the resources using AWS CloudFormation
 
-### Clone the repository
+#### Clone the repository
 You will be using the AWS Management Console and SageMaker Studio for most of the workshop steps. The only exception is this initial step where you will need to upload the two CloudFormation templates from your computer. 
 
 1. Clone this repository to your computer. 
@@ -30,7 +45,7 @@ You will be using the AWS Management Console and SageMaker Studio for most of th
 3. You will find two files: `01_networking.yaml` and `02_sagemaker_studio.yaml`. You will upload these files later in the setup process.
 
 
-### Create the core networking resources
+#### Create the core networking resources
 First, you will create the networking resources. If you use the `direct_mode` folder, the networking template will create a VPC, two public subnets, an Internet Gateway with the relevant route table and routes. If you use the `vpc_mode` folder, the networking template will create two public and four private subnets, a NAT Gateway, an AWS Network Firewall, and the appropriate route table and routes.
 
 Follow these steps:
@@ -81,13 +96,13 @@ Please execute the following steps:
 	
 	<img src="images/cloudformation_create_stack2_step_1.png" alt="CloudFormation create stack screen 1" width="700px" />
 	
-3. On the **Specify stack details** screen, input a stack name like _endtoendml-workshop-sagemaker_. Enter the name of the stack you created earlier (_endtoendml-workshop-networking_ if you used the value we suggested) and enter a user profile name or accept the default value. Finally, press **Next**.
+3. On the **Specify stack details** screen, enter a name like _endtoendml-workshop-domain as the Stack name. For the **CoreNetworkingStackName** parameter, enter the name of the stack you created earlier (_endtoendml-workshop-networking_ if you used the value we suggested) and enter a user profile name or accept the default value. Finally, press **Next**.
 	
 	<img src="images/cloudformation_create_stack2_step_2.png" alt="CloudFormation create stack screen 2" width="700px" />
 	
 4. Don't make any changes on the **Configure stack options** screen and just press **Next**.
    
-5. On the final **Review endtoendml-workshop-sagemaker** screen, scroll to the bottom, check the checkbox informing that AWS Cloudformation might create IAM resources with custom names and click the **Create Stack** button.
+5. On the final **Review endtoendml-workshop-domain** screen, scroll to the bottom, check the checkbox informing that AWS Cloudformation might create IAM resources with custom names and click the **Create Stack** button.
 
 	<img src="images/cloudformation_create_stack2_step_4.png" alt="CloudFormation create stack screen 4" width="700px" />
    
@@ -96,6 +111,6 @@ Please execute the following steps:
 	<img src="images/cloudformation_check_status_stack2.png" alt="CloudFormation check stack creation" width="700px" />
 	
 
-## Proceed to the first module
+### Proceed to the first module
 
-1.  Start the workshop from <a href="../01_configure_sagemaker_studio/">**Module 01**</a>.
+The setup is now complete. Proceed to <a href="../01_configure_sagemaker_studio/README.md">**Module 01**</a>.
