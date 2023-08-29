@@ -1,6 +1,6 @@
 # Module 7: Invoke the API from a browser
 
-To perform inference from a client application, you will use a web tool called **ReqBin**, which allows to send HTTP requests to APIs.
+To perform inference, you will use a web tool called **ReqBin** to send requests to new HTTP API. 
 
 - Access ReqBin at https://reqbin.com/
 - Configure the client as shown in the following screenshot:

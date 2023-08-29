@@ -1,9 +1,9 @@
 # Module 6: Build a HTTP API using Amazon API Gateway and AWS Lambda
 
-After training the model and deploying it to a fully-managed Amazon SageMaker endpoint, you are ready to build a HTTP API that will be invoked by client applications to get inferences.
-Although you can call the Amazon SageMaker HTTPs endpoint directly, creating an HTTP API in Amazon API Gateway provides more control on user authorization, usage profiles, throttling, API versioning, etc. 
+After deploying the model to a fully-managed Amazon SageMaker endpoint, you are ready to build a HTTP API that will be invoked by client applications to perform inferences.
+Although you can call the Amazon SageMaker endpoint directly, creating an HTTP API in Amazon API Gateway provides more control over user authorization, usage profiles, throttling, API versioning, etc. 
 
-After building the API, the request flow would be as follows:
+After building the HTTP API, the request flow would be as follows:
 
 1. The client application send a HTTP POST request to the Amazon API Gateway endpoint.
 2. An AWS Lambda function processes the request and calls the Amazon SageMaker HTTPS endpoint where the model is hosted
