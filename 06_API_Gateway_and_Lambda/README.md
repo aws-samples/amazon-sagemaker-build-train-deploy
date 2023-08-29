@@ -1,4 +1,4 @@
-# Build a REST API with Amazon API Gateway and AWS Lambda
+# Module 6: Build a HTTP API using Amazon API Gateway and AWS Lambda
 
 After training the model and deploying it to a fully-managed Amazon SageMaker endpoint, you are ready to build a HTTP API that will be invoked by client applications to get inferences.
 Although you can call the Amazon SageMaker HTTPs endpoint directly, creating an HTTP API in Amazon API Gateway provides more control on user authorization, usage profiles, throttling, API versioning, etc. 
@@ -95,5 +95,10 @@ The implementation is straightforward: the Lambda handler responds to OPTIONS an
 <img src="images/lambda_6.png" alt="Configure API Gateway" width="700px" />
 
 
-### Invoke the API from a web page
-You can now proceed to <a href="../07_invoke_API/">Module 07</a> to invoke the API Gateway endpoint from a web client application.
+## You have completed Module 6
+
+You have now created an HTTP API that accepts inference requests. 
+
+> :warning: **Module 7 does not have a Jupyter Notebook.**. 
+
+Open **README.md** in module 7 to test the new HTTP API endpoint from a browser.
