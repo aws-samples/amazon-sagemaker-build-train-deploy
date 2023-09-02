@@ -71,7 +71,7 @@ Please follow the order of modules because the modules depend on the results fro
 
 ## Getting started
 
-### AWS Event using Workshop Studio
+### AWS-run event using Workshop Studio
 The temporary AWS account provided configures the environment for you. Proceed to <a href="./01_configure_sagemaker_studio/README.md">**Module 01**</a>.
 
 ### Self-paced using your AWS account

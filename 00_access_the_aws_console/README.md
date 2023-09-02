@@ -7,8 +7,8 @@ In this module, you will access AWS Console and make sure you are using the righ
 ### Self-paced using your AWS account
 Open AWS Console by navigating to <a href="https://console.aws.amazon.com/" target="_blank">https://console.aws.amazon.com/</a>, then follow the steps in the [Choose the right AWS Region](#choose-the-right-aws-region) section further down on this page. 
 
-### AWS Event using Workshop Studio
-If you're running these labs as part of an AWS led event, we will be using Workshop Studio to provision temporary accounts for you, with everything you need to complete the workshop pre-provisioned. While there are some limits to these accounts, we do encourage you experiment and try out a few things!
+### AWS-run event using Workshop Studio
+If you're running this workshop as part of an AWS-run event, Workshop Studio will provision temporary accounts for you, so all resources you need to complete the workshop will be created for you.
 
 1. Browse to [**Workshop Studio**](https://catalog.us-east-1.prod.workshops.aws/), and click **Get Started**. Alternatively, use the direct URL provided by your facilitator to access the event.
 

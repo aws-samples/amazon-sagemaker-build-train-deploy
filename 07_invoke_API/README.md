@@ -1,5 +1,7 @@
 # Module 7: Invoke the HTTP API from the browser
 
+> ⚠️ This module does not have a Jupyter notebook. 
+
 To perform inference, you will use a web tool called **ReqBin** to send requests to new HTTP API. 
 
 - Access ReqBin at https://reqbin.com/
@@ -17,12 +19,8 @@ Make sure you:
 
 Then, click on **Send** to execute the request and get the inference result.
 
-## You have completed Module 7 
+## You have completed module 7 
 
 By finishing this module, you have completed the main flow of the workshop.
 
-Open **08_workflow.ipynb** in module 8 to build a an Amazon SageMaker Pipeline for preprocessing and training jobs. 
-
-
-
-
+Proceed to module 8 to build a an Amazon SageMaker Pipeline for preprocessing and training jobs. 
