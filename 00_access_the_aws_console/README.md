@@ -49,7 +49,7 @@ You should now have access to your temporary AWS account. Note that this is a te
 Check with the workshop facilitator to find the right region to use. Then, in the upper-right corner of the AWS Management Console, make sure you are in the right region.
 
 ### Self-paced using your AWS account
-Open the [AWS Console](https://console.aws.amazon.com/) in a new window and choose a region you want to run the workshop in. We have tested this workshop in the following regions, but the workshop should work in the regions where Amazon SageMaker is available. Check whether the intended region in the list on the [Amazon SageMaker Pricing page](https://aws.amazon.com/sagemaker/pricing/) under the **On-Demand Pricin**g** section.
+Open the [AWS Console](https://console.aws.amazon.com/) in a new window and choose a region you want to run the workshop in. We have tested this workshop in the following regions, but the workshop should work in the regions where Amazon SageMaker is available. Check whether the intended region in the list on the [Amazon SageMaker Pricing page](https://aws.amazon.com/sagemaker/pricing/) under the **On-Demand Pricing** section.
 
 |Region Name          |Region   |
 |---------------------|---------|
