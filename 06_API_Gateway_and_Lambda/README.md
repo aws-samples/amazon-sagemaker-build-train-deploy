@@ -1,17 +1,18 @@
 # Module 6: Build a HTTP API using Amazon API Gateway and AWS Lambda
 
 After deploying the model to a fully-managed Amazon SageMaker endpoint, you are ready to build a HTTP API that will be invoked by client applications to perform inferences.
-Although you can call the Amazon SageMaker endpoint directly, creating an HTTP API in Amazon API Gateway provides more control over user authorization, usage profiles, throttling, API versioning, etc. 
+
+Although you can call the Amazon SageMaker endpoint directly, adding an HTTP API in Amazon API Gateway in front of the SageMaker endpoint provides more control over user authorization, usage profiles, throttling, API versioning, etc. 
 
 After building the HTTP API, the request flow would be as follows:
 
 1. The client application send a HTTP POST request to the Amazon API Gateway endpoint.
-2. An AWS Lambda function processes the request and calls the Amazon SageMaker HTTPS endpoint where the model is hosted
-3. Lambda function receives the inference response from Amazon SageMaker endpoint and send it back to the client via Amazon API Gateway
+2. The Amazon API Gateway application passes the request to an AWS Lambda function, which processes the request and calls the Amazon SageMaker HTTPS endpoint where the model is hosted.
+3. Lambda function receives the inference response from Amazon SageMaker endpoint and send it back to the client via Amazon API Gateway.
 
 Let's start building the HTTP API.
 
-## Create AWS Lambda function and Amazon API Gateway HTTP API
+## Create the AWS Lambda function
 
 1. Open **AWS Console** and go to the **Lambda** service.
 2. In the **Functions** section, click on **Create function**.
@@ -23,19 +24,11 @@ Let's start building the HTTP API.
 
 <img src="images/lambda_2.png" alt="Select IAM role" width="700px" />
 
-5. In **Function overview**, choose **Add trigger** and select **API Gateway** as the source.
-
-<img src="images/lambda_3.png" alt="Configure API Gateway" width="700px" />
-
-6. Choose **Create a new API** and keep the API Type as **HTTP API**. In the **Security** section, choose **Open**, then choose **Add**.
-
-<img src="images/lambda_4.png" alt="Configure API Gateway" width="700px" />
-
-7. You are now redirected to the Lambda function page. In the **Function code** section, double click "lambda_function.py":
+5. You are now redirected to the Lambda function page. In the **Function code** section, double click "lambda_function.py":
 
 <img src="images/lambda_5.png" alt="Configure API Gateway" width="700px" />
 
-8. Replace the existing code with with the following snippet, making sure that the indentation is matching:
+6. Replace the existing code with with the following snippet, making sure that the indentation is matching:
 
 > ⚠️ **Warning**: the **ENDPOINT_NAME** variable must be set to the name of the endpoint that was deployed in the previus module of this workshop.
 
@@ -89,8 +82,20 @@ def lambda_handler(event, context):
 
 The implementation is straightforward: the Lambda handler responds to OPTIONS and POST requests. When it receives a POST request, it invokes the Amazon SageMaker endpoint with the _Body_ parameter set to the request body, and when it receives the inference results, it sends the response to the caller.
 
-9. Click **Deploy** to save changes.
-10. Back in the **Function overview** section at the top, click on the **API Gateway** trigger and from the **Configuration** tab, make a note of _API endpoint_. You will need this in the next module.
+7. Click **Deploy** to save changes.
+
+
+## Create the Amazon API Gateway HTTP API
+
+1. In **Function overview**, choose **Add trigger** and select **API Gateway** as the source.
+
+<img src="images/lambda_3.png" alt="Configure API Gateway" width="700px" />
+
+2. Choose **Create a new API** and keep the API Type as **HTTP API**. In the **Security** section, choose **Open**, then choose **Add**.
+
+<img src="images/lambda_4.png" alt="Configure API Gateway" width="700px" />
+
+3. Click on the **API Gateway** trigger and from the **Configuration** tab, make a note of _API endpoint_. You will need this in the next module.
 
 <img src="images/lambda_6.png" alt="Configure API Gateway" width="700px" />
 

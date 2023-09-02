@@ -1,4 +1,4 @@
-# Module 7: Invoke the API from a browser
+# Module 7: Invoke the HTTP API from the browser
 
 To perform inference, you will use a web tool called **ReqBin** to send requests to new HTTP API. 
 

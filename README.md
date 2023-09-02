@@ -1,4 +1,7 @@
-# End to end Machine Learning with Amazon SageMaker
+# End-to-end Machine Learning with Amazon SageMaker
+
+In this workshop, you will go through the steps required to build a machine learning application on AWS. You will perform an iteration of the Machine Learning process to build, train and deploy a model using Amazon SageMaker. You will then deploy a HTTP API using Amazon API Gateway to perform inferences from a web client. Finally, you will automate the ML workflow using Amazon SageMaker Pipelines.
+
 
 ## The Machine Learning Process
 
@@ -23,13 +26,6 @@ Amazon SageMaker is a fully-managed service that enables developers and data sci
 
 Amazon SageMaker removes the complexity that holds back developer success with each of these steps; indeed, it includes modules that can be used together or independently to build, train, and deploy your machine learning models.
 
-## About this workshop
-
-In this workshop, you will go through the steps required to build, train, and deploy a machine learning application on AWS using Amazon SageMaker. You will then deploy a HTTP API using Amazon API Gateway to receive inference requests from a web client and send it to an AWS Lambda function, which performs inference against the model. In the last module, you will automate the workflow using Amazon SageMaker Pipelines.
-
-The final architecture is shown below:
-
-<img src="images/architecture.png" alt="Architecture" />
 
 ## The Machine Learning task
 
@@ -49,6 +45,13 @@ Following is an excerpt from the dataset:
 |51|L47230|L|298.9|309.1|...|1|
 
 The target variable, **Machine failure**, is a binary attributes, so it suggests the problem is a binary classification problem.
+
+
+## Solution Architecture
+
+This diagram shows what you will be building in this workshop:
+<img src="images/architecture.png" alt="Architecture" />
+
 
 ## Modules
 
