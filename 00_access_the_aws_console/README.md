@@ -49,7 +49,7 @@ You should now have access to your temporary AWS account. Note that this is a te
 Check with the workshop facilitator to find the right region to use. Then, in the upper-right corner of the AWS Management Console, make sure you are in the right region.
 
 ### Self-paced using your AWS account
-Open the <a href="https://console.aws.amazon.com/" target="_blank">AWS Console</a> and choose a region you want to run the workshop in. We have tested this workshop in the following regions, but the workshop should work in the regions where Amazon SageMaker is available. Check whether the intended region in the list on the [Amazon SageMaker Pricing page](https://aws.amazon.com/sagemaker/pricing/){:target="_blank"} under the **On-Demand Pricin**g** section.
+Open the [AWS Console](https://console.aws.amazon.com/) in a new window and choose a region you want to run the workshop in. We have tested this workshop in the following regions, but the workshop should work in the regions where Amazon SageMaker is available. Check whether the intended region in the list on the [Amazon SageMaker Pricing page](https://aws.amazon.com/sagemaker/pricing/) under the **On-Demand Pricin**g** section.
 
 |Region Name          |Region   |
 |---------------------|---------|
@@ -57,5 +57,5 @@ Open the <a href="https://console.aws.amazon.com/" target="_blank">AWS Console</
 |US West (Oregon)     |us-west-2|
 |Europe (Ireland)     |eu-west-1|
 
-## You have completed Module 0
-Proceed to [Module 1:  Configure SageMaker Studio](../01_configure_sagemaker_studio/README.md).
+## You have completed module 0
+Proceed to [README.md in module 1](../01_configure_sagemaker_studio/README.md) to configure Amazon SageMaker Studio for the workshop.
