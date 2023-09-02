@@ -1,11 +1,8 @@
 # Module 0 - Access the AWS Console
 
-In this module, you will access AWS Console and make sure you are using the right AWS region.
+In this module, you will access AWS Console and choose the AWS region.
 
 ## Access the AWS Console
-
-### Self-paced using your AWS account
-Open AWS Console by navigating to <a href="https://console.aws.amazon.com/" target="_blank">https://console.aws.amazon.com/</a>, then follow the steps in the [Choose the right AWS Region](#choose-the-right-aws-region) section further down on this page. 
 
 ### AWS-run event using Workshop Studio
 If you're running this workshop as part of an AWS-run event, Workshop Studio will provision temporary accounts for you, so all resources you need to complete the workshop will be created for you.
@@ -47,9 +44,18 @@ You should now have access to your temporary AWS account. Note that this is a te
 	<img src="images/ws_eventtimer.png" alt="Event Engine login" width="500px" />
 </p>
 
-## Choose the right AWS Region
+### Choose the right AWS Region
 
-In the upper-right corner of the AWS Management Console, make sure you are in the **US East (N. Virginia) [us-east-1]** AWS region.
+Check with the workshop facilitator to find the right region to use. Then, in the upper-right corner of the AWS Management Console, make sure you are in the right region.
+
+### Self-paced using your AWS account
+Open the [AWS Console](https://console.aws.amazon.com/){:target="_blank"} and choose a region you want to run the workshop in. We have tested this workshop in the following regions, but the workshop should work in the regions where Amazon SageMaker is available. Check whether the intended region in the list on the [Amazon SageMaker Pricing page](https://aws.amazon.com/sagemaker/pricing/){:target="_blank"} under the **On-Demand Pricin**g** section.
+
+|Region Name          |Region   |
+|---------------------|---------|
+|US East (N. Virginia)|us-east-1|
+|US West (Oregon)     |us-west-2|
+|Europe (Ireland)     |eu-west-1|
 
 ## You have completed Module 0
 Proceed to [Module 1:  Configure SageMaker Studio](../01_configure_sagemaker_studio/README.md).
