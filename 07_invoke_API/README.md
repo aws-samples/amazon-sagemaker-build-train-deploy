@@ -11,7 +11,9 @@ Make sure you:
 - Provide the address of the Amazon API Gateway API you deployed in the previous step.
 - Set the method to POST
 - Set the content type to text/plain
-- Add an inference record as content. Example: `L, 298.4, 308.2, 1582, 70.7, 216`
+- Add an inference record as content. Example: 
+
+```L, 298.4, 308.2, 1582, 70.7, 216```
 
 Then, click on **Send** to execute the request and get the inference result.
 
