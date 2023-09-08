@@ -34,6 +34,10 @@ Let's start building the HTTP API.
 
 > ⚠️ **Warning**: the **ENDPOINT_NAME** variable must be set to the name of the endpoint that was deployed in the previus module of this workshop.
 
+Note: You could also retrieve the endpoint name by viewing the endpoints in the SageMaker console:
+<img src="images/lambda_7.png" alt="Endpoint list" width="700px" />
+<img src="images/lambda_8.png" alt="Endpoint config" width="700px" />
+
 ```
 import boto3
 import json
