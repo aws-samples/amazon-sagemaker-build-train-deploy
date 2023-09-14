@@ -22,7 +22,7 @@ Let's start building the HTTP API.
 
 <img src="images/lambda_1.png" alt="select blueprint" width="700px" />
 
-4. Type **end-to-end-ml-lambda-function** in the function name textbox. Select _Use an existing role_ and then choose the IAM role **_LambdaInvokeSageMakerEndpointRole-endtoendml_** from the **Existing Role** dropdown. This will allow the function to invoke the Amazon SageMaker endpoint.
+4. Type **end-to-end-ml-lambda-function** in the function name textbox. Select _Use an existing role_ and then choose the IAM role whose name starts with **_LambdaInvokeSageMakerEndpointRole_** from the **Existing Role** dropdown. This will allow the function to invoke the real-time inference endpoint.
 
 <img src="images/lambda_2.png" alt="Select IAM role" width="700px" />
 
@@ -39,6 +39,23 @@ Note: You could also retrieve the endpoint name by viewing the endpoints in the 
 <img src="images/lambda_8.png" alt="Endpoint config" width="700px" />
 
 ```
+# MIT No Attribution
+
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import boto3
 import json
 import csv
@@ -51,10 +68,9 @@ runtime= boto3.client('runtime.sagemaker')
 def build_response(status_code, response_body):
     print(status_code)
     print(response_body)
-    return {
+    
+    response = {
                 'statusCode': status_code,
-                #'body': json.dumps(response_body),
-                'body': str(response_body['predictions'][0]['score']),
                 'headers': {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin' : '*',
@@ -62,6 +78,12 @@ def build_response(status_code, response_body):
 		            'Access-Control-Allow-Headers': '*'
                 },
             }
+
+    if response_body is not None:
+        response['body'] = str(response_body['predictions'][0]['score'])
+
+    return response
+
 
 def lambda_handler(event, context):
     print("Received event: " + json.dumps(event, indent=2))
@@ -82,7 +104,7 @@ def lambda_handler(event, context):
             return build_response(200, result)
     
         else:
-            return build_response(405, 'null')
+            return build_response(405, None)
 
 ```
 
@@ -105,9 +127,10 @@ The implementation is straightforward: the Lambda handler responds to OPTIONS an
 
 <img src="images/lambda_6.png" alt="Configure API Gateway" width="700px" />
 
+> The API expects a POST HTTP request that contains a comma-delimited list of feature values in the body. If you try to naviagate to the API endpoint URL in the browser, the API will receive a GET request, so it will return HTTP status code 405 (Method Not Allowed).
 
 ## You have completed module 6
 
 You have now created an HTTP API that accepts inference requests. 
 
-Proceed to module 7 to test the new HTTP API endpoint from a browser.
+Proceed to module 7 to test the new HTTP API endpoint.
