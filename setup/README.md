@@ -2,7 +2,7 @@
 
 > ⚠️ **Running this workshop in your AWS account will incur costs**. You will need to delete the resources you create to avoid incurring further costs after you have completed the workshop. Follow the [clean up steps](cleanup/README.md).
 
-## AWS Event using Workshop Studio
+## AWS Event using AWS Workshop Studio
 The environment is already set up for you. Proceed to <a href="../01_configure_sagemaker_studio/README.md">**Module 01**</a>.
 
 ## Self-paced using your AWS account

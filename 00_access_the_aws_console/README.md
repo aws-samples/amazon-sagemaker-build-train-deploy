@@ -4,10 +4,10 @@ In this module, you will access AWS Console and choose the AWS region.
 
 ## Access the AWS Console
 
-### AWS-run event using Workshop Studio
-If you're running this workshop as part of an AWS-run event, Workshop Studio will provision temporary accounts for you, so all resources you need to complete the workshop will be created for you.
+### AWS-run event using AWS Workshop Studio
+If you're running this workshop as part of an AWS-run event, AWS Workshop Studio will provision temporary accounts and create all resources you need to complete the workshop.
 
-1. Browse to [**Workshop Studio**](https://catalog.us-east-1.prod.workshops.aws/), and click **Get Started**. Alternatively, use the direct URL provided by your facilitator to access the event.
+1. Browse to [**AWS Workshop Studio**](https://catalog.us-east-1.prod.workshops.aws/), and click **Get Started**. Alternatively, use the direct URL provided by your facilitator to access the event.
 
 2. Select **Email one-time password (OTP)**, then enter your email address. Your facilitator should have whitelisted your email address and/or email domain to allow access to the event. Click **Send passcode**.
 <p align="center">
@@ -38,7 +38,7 @@ If you're running this workshop as part of an AWS-run event, Workshop Studio wil
 	<img src="images/ws_accountaccess.png" alt="Event Engine login" width="200px" />
 </p>
 
-You should now have access to your temporary AWS account. Note that this is a temporary account and will be cleaned up when the event is terminated. In Workshop Studio, you should see a notice with the time remaining for the account.
+You should now have access to your temporary AWS account. Note that this is a temporary account and will be cleaned up when the event is terminated. In AWS Workshop Studio, you should see a notice with the time remaining for the account.
 
 <p align="center">
 	<img src="images/ws_eventtimer.png" alt="Event Engine login" width="500px" />

@@ -1,6 +1,8 @@
 # End-to-End Machine Learning with Amazon SageMaker
 
-In this workshop, you will go through the steps required to build a machine learning application on AWS. You will perform an iteration of the machine learning process to build, train, and deploy a model using Amazon SageMaker. You will then deploy a HTTP API using Amazon API Gateway and AWS Lambda to perform prediction (inference) from a web client. Finally, you will automate the machine learning workflow using Amazon SageMaker Pipelines.
+In this workshop, you will go through the steps required to build a machine learning application on AWS using Amazon SageMaker. 
+
+You will learn how to start experimentation in the SageMaker Studio environment using a familiar Jupyter notebook experience, use Amazon SageMaker Processing Jobs for the preprocessing step, leverage Amazon SageMaker Training Jobs for the training step, deploy the model, and build an HTTP endpoint to serve inference requests. You will also learn how to automate the preprocessing and training step using Amazon SageMaker Pipelines. 
 
 ## The Machine Learning Process
 
@@ -68,10 +70,10 @@ This workshops consists of eight modules:
 
 Please follow the order of modules because the modules depend on the results from the previous modules.
 
-## Getting started
+## Running this workshop
 
-### AWS-run event using Workshop Studio
-The temporary AWS account provided configures the environment for you. Proceed to <a href="./01_configure_sagemaker_studio/README.md">**Module 01**</a>.
+### AWS-run event using AWS Workshop Studio
+If you are attending a [End-to-End Machine Learning with Amazon SageMaker Workshop](https://catalog.workshops.aws/end-to-end-machine-learning-with-amazon-sagemaker) run by AWS, the AWS event facilitator provides you access to a temporary AWS account preconfigured for this workshop. Proceed to <a href="./01_configure_sagemaker_studio/README.md">**Module 01**</a>.
 
 ### Self-paced using your AWS account
 If you want to use your own AWS account, you'll have to execute some preliminary configuration steps as described in the **<a href="./setup/README.md">Setup Guide</a>**.
