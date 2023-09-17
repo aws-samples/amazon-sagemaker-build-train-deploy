@@ -22,7 +22,7 @@ Let's start building the HTTP API.
 
 <img src="images/lambda_01.png" alt="select blueprint" width="700px" />
 
-4. Type **end-to-end-ml-lambda-function** in the function name textbox. Select **Use an existing role** and then choose the IAM role whose name starts with **_LambdaInvokeSageMakerEndpointRole_** from the **Existing Role** dropdown. This will allow the function to invoke the real-time inference endpoint.
+4. Type **end-to-end-ml-lambda-function** in the function name textbox. Select **Use an existing role** and then choose the IAM role whose name starts with **_LambdaInvokeSageMakerEndpointRole_** from the **Existing Role** dropdown. This IAM role, which has been created by the workshop setup process, has permission to invoke the Amazon SageMaker endpoint.
 
 <img src="images/lambda_02.png" alt="Select IAM role" width="700px" />
 
