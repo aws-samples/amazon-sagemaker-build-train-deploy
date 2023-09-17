@@ -80,11 +80,6 @@ If you want to use your own AWS account, you'll have to execute some preliminary
 
 > :warning: **Running this workshop in your AWS account will incur costs**. You will need to delete the resources you create to avoid incurring further costs after you have completed the workshop. Follow the [clean up steps](./cleanup/README.md).
 
-
-## License
-
-The contents of this workshop are licensed under the [MIT-0 License](./LICENSE).
-
 ## Acknowledgements
 
 Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.
