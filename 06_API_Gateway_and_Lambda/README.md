@@ -20,23 +20,17 @@ Let's start building the HTTP API.
 2. In the **Functions** section, click on **Create function**.
 3. Select **Author from scratch**.
 
-<img src="images/lambda_1.png" alt="select blueprint" width="700px" />
+<img src="images/lambda_01.png" alt="select blueprint" width="700px" />
 
-4. Type **end-to-end-ml-lambda-function** in the function name textbox. Select _Use an existing role_ and then choose the IAM role whose name starts with **_LambdaInvokeSageMakerEndpointRole_** from the **Existing Role** dropdown. This will allow the function to invoke the real-time inference endpoint.
+4. Type **end-to-end-ml-lambda-function** in the function name textbox. Select **Use an existing role** and then choose the IAM role whose name starts with **_LambdaInvokeSageMakerEndpointRole_** from the **Existing Role** dropdown. This will allow the function to invoke the real-time inference endpoint.
 
-<img src="images/lambda_2.png" alt="Select IAM role" width="700px" />
+<img src="images/lambda_02.png" alt="Select IAM role" width="700px" />
 
 5. You are now redirected to the Lambda function page. In the **Function code** section, double click "lambda_function.py":
 
-<img src="images/lambda_5.png" alt="Configure API Gateway" width="700px" />
+<img src="images/lambda_03.png" alt="Configure API Gateway" width="700px" />
 
-6. Replace the existing code with with the following snippet, making sure that the indentation is matching:
-
-> ⚠️ **Warning**: the **ENDPOINT_NAME** variable must be set to the name of the endpoint that was deployed in the previus module of this workshop.
-
-Note: You could also retrieve the endpoint name by viewing the endpoints in the SageMaker console:
-<img src="images/lambda_7.png" alt="Endpoint list" width="700px" />
-<img src="images/lambda_8.png" alt="Endpoint config" width="700px" />
+6. Replace the Lambda function code with with the following snippet, making sure that the indentation is matching:
 
 ```
 # MIT No Attribution
@@ -61,8 +55,7 @@ import json
 import csv
 import os
 
-# Remember to update the endpoint name with the name of the SageMaker endpoint
-ENDPOINT_NAME = 'end-to-end-ml-sm-pipeline-endpoint-XXXXXXXXXX'
+ENDPOINT_NAME = os.environ.get('SAGEMAKER_ENDPOINT_NAME')
 runtime= boto3.client('runtime.sagemaker')
 
 def build_response(status_code, response_body):
@@ -108,24 +101,48 @@ def lambda_handler(event, context):
 
 ```
 
-The implementation is straightforward: the Lambda handler responds to OPTIONS and POST requests. When it receives a POST request, it invokes the Amazon SageMaker endpoint with the _Body_ parameter set to the request body, and when it receives the inference results, it sends the response to the caller.
+When the Lambda function receives a POST request, it invokes the Amazon SageMaker endpoint with the _Body_ parameter set to the request body, and when it receives the inference results, it returns the response to the caller.
 
 7. Click **Deploy** to save changes.
+
+8.  The first line of code in the Lambda function after the import statements retrieves the name of the SageMaker Endpoint you deployed in the previous module from an environment variable named `SAGEMAKER_ENDPOINT_NAME`. You are now going to create that environment variable.
+
+9. From the **Configuration** tab, choose **Environment variables**, then select **Edit**.
+
+<img src="images/lambda_09.png" alt="Environment variables" width="700px" />
+
+10. On the **Edit environment variables** screen, choose **Add environment variable**.
+
+<img src="images/lambda_10.png" alt="Edit environment variable" width="700px" /> 
+
+11. Enter `SAGEMAKER_ENDPOINT_NAME` as the **Key**. For the **Value**, use the SageMaker endpoint name you made a note of in the previous module. It is a name starting with _end-to-end-ml-sm-pipeline-endpoint_, followed by a few digits. Then choose **Save**.
+
+<img src="images/lambda_11.png" alt="Enter environment variable key and value" width="700px" />  
+
+You can also retrieve the SageMaker endpoint name by viewing the endpoints in the SageMaker console, as shown below. Note, you are looking for the name of the endpoint, not its URL.
+
+<img src="images/lambda_07.png" alt="Endpoint list" width="700px" />
+
+<img src="images/lambda_08.png" alt="Endpoint config" width="700px" />
+
+12. The environment variables section should now display the `SAGEMAKER_ENDPOINT_NAME` and the endpoint name you entered.
+
+<img src="images/lambda_12.png" alt="SageMaker Endpoint Name environment variable" width="700px" />  
 
 
 ## Create the Amazon API Gateway HTTP API
 
-1. In **Function overview**, choose **Add trigger** and select **API Gateway** as the source.
+1. In the **Function overview** section, choose **Add trigger** and select **API Gateway** as the source.
 
-<img src="images/lambda_3.png" alt="Configure API Gateway" width="700px" />
+<img src="images/lambda_04.png" alt="Configure API Gateway" width="700px" />
 
 2. Choose **Create a new API** and keep the API Type as **HTTP API**. In the **Security** section, choose **Open**, then choose **Add**.
 
-<img src="images/lambda_4.png" alt="Configure API Gateway" width="700px" />
+<img src="images/lambda_05.png" alt="Configure API Gateway" width="700px" />
 
 3. Click on the **API Gateway** trigger and from the **Configuration** tab, make a note of _API endpoint_. You will need this in the next module.
 
-<img src="images/lambda_6.png" alt="Configure API Gateway" width="700px" />
+<img src="images/lambda_06.png" alt="Configure API Gateway" width="700px" />
 
 > The API expects a POST HTTP request that contains a comma-delimited list of feature values in the body. If you try to naviagate to the API endpoint URL in the browser, the API will receive a GET request, so it will return HTTP status code 405 (Method Not Allowed).
 
