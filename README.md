@@ -1,7 +1,6 @@
-# End-to-end Machine Learning with Amazon SageMaker
+# End-to-End Machine Learning with Amazon SageMaker
 
-In this workshop, you will go through the steps required to build a machine learning application on AWS. You will perform an iteration of the Machine Learning process to build, train and deploy a model using Amazon SageMaker. You will then deploy a HTTP API using Amazon API Gateway to perform inferences from a web client. Finally, you will automate the ML workflow using Amazon SageMaker Pipelines.
-
+In this workshop, you will go through the steps required to build a machine learning application on AWS. You will perform an iteration of the machine learning process to build, train, and deploy a model using Amazon SageMaker. You will then deploy a HTTP API using Amazon API Gateway and AWS Lambda to perform prediction (inference) from a web client. Finally, you will automate the machine learning workflow using Amazon SageMaker Pipelines.
 
 ## The Machine Learning Process
 
@@ -62,8 +61,8 @@ This workshops consists of eight modules:
 - **Module 2**: Use Amazon SageMaker Studio Notebooks and standard Python libraries to perform fast experimentation.
 - **Module 3**: Perform data preprocessing and feature engineering using Amazon SageMaker Processing and SKLearn.
 - **Module 4**: Train a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether the machinery is going to fail.
-- **Module 5**: Deploy the feature engineering and ML models as an (inference) pipeline using Amazon SageMaker hosting. Optional: Use Sagemaker Model Monitor to track data drift violations against the training data baseline.
-- **Module 6**: Build a HTTP API using Amazon API Gateway and an AWS Lambda function that invokes the Amazon SageMaker endpoint for inference.
+- **Module 5**: Deploy the feature engineering and machine learning models as an inference pipeline using Amazon SageMaker hosting. Optionally, you can use Sagemaker Model Monitor to track data drift against the training data baseline.
+- **Module 6**: Build a HTTP API using Amazon API Gateway and an AWS Lambda function to invoke the Amazon SageMaker endpoint for inference.
 - **Module 7**: Use a web client to invoke the HTTP API and perform inference.
 - **Module 8**: Use Amazon SageMaker Pipelines to orchestrate the model build workflow and store models in model registry.
 
@@ -82,7 +81,7 @@ If you want to use your own AWS account, you'll have to execute some preliminary
 
 ## License
 
-The contents of this workshop are licensed under the [Apache 2.0 License](./LICENSE).
+The contents of this workshop are licensed under the [MIT-0 License](./LICENSE).
 
 ## Acknowledgements
 
