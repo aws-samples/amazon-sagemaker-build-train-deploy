@@ -121,7 +121,7 @@ When the Lambda function receives a POST request, it invokes the Amazon SageMake
 
 12. Choose **Save**.
 
-13. The environment variables section should now display the `SAGEMAKER_ENDPOINT_NAME` and the endpoint name you entered.
+13. The environment variables section should now display the environment variable you just created.
 
 <img src="images/lambda_12.png" alt="SageMaker Endpoint Name environment variable" width="700px" />  
 
