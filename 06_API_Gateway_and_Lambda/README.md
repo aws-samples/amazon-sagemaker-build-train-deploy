@@ -115,17 +115,13 @@ When the Lambda function receives a POST request, it invokes the Amazon SageMake
 
 <img src="images/lambda_10.png" alt="Edit environment variable" width="700px" /> 
 
-11. Enter `SAGEMAKER_ENDPOINT_NAME` as the **Key**. For the **Value**, use the SageMaker endpoint name you made a note of in the previous module. It is a name starting with _end-to-end-ml-sm-pipeline-endpoint_, followed by a few digits. Then choose **Save**.
+11. Enter `SAGEMAKER_ENDPOINT_NAME` as the **Key**. For the **Value**, use the SageMaker endpoint name you noted down in the previous module. The endpoint name starts with _end-to-end-ml-sm-pipeline-endpoint_.
 
 <img src="images/lambda_11.png" alt="Enter environment variable key and value" width="700px" />  
 
-You can also retrieve the SageMaker endpoint name by viewing the endpoints in the SageMaker console, as shown below. Note, you are looking for the name of the endpoint, not its URL.
+12. Choose **Save**.
 
-<img src="images/lambda_07.png" alt="Endpoint list" width="700px" />
-
-<img src="images/lambda_08.png" alt="Endpoint config" width="700px" />
-
-12. The environment variables section should now display the `SAGEMAKER_ENDPOINT_NAME` and the endpoint name you entered.
+13. The environment variables section should now display the `SAGEMAKER_ENDPOINT_NAME` and the endpoint name you entered.
 
 <img src="images/lambda_12.png" alt="SageMaker Endpoint Name environment variable" width="700px" />  
 
