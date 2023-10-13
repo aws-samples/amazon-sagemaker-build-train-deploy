@@ -9,6 +9,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
+from sklearn.metrics import roc_auc_score
 
 from sagemaker.session import Session
 from sagemaker.experiments import load_run
@@ -119,18 +120,12 @@ if __name__=='__main__':
         val_accuracy = accuracy_score(val_y, rounded_predict)
         val_precision = precision_score(val_y, rounded_predict)
         val_recall = recall_score(val_y, rounded_predict)
-
-        print("Accuracy Model A: %.2f%%" % (val_accuracy * 100.0))
-        print("Precision Model A: %.2f" % (val_precision))
-        print("Recall Model A: %.2f" % (1 - val_recall))
-
-        from sklearn.metrics import roc_auc_score
-
         val_auc = roc_auc_score(val_y, predictions)
-        print("Validation AUC A: %.2f" % (val_auc))
 
-        boto_session = boto3.session.Session()
-        sagemaker_session = Session(boto_session=boto_session)    
+        print(f'Accuracy: {val_accuracy:.2f}')
+        print(f'Precision: {val_precision:.2f}')
+        print(f'Recall: {val_recall:.2f}')
+        print(f'AUC: {val_auc:.2f}')
 
         run.log_artifact(name="model", value=model_joblib_path, media_type="text/plain", is_output=True)
         run.log_metric(name="val_auc", value = val_auc)
