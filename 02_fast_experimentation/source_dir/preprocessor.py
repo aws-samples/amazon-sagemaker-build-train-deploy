@@ -4,7 +4,6 @@ import warnings
 
 import pandas as pd
 import tarfile
-from pathlib import Path
 
 import joblib
 from sklearn.model_selection import train_test_split
@@ -127,25 +126,3 @@ if __name__=='__main__':
         run.log_artifact(name="val_data", value=val_features_output_path, media_type="text/csv", is_output=True)
         run.log_artifact(name="test_data", value=test_features_output_path, media_type="text/csv", is_output=True)
         run.log_artifact(name="featurizer_model", value=model_joblib_path, media_type="text/plain", is_output=True)
-
-    
-    s3 = boto3.client("s3")
-    print(f'Uploading to s3 bucket "{s3_bucket_name}" prefix "{s3_key_prefix}"')
-                
-    train_data_key = f'{s3_key_prefix}/data/preprocessed/train/train_features.csv'
-    s3.upload_file(train_features_output_path, s3_bucket_name, train_data_key)
-            
-    val_data_key = f'{s3_key_prefix}/data/preprocessed/val/val_features.csv'
-    s3.upload_file(val_features_output_path, s3_bucket_name, val_data_key)
-    
-    test_data_key = f'{s3_key_prefix}/data/preprocessed/test/test_features.csv'
-    s3.upload_file(test_features_output_path, s3_bucket_name, test_data_key)
-            
-    train_labels_key = f'{s3_key_prefix}/data/preprocessed/train/train_labels.csv'
-    s3.upload_file(train_labels_output_path, s3_bucket_name, train_labels_key)
-
-    val_labels_key = f'{s3_key_prefix}/data/preprocessed/val/val_labels_csv'
-    s3.upload_file(val_labels_output_path, s3_bucket_name, val_labels_key)
-
-    test_labels_key = f'{s3_key_prefix}/data/preprocessed/test/test_labels_csv'
-    s3.upload_file(test_labels_output_path, s3_bucket_name, val_labels_key)
