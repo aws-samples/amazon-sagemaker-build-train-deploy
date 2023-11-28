@@ -11,7 +11,6 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import roc_auc_score
 
-from sagemaker.session import Session
 from sagemaker.experiments import load_run
 
 def parse_args():
@@ -103,11 +102,8 @@ if __name__=='__main__':
         if not os.path.exists(model_dir):
             os.makedirs(model_dir)
         model_name = 'xgboost_model_{}.model'.format(str(int(time.time())))
-        model_key = 'xgboost_model{}.joblib'.format(str(int(time.time())))
         model_path = os.path.join(model_dir, model_name)
-        model_joblib_path = os.path.join(model_dir, model_key)
         xgb.save_model(model_path)
-        xgb.save_model(model_joblib_path)
 
         predictions = xgb.predict(dval)
         print ("Metrics for validation set")
@@ -127,7 +123,7 @@ if __name__=='__main__':
         print(f'Recall: {val_recall:.2f}')
         print(f'AUC: {val_auc:.2f}')
 
-        run.log_artifact(name="model", value=model_joblib_path, media_type="text/plain", is_output=True)
+        run.log_artifact(name="model", value=model_path, media_type="text/plain", is_output=True)
         run.log_metric(name="val_auc", value = val_auc)
         run.log_metric(name="val_accuracy", value = val_accuracy)
         run.log_metric(name="val_precision", value = val_precision)
