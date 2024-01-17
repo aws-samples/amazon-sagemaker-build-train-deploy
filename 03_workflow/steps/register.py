@@ -24,6 +24,10 @@ from sagemaker.serve.builder.model_builder import ModelBuilder
 from sagemaker.serve.builder.schema_builder import SchemaBuilder
 from sagemaker.serve import CustomPayloadTranslator
 
+# AWS Region
+session = boto3.session.Session()
+current_region = session.region_name
+
 def build_sklearn_sagemaker_model(role, featurizer):
     feature_columns_names = ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
     
@@ -63,7 +67,7 @@ def build_sklearn_sagemaker_model(role, featurizer):
         model_path="sklearn_model/",
         name="sklearn_featurizer",
         dependencies={"requirements": "requirements_inference.txt"},
-        image_uri=get_image_uri(framework="sklearn", region="us-west-2", version="1.2-1"),
+        image_uri=get_image_uri(framework="sklearn", region=current_region, version="1.2-1"),
         schema_builder=schema_builder,
         model_server=ModelServer.TORCHSERVE,
         inference_spec=SklearnModelSpec(),
