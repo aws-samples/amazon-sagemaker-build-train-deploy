@@ -28,6 +28,16 @@ from sagemaker.serve.builder.model_builder import ModelBuilder
 from sagemaker.serve.builder.schema_builder import SchemaBuilder
 from sagemaker.serve import CustomPayloadTranslator
 
+# Get the absolute path of this Python file
+current_file = os.path.abspath(__file__)
+
+# Extract just the folder name from the path
+folder_name = os.path.dirname(current_file)
+
+# AWS Region
+session = boto3.session.Session()
+current_region = session.region_name
+
 def get_model_artifacts_for_last_job(job_name_prefix):
     import boto3
     sagemaker_client = boto3.client('sagemaker')
@@ -110,8 +120,8 @@ def build_sklearn_sagemaker_model(role, featurizer):
     model_builder = ModelBuilder(
         model_path="sklearn_model/",
         name="sklearn_featurizer",
-        dependencies={"requirements": "requirements_inference.txt"},
-        image_uri=get_image_uri(framework="sklearn", region="us-west-2", version="1.2-1"),
+        dependencies={"requirements": f"{folder_name}/requirements_inference.txt"},
+        image_uri=get_image_uri(framework="sklearn", region=current_region, version="1.2-1"),
         schema_builder=schema_builder,
         model_server=ModelServer.TORCHSERVE,
         inference_spec=SklearnModelSpec(),
@@ -150,7 +160,7 @@ def build_xgboost_sagemaker_model(role, booster):
     model_builder = ModelBuilder(
         model=booster,
         model_path="xgboost_model/",
-        dependencies={"requirements": "requirements_inference.txt"},
+        dependencies={"requirements": f"{folder_name}/requirements_inference.txt"},
         schema_builder=schema_builder,
         role_arn=role)
     
