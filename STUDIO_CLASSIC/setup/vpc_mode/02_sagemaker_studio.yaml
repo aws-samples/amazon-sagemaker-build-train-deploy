@@ -84,9 +84,11 @@ Resources:
     Properties:
       AuthMode: IAM
       AppNetworkAccessType: "VpcOnly"
+      DefaultSpaceSettings:
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
       DefaultUserSettings:
         ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
-        SecurityGroups: 
+        SecurityGroups:
           - Fn::ImportValue:
               !Sub '${CoreNetworkingStackName}-SecurityGroup'
       DomainName: !Sub '${AWS::StackName}'
@@ -177,19 +179,6 @@ Resources:
                   - iam:GetRole
                   - iam:PassRole
                 Resource: '*'
-        - PolicyName: !Sub 'DenyIncorrectImages-${AWS::StackName}'
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Deny
-                Action:
-                  - sagemaker:CreateApp
-                Resource: '*'
-                Condition:
-                  ForAnyValue:StringNotLike:
-                    sagemaker:ImageArns:
-                      - "arn:aws:sagemaker:*:*:image/sagemaker-data-science-310-v1"
-                      - "arn:aws:sagemaker:*:*:image/jupyter-server-3"
         - PolicyName: !Sub 'KMSUser-${AWS::StackName}'
           PolicyDocument:
             Version: '2012-10-17'
