@@ -1,0 +1,183 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: VPC Mode - Provision the networking resources to be used by the Amazon SageMaker Studio domain.
+
+Resources:
+
+  SageMakerVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-vpc'
+
+  SageMakerInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-igw'
+
+  SageMakerIGWAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId:
+        Ref: SageMakerInternetGateway
+      VpcId:
+        Ref: SageMakerVPC
+
+  SageMakerPrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: SageMakerVPC
+      CidrBlock: 10.0.0.0/24
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: !Ref 'AWS::Region'
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-private-subnet1'
+
+  SageMakerPrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: SageMakerVPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: !Select
+        - 1
+        - Fn::GetAZs: !Ref 'AWS::Region'
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-private-subnet2'
+
+  SageMakerPrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref SageMakerVPC
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-private-routetable'
+
+  SageMakerPrivateRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: SageMakerPrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: SageMakerNATGateway
+
+  SageMakerPrivateSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: SageMakerPrivateSubnet1
+      RouteTableId:
+        Ref: SageMakerPrivateRouteTable        
+
+  SageMakerPrivateSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: SageMakerPrivateSubnet2
+      RouteTableId:
+        Ref: SageMakerPrivateRouteTable
+
+  SageMakerPublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref SageMakerVPC
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: !Ref 'AWS::Region'
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-public-subnet1'
+
+  SageMakerPublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref SageMakerVPC
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-public-routetable'
+
+  SageMakerPublicRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: SageMakerPublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: SageMakerInternetGateway
+
+  studioVPCPublicSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: SageMakerPublicSubnet1
+      RouteTableId:
+        Ref: SageMakerPublicRouteTable
+
+  SageMakerNATEIP:
+    DependsOn: SageMakerIGWAttachment
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-elastic-ip'
+
+  SageMakerNATGateway:
+    DependsOn: SageMakerIGWAttachment
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt 'SageMakerNATEIP.AllocationId'
+      SubnetId: !Ref SageMakerPublicSubnet1
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-nat-gateway'
+
+  SageMakerSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      SecurityGroupEgress:
+        - Description: All traffic is allowed outbound
+          IpProtocol: '-1'
+          CidrIp: 0.0.0.0/0
+      GroupDescription: 'Security Group for SageMaker Studio'
+      VpcId: !Ref SageMakerVPC
+      Tags:
+        - Key: Name
+          Value: studio-security-group
+
+  SageMakerSecurityGroupSelfIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      Description: Self-ingress to enable communication between intances within the same SG
+      IpProtocol: '-1'
+      SourceSecurityGroupId: !Ref SageMakerSecurityGroup
+      GroupId: !Ref SageMakerSecurityGroup
+
+Outputs:
+  SageMakerVPC:
+    Value: !Ref SageMakerVPC
+    Export:
+      Name: !Sub '${AWS::StackName}-VPC'
+  SageMakerSubnet1:
+    Value: !Ref SageMakerPrivateSubnet1
+    Export:
+      Name: !Sub '${AWS::StackName}-Subnet1'
+  SageMakerSubnet2:
+    Value: !Ref SageMakerPrivateSubnet2
+    Export:
+      Name: !Sub '${AWS::StackName}-Subnet2'
+  SageMakerSecurityGroup:
+    Value: !Ref SageMakerSecurityGroup
+    Export:
+      Name: !Sub '${AWS::StackName}-SecurityGroup'      

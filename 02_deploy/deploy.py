@@ -1,12 +1,9 @@
 import io
 import os
-import sys
-import json
 import joblib
 import subprocess
 
 import xgboost
-import sklearn
 import numpy as np
 import pandas as pd
 
@@ -15,12 +12,8 @@ import boto3
 from sagemaker import get_execution_role
 from sagemaker.s3 import S3Downloader
 from sagemaker.pipeline import PipelineModel
-from sagemaker import ModelMetrics, MetricsSource
-from sagemaker.s3_utils import s3_path_join
 from sagemaker.utils import unique_name_from_base
 from sagemaker.image_uris import retrieve as get_image_uri
-from sagemaker.deserializers import NumpyDeserializer
-from sagemaker.predictor import Predictor
 
 from sagemaker.serve import ModelServer
 from sagemaker.serve import InferenceSpec
@@ -28,7 +21,6 @@ from sagemaker.serve.builder.model_builder import ModelBuilder
 from sagemaker.serve.builder.schema_builder import SchemaBuilder
 from sagemaker.serve import CustomPayloadTranslator
 
-# AWS Region
 session = boto3.session.Session()
 current_region = session.region_name
 
@@ -80,18 +72,18 @@ def build_sklearn_sagemaker_model(role, featurizer):
     feature_columns_names = ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
     
     class SklearnRequestTranslator(CustomPayloadTranslator):
-        # This function converts the payload to bytes - happens on client side
+        # Converts the request payload to bytes - runs on the client side
         def serialize_payload_to_bytes(self, payload: object) -> bytes:
-            return payload.encode("utf-8");
+            return payload.encode("utf-8")
             
-        # This function converts the bytes to payload - happens on server side
+        # Converts the request byte stream to dataframe - runs on the server side
         def deserialize_payload_from_stream(self, stream) -> pd.DataFrame:
             df = pd.read_csv(io.BytesIO(stream.read()), header=None)
             df.columns = feature_columns_names
             return df
     
     class SklearnModelSpec(InferenceSpec):
-        def invoke(self, input_object: object, model: object):       
+        def invoke(self, input_object: object, model: object):
             features = model.transform(input_object)
             return features
     
@@ -126,20 +118,17 @@ def build_sklearn_sagemaker_model(role, featurizer):
 def build_xgboost_sagemaker_model(role, booster):
 
     class RequestTranslator(CustomPayloadTranslator):
-        # This function converts the payload to bytes - happens on client side
+        # Convert the request dataframe to bytes - runs on the client side
         def serialize_payload_to_bytes(self, payload: object) -> bytes:
-            return self._convert_numpy_to_bytes(payload)
+            buffer = io.BytesIO()
+            np.save(buffer, payload)
+            return buffer.getvalue()
             
-        # This function converts the bytes to payload - happens on server side
+        # Convert the byte stream to XGBoost data matrix - runs on the server side
         def deserialize_payload_from_stream(self, stream) -> xgboost.DMatrix:
             np_array = np.load(io.BytesIO(stream.read())).reshape((1, -1))
             dmatrix = xgboost.DMatrix(np_array)
             return dmatrix
-            
-        def _convert_numpy_to_bytes(self, np_array: np.ndarray) -> bytes:
-            buffer = io.BytesIO()
-            np.save(buffer, np_array)
-            return buffer.getvalue()
 
     schema_builder=SchemaBuilder(
         sample_input=np.array([0.647088,0.467287,-0.191472,0.720195,-0.536976,0.0,1.0,0.0]),
@@ -180,40 +169,18 @@ def deploy_model(pipeline_model, instance_type, wait):
                           endpoint_name=endpoint_name,
                           wait=wait)
 
-def run_test_inferences(endpoint_name):
-    from io import BytesIO
-    
-    predictor = Predictor(endpoint_name=endpoint_name)
-
-    payload = "L,298.4,308.2,1582,70.7,216"
-    buffer = predictor.predict(payload)
-    np_bytes = BytesIO(buffer)
-    print(f"Inference payload: {payload}")
-    print(f"Inference result: {np.load(np_bytes, allow_pickle=True)}")
-
-    payload = "M,298.4,308.2,1582,30.2,214"
-    buffer = predictor.predict(payload)
-    np_bytes = BytesIO(buffer)
-    print(f"Inference payload: {payload}")
-    print(f"Inference result: {np.load(np_bytes, allow_pickle=True)}")
-
 if __name__ == "__main__":
+    role=get_execution_role()
+    print(f'Execution role is: {role}')
 
-    if len(sys.argv) > 2 and sys.argv[1] == "--run-inference":
-        endpoint_name = sys.argv[2]
-        run_test_inferences(endpoint_name)
-    else:
-        role=get_execution_role()
-        print(role)
+    sklearn_job_prefix = "amzn-sm-btd-preprocess"
+    xgboost_job_prefix = "amzn-sm-btd-train"
 
-        sklearn_job_prefix = "amzn-sm-btd-preprocess"
-        xgboost_job_prefix = "amzn-sm-btd-train"
+    featurizer, booster = load_models(sklearn_job_prefix, xgboost_job_prefix)
     
-        featurizer, booster = load_models(sklearn_job_prefix, xgboost_job_prefix)
-        
-        sklearn_model = build_sklearn_sagemaker_model(role, featurizer)
-        xgboost_model = build_xgboost_sagemaker_model(role, booster)
-    
-        pipeline_model = build_pipeline_model(role, sklearn_model, xgboost_model)
-    
-        deploy_model(pipeline_model, "ml.m5.xlarge", wait=False)
+    sklearn_model = build_sklearn_sagemaker_model(role, featurizer)
+    xgboost_model = build_xgboost_sagemaker_model(role, booster)
+
+    pipeline_model = build_pipeline_model(role, sklearn_model, xgboost_model)
+
+    deploy_model(pipeline_model, "ml.m5.xlarge", wait=False)
