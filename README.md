@@ -71,7 +71,7 @@ Please follow the order of modules because the modules depend on the results fro
 ## Running this workshop
 
 ### AWS-run event using AWS Workshop Studio
-If you are attending a [End-to-End Machine Learning with Amazon SageMaker Workshop](https://catalog.workshops.aws/end-to-end-machine-learning-with-amazon-sagemaker) run by AWS, the AWS event facilitator provides you access to a temporary AWS account preconfigured for this workshop. Proceed to <a href="./01_configure_sagemaker_studio/README.md">**Module 01**</a>.
+If you are attending a [End-to-End Machine Learning with Amazon SageMaker Workshop](https://catalog.workshops.aws/end-to-end-machine-learning-with-amazon-sagemaker) run by AWS, the AWS event facilitator provides you access to a temporary AWS account preconfigured for this workshop. Proceed to <a href="./01_build_and_train/01_build_and_train.ipynb">**Module 1: Build and train models**</a>.
 
 ### Self-paced using your AWS account
 If you want to use your own AWS account, you'll have to execute some preliminary configuration steps as described in the **<a href="./setup/README.md">Setup Guide</a>**.
