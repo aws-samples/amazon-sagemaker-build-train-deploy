@@ -16,9 +16,17 @@ In this module, you will open Amazon SageMaker Studio and clone this GitHub repo
 
 	<img src="images/studio_console_2.png" alt="Studio console 2" width="800px" />
 	
-4. Amazon SageMaker Studio will load. Then you will be redirected to the Studio interface.
+4. Amazon SageMaker Studio will load. Then you will be redirected to the Studio interface. For this workshop you will use [Amazon SageMaker Studio Classic](https://docs.aws.amazon.com/sagemaker/latest/dg/studio.html). Launch it by clicking on the highlighted button under **Applications**.  
 
 	<img src="images/sagemaker_studio_home.png" alt="Studio interface" width="700px" />
+
+5. Within SageMaker Studio Classic, launch the IDE by clicking **Open** in the highlighted area. 
+
+	<img src="images/sagemaker_classic.png" alt="Studio Classic interface" width="700px" />
+
+6.  The IDE will load. 
+
+	<img src="images/sagemaker_classic_home.png" alt="Studio Classic IDE]" width="700px" />
 
 
 ## Clone the GitHub repository
@@ -39,9 +47,11 @@ In this module, you will open Amazon SageMaker Studio and clone this GitHub repo
     
     <img src="images/studio_clone_repo.png" alt="Clone repo in SageMaker Studio" width="800px" />
 	
-3. Browse to the folder **01_configure_sagemaker_studio** and open the file **01_configure_sagemaker_studio.ipynb**. 
+3. Browse to the folder **STUDIO_CLASSIC/01_configure_sagemaker_studio** and open the file **01_configure_sagemaker_studio.ipynb**.
 
-    <img src="images/studio_select_first_notebook.png" alt="Open the first notebook in SageMaker Studio" width="800px" />
+> Note: All files related to this workshop are in the `STUDIO_CLASSIC` folder.
+
+<img src="images/studio_select_first_notebook.png" alt="Open the first notebook in SageMaker Studio" width="800px" />
     
 4. If a kernel is not automatically selected for your notebook, choose the kernel by clicking on the **Kernel** button on the top-right and them selecting the **Data Science 3.0** image and **Python 3** kernel as shown below:
 
