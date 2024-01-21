@@ -1,17 +1,17 @@
 # Module 0: Prepare Amazon SageMaker Studio
 
-In this module, you will open Amazon SageMaker Studio and clone this GitHub repository in your SageMaker Studio environment.
+In this module, you will open SageMaker Studio and clone this GitHub repository in your SageMaker Studio environment.
 
-## Open Amazon SageMaker Studio
+## Open SageMaker Studio
 
 1. In the AWS Management Console, search for "SageMaker" and select Amazon SageMaker in the results.
 	
 <img src="../images/module_00/aws_console_search_sm.png" alt="Search SageMaker" width="700px" />
 
-2. You’ll be taken to the Amazon SageMaker dashboard. Click on **Studio** in the left sidebar menu. The Get Started box on the right should show the name of the domain and default user profile. Select **Open Studio**.	
+2. You’ll be taken to the SageMaker console. Click on **Studio** in the left sidebar menu. The Get Started box on the right should show the name of the domain and default user profile. Select **Open Studio**.	
 <img src="../images/module_00/studio_console.png" alt="Studio console" width="800px" />
 	
-3. Amazon SageMaker Studio will load. In this module (module 1), you will use a [JupyterLab space](https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-jl.html), a private space within SageMaker Studio that manages the storage and compute resources needed to run the JupyterLab application. The JupyterLab application is a web-based interactive development environment (IDE) for notebooks, code, and data. Launch the JupyterLab application by clicking on the highlighted button under **Applications**, then choose **Create JupyterLab space**.  
+3. SageMaker Studio will load. In this module (module 1), you will use a [JupyterLab space](https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-jl.html), a private space within SageMaker Studio that manages the storage and compute resources needed to run the JupyterLab application. The JupyterLab application is a web-based interactive development environment (IDE) for notebooks, code, and data. Launch the JupyterLab application by clicking on the highlighted button under **Applications**, then choose **Create JupyterLab space**.  
 
 <img src="../images/module_00/sagemaker_studio_home.png" alt="Studio interface" width="700px" />
 
