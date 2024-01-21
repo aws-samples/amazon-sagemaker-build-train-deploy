@@ -2,7 +2,7 @@
 
 In this workshop, you will go through the steps required to build a machine learning application on AWS using Amazon SageMaker. 
 
-You will learn how to start experimentation in the SageMaker Studio environment using a familiar JupyterLab notebook experience and run your local code as a SageMaker training job using the remote function feature. You will also learn how to use SageMaker Studio's Code Editor, which is based on Code-OSS (Visual Studio Code – Open Source), to deploy the model into an endpoint and build an end to end pipeline. You wull also learn how to build an HTTP endpoint using AWS Lambda and Amazon API Gateway to serve inference requests from a web client.
+You will learn how to start experimentation in the SageMaker Studio environment using a familiar JupyterLab notebook experience and run your local code as a SageMaker training job using the remote function feature. You will also learn how to use SageMaker Studio's Code Editor, which is based on Visual Studio Code – Open Source (Code-OSS), to deploy the model into an endpoint and build an end to end pipeline. You wull also learn how to build an HTTP endpoint using AWS Lambda and Amazon API Gateway to serve inference requests from a web client.
 
 ## The Machine Learning Process
 
