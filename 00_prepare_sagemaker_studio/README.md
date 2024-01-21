@@ -1,4 +1,4 @@
-# Module 1: Configure Amazon SageMaker Studio
+# Module 0: Prepare Amazon SageMaker Studio
 
 In this module, you will open Amazon SageMaker Studio and clone this GitHub repository in your SageMaker Studio environment.
 
