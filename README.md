@@ -1,4 +1,4 @@
-# End-to-End Machine Learning with Amazon SageMaker
+# Scale complete ML development with Amazon SageMaker Studio
 
 In this workshop, you will go through the steps required to build a machine learning application on AWS using Amazon SageMaker. 
 
