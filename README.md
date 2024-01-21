@@ -86,6 +86,6 @@ Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ic
 [Giuseppe A. Porcelli](https://it.linkedin.com/in/giuporcelli) - Principal ML Specialist Solutions Architect - Amazon Web Services<br />
 [Antonio Duma](https://it.linkedin.com/in/antoniod82) - Senior Startup Solutions Architect - Amazon Web Services <br />
 [Hasan Poonawala](https://www.linkedin.com/in/hasanp) - Senior ML Specialist Solutions Architect - Amazon Web Services <br />
-[Mehran Nikoo](https://www.linkedin.com/in/mnikoo/) - Senior Digital Native Solutions Architect - Amazon Web Services <br />
+[Mehran Nikoo](https://www.linkedin.com/in/mnikoo/) - Senior Solutions Architect - Amazon Web Services <br />
 [Bruno Pistone](https://www.linkedin.com/in/bpistone) - AI/ML Specialist Solutions Architect - Amazon Web Services<br />
-[Durga Sury](https://www.linkedin.com/in/durgasury) - ML Solution Architect - Amazon Web Services<br />
+[Durga Sury](https://www.linkedin.com/in/durgasury) - ML Solutions Architect - Amazon Web Services<br />
