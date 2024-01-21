@@ -56,10 +56,9 @@ This diagram shows what you will be building in this workshop:
 
 ## Modules
 
-This workshops consists of eight modules:
+This workshops consists of six modules:
 
-- **Module 0.0**: Access the AWS Console.
-- **Module 0.1**: Configure SageMaker Studio and clone the GitHub repository.
+- **Module 0**: Access the AWS Console and clone the GitHub repository.
 - **Module 1**: Use a JupyterLab space in SageMaker Studio to perform experimentation and feature engineering, and build and train a regression model using XGBoost. The model will predict whether the machinery is going to fail.
 - **Module 2**: Use the Code-OSS Editor in SageMaker Studio to deploy the model to an inference endpoint.
 - **Module 3**: Still using the Code-OSS Editor, build an end-to-end pipeline to download the data source, perform feature engineering, train a model, register it in the model registry, and deploy it into an inference endpoint.
