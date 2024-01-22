@@ -34,7 +34,7 @@ You will use the <a href="https://archive.ics.uci.edu/ml/datasets/AI4I+2020+Pred
 
 The dataset consists of 10,000 records and 14 features, representing some measurements that have been collected on the machinery, plus the indication of failure, if any. This is a basic dataset that oversimplifies the Predictive Maintenance task. However, it keeps this workshop easy to follow while being a good representative of the various steps of the machine learning workflow.
 
-Your goal is to build a simple machine learning model that predicts whether a piece of machinery is going to fail (<b>Predictive Maintenance</b>).
+Your goal is to build a simple machine learning model that predicts whether a piece of machinery is going to fail.
 
 Following is an excerpt from the dataset:
 
@@ -45,7 +45,7 @@ Following is an excerpt from the dataset:
 |3|L47182|L|298.1|308.5|...|0|
 |51|L47230|L|298.9|309.1|...|1|
 
-The target variable, **Machine failure**, is a binary attributes, so it suggests the problem is a binary classification problem.
+The binary (0 or 1) nature of the target variable, **Machine failure**, suggests you are solving a binary classification problem. In this workshop, you will build a regression model, which will predict a continuous in the range [0,1). Using a regression model to solve a binary classification problem is a common approach. The predicted regression score indicates the system’s certainty that the given observation belongs to the positive class. To make the decision about whether the observation should be classified as positive or negative, as a consumer of this score, you can interpret the score by picking a classification threshold (cut-off) and compare the score against it. Any observations with scores higher than the threshold are then predicted as the positive class and scores lower than the threshold are predicted as the negative class. To learn more about this approach, read https://docs.aws.amazon.com/machine-learning/latest/dg/binary-classification.html.
 
 
 ## Solution Architecture
