@@ -8,4 +8,4 @@
 
 <img src="../images/module_00/studio_console.png" alt="Studio console" width="700px" />
 	
-3. Once SageMaker Studio loads, proceed to <a href="../01_build_and_train/README.md">README in Module 1: Build and train models</a>.
+3. Once SageMaker Studio loads, proceed to <a href="../01_build_and_train/README.md">Module 1: Build and train models</a>.

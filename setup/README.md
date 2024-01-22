@@ -111,6 +111,6 @@ Please execute the following steps:
 	<img src="images/cloudformation_check_status_stack2.png" alt="CloudFormation check stack creation" width="700px" />
 	
 
-### Proceed to the first module
+### Proceed to the workshop modules
 
-The setup is now complete. Proceed to <a href="../00_open_sagemaker_studio/README.md">**Module 01: Prepare SageMaker Studio**</a>.
+The setup is now complete. Proceed to <a href="../00_open_sagemaker_studio/README.md">**Module 0: Open SageMaker Studio**</a>.
