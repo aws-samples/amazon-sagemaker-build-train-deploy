@@ -113,4 +113,4 @@ Please execute the following steps:
 
 ### Proceed to the first module
 
-The setup is now complete. Proceed to <a href="../00_prepare_sagemaker_studio/README.md">**Module 01: Prepare SageMaker Studio**</a>.
+The setup is now complete. Proceed to <a href="../00_open_sagemaker_studio/README.md">**Module 01: Prepare SageMaker Studio**</a>.
