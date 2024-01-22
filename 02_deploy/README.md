@@ -105,3 +105,7 @@ python3 test.py ENDPOINT_NAME
 <img src="../images/module_02/test.png" alt="Open test script" width="800px" />
 
 You should see two inference results in the Terminal window.
+
+
+## Proceed to module 3: Create a complete deployment pipeline
+You have completed Module 2: Deploy the models. Please proceed to [Module 3: Create a complete pipeline](../03_workflow/README.md).
