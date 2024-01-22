@@ -19,8 +19,10 @@ def run_test_inferences(endpoint_name):
     print(f"Inference payload: {payload}")
     print(f"Inference result: {np.load(np_bytes, allow_pickle=True)}")
 
+if __name__ == "__main__":
     if len(sys.argv) == 2:
         endpoint_name = sys.argv[1]
         run_test_inferences(endpoint_name)
-    else:    
+    else:
+        print('ERROR: Expected endpoint name as an argument')
         exit(1)
