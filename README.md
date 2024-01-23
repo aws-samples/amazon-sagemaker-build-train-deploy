@@ -70,12 +70,12 @@ Please follow the order of modules because the modules depend on the results fro
 ## Running this workshop
 
 ### AWS-run event using AWS Workshop Studio
-If you are attending the **Scale complete ML development with Amazon SageMaker Studio** run by AWS, the AWS event facilitator provides you access to a temporary AWS account preconfigured for this workshop. Proceed to <a href="./00_prepare_sagemaker_studio/README.md">**Module 0: Prepare SageMaker Studio**</a>.
+If you are attending the **Scale complete ML development with Amazon SageMaker Studio** workshop run by AWS, the AWS event facilitator has provided you access to a temporary AWS account preconfigured for this workshop. Proceed to <a href="./00_open_sagemaker_studio/README.md">**Module 0: Open SageMaker Studio**</a>.
 
 ### Self-paced using your AWS account
 If you want to use your own AWS account, you'll have to execute some preliminary configuration steps as described in the **<a href="./setup/README.md">Setup Guide</a>**.
 
-> :warning: **Running this workshop in your AWS account will incur costs**. You will need to delete the resources you create to avoid incurring further costs after you have completed the workshop. Follow the [clean up steps](./cleanup/README.md).
+> :warning: **Running this workshop in your AWS account will incur costs**. You will need to delete the resources you create to avoid incurring further costs after you have completed the workshop. See the [clean up steps](./cleanup/README.md).
 
 ## Acknowledgements
 

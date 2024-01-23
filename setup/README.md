@@ -9,7 +9,7 @@ The environment is already set up for you. Proceed to <a href="../01_configure_s
 
 > :warning: **Run this workshop in sandbox/playground AWS accounts only**. This workshop is meant to be used in sandbox/playground environments only. Do not deploy the resources or grant permissions described below in controlled or production environments.
 
-If you are going to use your own AWS Account, we assume you have the following permissions in the sandbox AWS account you are going to use for the workshop:
+If you are using your own AWS Account, the IAM user/role you are using to provision the resources should have the following permissions in the sandbox AWS account you are using for the workshop:
 ```
       - "arn:aws:iam::aws:policy/ReadOnlyAccess"
       - "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
@@ -66,7 +66,7 @@ Follow these steps:
 	
 	<img src="images/cloudformation_create_stack1_step_1.png" alt="CloudFormation create stack screen 1" width="700px" />
 	
-6. On the **Specify stack details** screen, input a stack name like _endtoendml-workshop-networking_ and press **Next**.
+6. On the **Specify stack details** screen, input a stack name like `endtoendml-workshop-networking` and press **Next**.
 	
 	<img src="images/cloudformation_create_stack1_step_2.png" alt="CloudFormation create stack screen 2" width="700px" />
 	
@@ -96,7 +96,7 @@ Please execute the following steps:
 	
 	<img src="images/cloudformation_create_stack2_step_1.png" alt="CloudFormation create stack screen 1" width="700px" />
 	
-3. On the **Specify stack details** screen, enter a name like _endtoendml-workshop-domain as the Stack name. For the **CoreNetworkingStackName** parameter, enter the name of the stack you created earlier (_endtoendml-workshop-networking_ if you used the value we suggested) and enter a user profile name or accept the default value. Finally, press **Next**.
+3. On the **Specify stack details** screen, enter a name like `endtoendml-workshop-domain` as the Stack name. For the **CoreNetworkingStackName** parameter, enter the name of the stack you created earlier (if you used the value suggested on this page, the stack name would be `endtoendml-workshop-networking`). Accept the default values for **KMSValue** and **UserProfileName** parameters. Finally, press **Next**.
 	
 	<img src="images/cloudformation_create_stack2_step_2.png" alt="CloudFormation create stack screen 2" width="700px" />
 	

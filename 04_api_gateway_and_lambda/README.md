@@ -1,16 +1,12 @@
-# Module 6: Build a HTTP API using Amazon API Gateway and AWS Lambda
+# Module 4: Build a HTTP API using Amazon API Gateway and AWS Lambda
 
-> ⚠️ This module does not have a Jupyter notebook. 
-
-After deploying the model to a fully-managed Amazon SageMaker endpoint, you are ready to build a HTTP API that will be invoked by client applications to perform inferences.
-
-Although you can call the Amazon SageMaker endpoint directly, adding an HTTP API in Amazon API Gateway in front of the SageMaker endpoint provides more control over user authorization, usage profiles, throttling, API versioning, etc. 
+After deploying the model to a fully-managed Amazon SageMaker inference endpoint, you are ready to build an HTTP API to allow web client applications to perform inferences. Although you can call the Amazon SageMaker endpoint directly, adding an HTTP API in Amazon API Gateway in front of the SageMaker endpoint provides more control over user authorization, usage profiles, throttling, API versioning, etc. 
 
 After building the HTTP API, the request flow would be as follows:
 
 1. The client application send a HTTP POST request to the Amazon API Gateway endpoint.
 2. The Amazon API Gateway application passes the request to an AWS Lambda function, which processes the request and calls the Amazon SageMaker HTTPS endpoint where the model is hosted.
-3. Lambda function receives the inference response from Amazon SageMaker endpoint and send it back to the client via Amazon API Gateway.
+3. Lambda function receives the inference response from Amazon SageMaker endpoint and sends it back to the client via Amazon API Gateway.
 
 Let's start building the HTTP API.
 
@@ -148,8 +144,6 @@ When the Lambda function receives a POST request, it invokes the Amazon SageMake
 
 > The API expects a POST HTTP request that contains a comma-delimited list of feature values in the body. If you try to naviagate to the API endpoint URL in the browser, the API will receive a GET request, so it will return HTTP status code 405 (Method Not Allowed).
 
-## You have completed module 4
+## Proceed to Module 5
 
-You have now created an HTTP API that accepts inference requests. 
-
-Proceed to module 5 to test the new HTTP API endpoint.
+You have completed Module 4: Build a HTTP API using Amazon API Gateway and AWS Lambda. Please proceed to [Module 5: Invoke the HTTP API from the browser](../05_invoke_api/README.md).

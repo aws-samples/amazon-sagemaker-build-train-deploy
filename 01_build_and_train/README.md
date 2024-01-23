@@ -1,12 +1,12 @@
 # Module 1: Build and train models
 
-In this module, you will create a JupyterLab space in SageMaker Studio and clone this GitHub repository in that JupyterLab space. You will then build and train models using a notebook in the newly created JupyterLab space.
+In this module, you will create a JupyterLab space in SageMaker Studio and clone this GitHub repository in that space. You will then build and train models using a Jupyter notebook in the newly created JupyterLab space. 
 
-In this module (Module 1), you will use a [JupyterLab space](https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-jl.html), a private space within SageMaker Studio that manages the storage and compute resources needed to run the JupyterLab application. The JupyterLab application is a web-based interactive development environment (IDE) for notebooks, code, and data.
+The JupyterLab application is a web-based interactive development environment (IDE) for notebooks, code, and data. A [JupyterLab space](https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-jl.html) is a private space within SageMaker Studio that manages the storage and compute resources needed to run the JupyterLab application. 
 
 ## Create a JupyterLab space in SageMaker Studio
 
-1.  Launch the JupyterLab application by clicking on the **JupyterLab** button under **Applications**, then choose **Create JupyterLab space**.  
+1.  In SageMaker Studio, launch the JupyterLab application by clicking on the **JupyterLab** button under **Applications**, then choose **Create JupyterLab space**.  
 
 <img src="../images/module_01/sagemaker_studio_home.png" alt="Studio interface" width="700px" />
 
@@ -31,7 +31,7 @@ In this module (Module 1), you will use a [JupyterLab space](https://docs.aws.am
 
 1. In the **File** menu, choose **New >> Terminal**
 
-	<img src="../images/module_01/studio_new_terminal.png" alt="Studio New Terminal" width="800px" />
+	<img src="../images/module_01/studio_new_terminal.png" alt="Studio New Terminal" width="600px" />
 
 	This will open a terminal window in the Jupyter interface.
 
@@ -54,5 +54,6 @@ In this module (Module 1), you will use a [JupyterLab space](https://docs.aws.am
 
 2. Follow the instructions in the Jupyter notebook.
 
-## Proceed to Module 2: Deploy the models
+## Proceed to Module 2
+
 You have completed Module 1: Build and train models. Please proceed to [Module 2: Deploy the models](../02_deploy/README.md).
