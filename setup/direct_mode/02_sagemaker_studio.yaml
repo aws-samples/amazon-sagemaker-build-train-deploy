@@ -83,7 +83,9 @@ Resources:
     Type: AWS::SageMaker::Domain
     Properties:
       AuthMode: IAM
-      AppNetworkAccessType: "PublicInternetOnly "      
+      AppNetworkAccessType: "PublicInternetOnly"      
+      DefaultSpaceSettings:
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn      
       DefaultUserSettings:
         ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
       DomainName: !Sub '${AWS::StackName}'
@@ -118,35 +120,6 @@ Resources:
                 - 'arn:aws:sagemaker:${AWS::Region}:${AccountId}:image/sagemaker-data-science-310-v1'
                 - AccountId: !FindInMap [SageMakerImageRegionToAccountMap, !Ref 'AWS::Region', accountid]      
 
-  JupyterServerApp:
-    Type: AWS::SageMaker::App
-    DependsOn: UserProfile
-    Properties:
-      AppName: default
-      AppType: JupyterServer
-      DomainId: !Ref StudioDomain
-      UserProfileName: !Ref UserProfileName
-      ResourceSpec: 
-        SageMakerImageArn: 
-          Fn::Sub:
-            - 'arn:aws:sagemaker:${AWS::Region}:${AccountId}:image/jupyter-server-3'
-            - AccountId: !FindInMap [SageMakerImageRegionToAccountMap, !Ref 'AWS::Region', accountid]
-   
-  DataScienceApp:
-    Type: AWS::SageMaker::App
-    DependsOn: UserProfile
-    Properties: 
-      AppName: datascience-3-ml-t3-medium
-      AppType: KernelGateway
-      DomainId: !GetAtt StudioDomain.DomainId
-      ResourceSpec: 
-        InstanceType: ml.t3.medium
-        SageMakerImageArn: 
-          Fn::Sub:
-            - 'arn:aws:sagemaker:${AWS::Region}:${AccountId}:image/sagemaker-data-science-310-v1'
-            - AccountId: !FindInMap [SageMakerImageRegionToAccountMap, !Ref 'AWS::Region', accountid]
-      UserProfileName: !Ref UserProfileName
-
   SageMakerExecutionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -165,28 +138,6 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
         - arn:aws:iam::aws:policy/AmazonS3FullAccess
       Policies:
-        - PolicyName: !Sub 'PassRolePolicy-${AWS::StackName}'
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - iam:GetRole
-                  - iam:PassRole
-                Resource: '*'
-        - PolicyName: !Sub 'DenyIncorrectImages-${AWS::StackName}'
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Deny
-                Action:
-                  - sagemaker:CreateApp
-                Resource: '*'
-                Condition:
-                  ForAnyValue:StringNotLike:
-                    sagemaker:ImageArns:
-                      - "arn:aws:sagemaker:*:*:image/sagemaker-data-science-310-v1"
-                      - "arn:aws:sagemaker:*:*:image/jupyter-server-3"
         - PolicyName: !Sub 'KMSUser-${AWS::StackName}'
           PolicyDocument:
             Version: '2012-10-17'

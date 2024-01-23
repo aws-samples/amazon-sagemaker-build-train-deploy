@@ -1,12 +1,12 @@
 # Module 2: Deploy the models
 
-In this module, you will create a Code Editor space in SageMaker Studio and clone the GitHub repository, this time in the Code Editor environment. You will then deploy the trained models to a SageMaker inference endpoint using a deployment script written in Python.
+In this module, you will create a Code Editor space in SageMaker Studio and clone the GitHub repository, this time in the Code Editor environment. You will then deploy the trained models on a SageMaker inference endpoint using a deployment script written in Python.
 
 The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.html), which is based on [Code-OSS, Visual Studio Code - Open Source](https://github.com/microsoft/vscode#visual-studio-code---open-source-code---oss) and fully integrated with SageMaker Studio, allows you to write, test, debug, and run your analytics and machine learning code using the popular lightweight IDE.
 
 ## Create a Code Editor space in SageMaker Studio
 
-1. Launch the Code Editor application by clicking on the **Code Editor** button under **Applications**, then choose **Create Code Editor space**.  
+1. In SageMaker Studio, launch the Code Editor application by clicking on the **Code Editor** button under **Applications**, then choose **Create Code Editor space**.  
 
 <img src="../images/module_02/sagemaker_studio_home.png" alt="SageMaker Studio Home" width="700px" />
 
@@ -16,20 +16,20 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 3. A new page shows the settings for the new JupyterLab space you created. Wait for a few seconds until the **Run space** button becomes active. Then run the space.  
 
-<img src="../images/module_02/run_space.png" alt="Create JupyterLab space" width="700px" />
+<img src="../images/module_02/run_space.png" alt="Run Code Editor space" width="700px" />
 
 4. Choose the **Open Code Editor** when it appears.
 
-<img src="../images/module_02/open_code_editor.png" alt="Create JupyterLab space" width="700px" />
+<img src="../images/module_02/open_code_editor.png" alt="Open Code Editor space" width="700px" />
 
-5.  The JupyterLab IDE will load.
+5.  The Code Editor IDE will load.
 
-<img src="../images/module_02/code_editor_home.png" alt="Studio Classic IDE" width="700px" />
+<img src="../images/module_02/code_editor_home.png" alt="Code Editor IDE" width="700px" />
 
 
 ## Clone the GitHub repository
 
-1. As highlighted below, from the Explorer menu, choose **Terminal >> New Terminal**
+1. As highlighted below, from the Explorer menu, choose **File >> New >> Terminal**
 
 	<img src="../images/module_02/code_editor_new_terminal.png" alt="Code Editor New Terminal" width="800px" />
 
@@ -61,7 +61,7 @@ Choose "Open Folder" button. Alternatively, from the Explorer menu, choose **Fil
 	- Deploy the pipeline model on a real-time inference endpoint. Learn more about [Deploying models for inference](https://docs.aws.amazon.com/sagemaker/latest/dg/deploy-model.html). 
 
 
-3. Open the Terminal window again. If you have closed it or cannot locate it, open the Explorer menu and choose **Terminal >> New Terminal**.
+3. Open the Terminal window again. If you have closed it or cannot locate it, open the Explorer menu and choose **File >> New >> Terminal**.
 
 4. In the Terminal window, run the following command to install the dependencies required by the script.
 
@@ -94,7 +94,7 @@ The deployment script will deploy the model to a SageMaker inference endpoint. N
 	- The test script uses the **Predictor** class from SageMaker Python SDK to predict scores based on the input feature values. The model pipeline behind the inference endpoint will first use the featurizer model to preprocess the features, and then pass the result to the XGBoost regression model to predict the score. 
 	- Note that the test script expects the SageMaker inference endpoint name as an input argument.
 
-3. Go back to the Terminal window. If you have closed it or cannot locate it, open the Explorer menu and choose **Terminal >> New Terminal**.
+3. Go back to the Terminal window. If you have closed it or cannot locate it, open the Explorer menu and choose **File >> New >> Terminaln**.
 
 4. Make sure you are in the **02_deploy** folder in the Terminal, then type the following commmand, replacing ENDPOINT_NAME with the name you made a note of in the previous section.
 
@@ -107,5 +107,6 @@ python3 test.py ENDPOINT_NAME
 You should see two inference results in the Terminal window.
 
 
-## Proceed to module 3: Create a complete deployment pipeline
-You have completed Module 2: Deploy the models. Please proceed to [Module 3: Create a complete pipeline](../03_workflow/README.md).
+## Proceed to Module 3
+
+You have completed Module 2: Deploy the models. Please proceed to [Module 3: Create a complete deployment pipeline](../03_workflow/README.md).
