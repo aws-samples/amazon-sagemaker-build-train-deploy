@@ -4,6 +4,17 @@ In this workshop, you will go through the steps required to build a machine lear
 
 You will learn how to start experimentation in the SageMaker Studio environment using a familiar JupyterLab notebook experience and run your local code as a SageMaker training job using the remote function feature. You will also learn how to use SageMaker Studio's Code Editor, which is based on Visual Studio Code – Open Source (Code-OSS), to deploy the model into an endpoint and build an end to end pipeline. You wull also learn how to build an HTTP endpoint using AWS Lambda and Amazon API Gateway to serve inference requests from a web client.
 
+This workshop covers some of the new features announced at AWS re:Invent 2023. To learn more about the new features, watch the session recording.
+
+<a href="https://www.youtube.com/embed/stB-F6jswno?si=20oR_uX5CFLo9ebR">
+    <p align="center">
+        <img src="https://img.youtube.com/vi/stB-F6jswno/0.jpg" />
+        <br>
+        AWS re:Invent 2023 - Scale complete ML development with Amazon SageMaker Studio (AIM325)
+    </p>
+</a>
+
+
 ## The Machine Learning Process
 
 The Machine Learning process is an iterative process consisting of several steps:

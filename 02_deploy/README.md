@@ -8,28 +8,28 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 1. In SageMaker Studio, launch the Code Editor application by clicking on the **Code Editor** button under **Applications**, then choose **Create Code Editor space**.  
 
-<img src="../images/module_02/sagemaker_studio_home.png" alt="SageMaker Studio Home" width="700px" />
+	<img src="../images/module_02/sagemaker_studio_home.png" alt="SageMaker Studio Home" width="700px" />
 
 2. In the "Create Code Editor space" dialog box, enter a name for the new space, such as `code-editor-space`. Then choose **Create space**.
 
-<img src="../images/module_02/create_code_editor_space.png" alt="Create Code Editor space" width="500px" />
+	<img src="../images/module_02/create_code_editor_space.png" alt="Create Code Editor space" width="500px" />
 
 3. A new page shows the settings for the new JupyterLab space you created. Wait for a few seconds until the **Run space** button becomes active. Then run the space.  
 
-<img src="../images/module_02/run_space.png" alt="Run Code Editor space" width="700px" />
+	<img src="../images/module_02/run_space.png" alt="Run Code Editor space" width="700px" />
 
 4. Choose the **Open Code Editor** when it appears.
 
-<img src="../images/module_02/open_code_editor.png" alt="Open Code Editor space" width="700px" />
+	<img src="../images/module_02/open_code_editor.png" alt="Open Code Editor space" width="700px" />
 
 5.  The Code Editor IDE will load.
 
-<img src="../images/module_02/code_editor_home.png" alt="Code Editor IDE" width="700px" />
+	<img src="../images/module_02/code_editor_home.png" alt="Code Editor IDE" width="700px" />
 
 
 ## Clone the GitHub repository
 
-1. As highlighted below, from the Explorer menu, choose **File >> New >> Terminal**
+1. As highlighted below, from the Explorer menu, choose **Terminal >> New Terminal**
 
 	<img src="../images/module_02/code_editor_new_terminal.png" alt="Code Editor New Terminal" width="800px" />
 
@@ -37,22 +37,30 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 2. Execute the following command in the terminal:
 
-```
-git clone https://github.com/aws-samples/amazon-sagemaker-build-train-deploy.git
-```
+	```
+	git clone https://github.com/aws-samples/amazon-sagemaker-build-train-deploy.git
+	```
     
-<img src="../images/module_02/code_editor_clone_repo.png" alt="Clone repo in Code Editor" width="800px" />
-	
-Choose "Open Folder" button. Alternatively, from the Explorer menu, choose **File >> Open Folder**. In the **Open folder** dialog box, choose **amazon-sagemaker-built-train-deploy**. Then Choose **OK**.
+	<img src="../images/module_02/code_editor_clone_repo.png" alt="Clone repo in Code Editor" width="800px" />
 
-<img src="../images/module_02/code_editor_open_folder.png" alt="Clone repo in Code Editor" width="800px" />
+3. Choose "Open Folder" button. Alternatively, from the Explorer menu, choose **File >> Open Folder**. In the **Open folder** dialog box, choose **amazon-sagemaker-built-train-deploy**. Then Choose **OK**.
+
+	<img src="../images/module_02/code_editor_open_folder.png" alt="Clone repo in Code Editor" width="800px" />
+
+4. You will see a dialog box that asks "Do you trust the authors of the files in this folder?". 
+
+	> When using SageMaker Code Editor or any other code editor, always make sure you know and trust the authors of the code in the folder you are opening.
+
+	Choose **Yes, I trust the authors**.
+
+	<img src="../images/module_02/do_you_trust_authors.png" alt="Do you trust the authors" width="500px" />
 
 
 ## Deploy the model to an inference endpoint
 
 1. In the Explorer window, browse to the folder **02_deploy** and open the Python file **deploy.py**.
 
-<img src="../images/module_02/code_editor_open_deploy_script.png" alt="Open the first notebook in SageMaker Studio" width="800px" />
+	<img src="../images/module_02/code_editor_open_deploy_script.png" alt="Open the first notebook in SageMaker Studio" width="800px" />
 
 2. Make yourself familiar with the deployment steps. The deployment script performs the following steps:
 	- Load the featurizer (SKLearn) and regression (XGBoost) models from the S3 bucket. The jobs you ran in Module 1 has stored the models in the S3 bucket.
@@ -61,50 +69,50 @@ Choose "Open Folder" button. Alternatively, from the Explorer menu, choose **Fil
 	- Deploy the pipeline model on a real-time inference endpoint. Learn more about [Deploying models for inference](https://docs.aws.amazon.com/sagemaker/latest/dg/deploy-model.html). 
 
 
-3. Open the Terminal window again. If you have closed it or cannot locate it, open the Explorer menu and choose **File >> New >> Terminal**.
+3. Open the Terminal window again. If you have closed it or cannot locate it, open the Explorer menu and choose **Terminal >> New Terminal**.
 
 4. In the Terminal window, run the following command to install the dependencies required by the script.
 
-```
-pip install -r requirements.txt
-```
-<img src="../images/module_02/install_dependencies.png" alt="Install dependencies" width="700px" />
+	```
+	pip install -r requirements.txt
+	```
+	<img src="../images/module_02/install_dependencies.png" alt="Install dependencies" width="700px" />
 
 5. Once all dependencies are installed and the previous command has finished executing, choose the **Run Python File** icon as displayed below:
 
-<img src="../images/module_02/run_deploy_script.png" alt="Run the deployment script" width="700px" />
+	<img src="../images/module_02/run_deploy_script.png" alt="Run the deployment script" width="700px" />
 
-The deployment script will deploy the model to a SageMaker inference endpoint. Note that the deployment process is non-blocking, so after the script finishes executing, the deployment will take a few minutes to complete.
+	The deployment script will deploy the model to a SageMaker inference endpoint. Note that the deployment process is non-blocking, so after the script finishes executing, the deployment will take a few minutes to complete.
 
-<img src="../images/module_02/deploy_output.png" alt="Deploy output" width="700px" />
+	<img src="../images/module_02/deploy_output.png" alt="Deploy output" width="700px" />
 
 6. Check the deployment by going back to SageMaker console and choosing **Inference >> Endpoints**. Locate the endpoint whose name starts with `sagemaker-btd-endpoint-` and wait until the **Status** column shows **InService**.
 
 7. Make note of the name of the SageMaker endpoint you have just deployed. The name starts with `sagemaker-btd-endpoint-`.
 
-<img src="../images/module_02/endpoints.png" alt="List of endpoints" width="700px" />
+	<img src="../images/module_02/endpoints.png" alt="List of endpoints" width="700px" />
 
 ## Perform predictions using the deployed model
 
 1. In the Explorer window, from folder **02_deploy**, open the Python file **test.py**.
 
-<img src="../images/module_02/code_editor_open_test_script.png" alt="Open test script" width="800px" />
+	<img src="../images/module_02/code_editor_open_test_script.png" alt="Open test script" width="800px" />
 
 2. Make yourself familiar with the test process in **test.py**:
 	- The test script uses the **Predictor** class from SageMaker Python SDK to predict scores based on the input feature values. The model pipeline behind the inference endpoint will first use the featurizer model to preprocess the features, and then pass the result to the XGBoost regression model to predict the score. 
 	- Note that the test script expects the SageMaker inference endpoint name as an input argument.
 
-3. Go back to the Terminal window. If you have closed it or cannot locate it, open the Explorer menu and choose **File >> New >> Terminaln**.
+3. Go back to the Terminal window. If you have closed it or cannot locate it, open the Explorer menu and choose **Terminal >> New Terminal**.
 
 4. Make sure you are in the **02_deploy** folder in the Terminal, then type the following commmand, replacing ENDPOINT_NAME with the name you made a note of in the previous section.
 
-```
-python3 test.py ENDPOINT_NAME
-```
+	```
+	python3 test.py ENDPOINT_NAME
+	```
 
-<img src="../images/module_02/test.png" alt="Open test script" width="800px" />
+	<img src="../images/module_02/test.png" alt="Open test script" width="800px" />
 
-You should see two inference results in the Terminal window.
+	You should see two inference results in the Terminal window.
 
 
 ## Proceed to Module 3
