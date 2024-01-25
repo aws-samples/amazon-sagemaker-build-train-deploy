@@ -71,10 +71,10 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 3. Open the Terminal window again. If you have closed it or cannot locate it, open the Explorer menu and choose **Terminal >> New Terminal**.
 
-4. In the Terminal window, run the following command to install the dependencies required by the script.
+4. In the Terminal window, run the following command to install the dependencies required by the deployment script.
 
 	```
-	pip install -r requirements.txt
+	cd ~/amazon-sagemaker-build-train-deploy/02_deploy && pip install -r requirements.txt
 	```
 	<img src="../images/module_02/install_dependencies.png" alt="Install dependencies" width="700px" />
 
@@ -86,11 +86,11 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 	<img src="../images/module_02/deploy_output.png" alt="Deploy output" width="700px" />
 
-6. Check the deployment by going back to SageMaker console and choosing **Inference >> Endpoints**. Locate the endpoint whose name starts with `sagemaker-btd-endpoint-` and wait until the **Status** column shows **InService**.
+6. Check the deployment progress by going back to SageMaker Studio and choosing **Deployment >> Endpoints** from the menu on the left. Locate the endpoint whose name starts with `sagemaker-btd-endpoint-`. Choose the **Refresh** link every couple of minutes and wait until the **Status** column shows **InService**.
 
-7. Make note of the name of the SageMaker endpoint you have just deployed. The name starts with `sagemaker-btd-endpoint-`.
+	<img src="../images/module_02/view_endpoints.png" alt="List of endpoints" width="800px" />
 
-	<img src="../images/module_02/endpoints.png" alt="List of endpoints" width="700px" />
+7. Make note of the name of the SageMaker endpoint you have just deployed. You will need the name in the next section. The endpoint name starts with `sagemaker-btd-endpoint-`.
 
 ## Perform predictions using the deployed model
 
@@ -104,10 +104,10 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 3. Go back to the Terminal window. If you have closed it or cannot locate it, open the Explorer menu and choose **Terminal >> New Terminal**.
 
-4. Make sure you are in the **02_deploy** folder in the Terminal, then type the following commmand, replacing ENDPOINT_NAME with the name you made a note of in the previous section.
+4. Run the following commmand, replacing ENDPOINT_NAME with the name you made a note of in the previous section.
 
 	```
-	python3 test.py ENDPOINT_NAME
+	cd ~/amazon-sagemaker-build-train-deploy/02_deploy && python3 test.py ENDPOINT_NAME
 	```
 
 	<img src="../images/module_02/test.png" alt="Open test script" width="800px" />
