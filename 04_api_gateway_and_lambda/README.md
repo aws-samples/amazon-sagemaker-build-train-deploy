@@ -5,7 +5,7 @@ After deploying the model to a fully-managed Amazon SageMaker inference endpoint
 After building the HTTP API, the request flow would be as follows:
 
 1. The client application send a HTTP POST request to the Amazon API Gateway endpoint.
-2. The Amazon API Gateway application passes the request to an AWS Lambda function, which processes the request and calls the Amazon SageMaker HTTPS endpoint where the model is hosted.
+2. The HTTP API in Amazon API Gateway passes the request to an AWS Lambda function, which processes the request and calls the Amazon SageMaker HTTPS endpoint where the model is hosted.
 3. Lambda function receives the inference response from Amazon SageMaker endpoint and sends it back to the client via Amazon API Gateway.
 
 Let's start building the HTTP API.
@@ -18,13 +18,15 @@ Let's start building the HTTP API.
 
     <img src="../images/module_04/lambda_01.png" alt="select blueprint" width="700px" />
 
-4. Type **end-to-end-ml-lambda-function** in the function name textbox. Select **Use an existing role** and then choose the IAM role whose name starts with **_LambdaInvokeSageMakerEndpointRole_** from the **Existing Role** dropdown. This IAM role, which has been created by the workshop setup process, has permission to invoke the Amazon SageMaker endpoint.
+4. Type `end-to-end-ml-lambda-function` in the function name textbox. Choose **Python 3.12** as the runtime.
+
+5. Under **Change default execution role**, select **Use an existing role** and then choose the IAM role whose name starts with **LambdaInvokeSageMakerEndpointRole** from the **Existing Role** dropdown. This IAM role, which has been created by the workshop setup process, has permission to invoke the Amazon SageMaker inference endpoint.
 
     <img src="../images/module_04/lambda_02.png" alt="Select IAM role" width="700px" />
 
-5. You are now redirected to the Lambda function page. In the **Function code** section, double click "lambda_function.py":
+5. You are now redirected to the Lambda function page. In the **Function code** section, double click **lambda_function.py**:
 
-    <img src="../images/module_04/lambda_03.png" alt="Configure API Gateway" width="700px" />
+    <img src="../images/module_04/lambda_03.png" alt="Lambda code" width="700px" />
 
 6. Replace the Lambda function code with with the following snippet, making sure that the indentation is matching:
 
