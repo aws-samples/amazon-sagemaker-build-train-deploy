@@ -4,7 +4,13 @@
 
     <img src="../images/module_03/open_pipeline_script.png" alt="Open pipeline script" width="800px" />
 
-2. Make yourself familiar with the code in **pipeline.py**.
+2. Make yourself familiar with the code in **pipeline.py**. The script performs the following steps:
+   - Download the raw dataset and upload to a location in Amazon S3
+   - Create an Amazon SageMaker Pipeline to orchestrate the execution of the ML workflow steps, including data processing, training, evaluation, register model version in the SageMaker Model Registry and finally deploy the latest model version.
+   - Execute the pipeline
+  
+    The definition of the SageMaker Pipeline is built using the @step decorator, a feature of SageMaker Pipelines that converts your local machine learning functions into one or more pipelines. This allows to orchestrate the same functions that we built for data processing, training and deployment as part of a pipeline. For further information, please read: https://docs.aws.amazon.com/sagemaker/latest/dg/pipelines-step-decorator.html
+
 
 3. Choose the **Run Python File** icon at the top right, as displayed below:
 
@@ -28,7 +34,7 @@
 
     <img src="../images/module_03/pipeline-execution-completed.png" alt="Open pipeline script" width="800px" />
 
-9. In SageMaker Studio, choose **Deployment >> Endpoints** from the menu on the left. Locate the endpoints whose name starts with `sagemaker-btd-endpoint-`. Find the last deployed endpoint (note the **Created on** field), and make note of the endpoint name. You will need to use this name in the next module.
+9.  In SageMaker Studio, choose **Deployment >> Endpoints** from the menu on the left. Locate the endpoints whose name starts with `sagemaker-btd-endpoint-`. Find the last deployed endpoint (note the **Created on** field), and make note of the endpoint name. You will need to use this name in the next module.
 
 	<img src="../images/module_02/view_endpoints.png" alt="List of endpoints" width="800px" />
 
