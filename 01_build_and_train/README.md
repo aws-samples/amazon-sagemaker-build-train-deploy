@@ -14,7 +14,7 @@ The JupyterLab application is a web-based interactive development environment (I
 
 	<img src="../images/module_01/create_jupyterlab_space.png" alt="Create JupyterLab space" width="500px" />
 
-3. A new page shows the settings for the new JupyterLab space you created. Wait for a few seconds until the **Run space** button becomes active. Then run the space.  
+3. A new page shows the settings for the new JupyterLab space you created. Wait for a few seconds until the **Run space** button becomes active. Then, make sure that SageMaker Distribution 1.2 (newer versions should still work well) is selected as image, and run the space. 
 
 	<img src="../images/module_01/run_space.png" alt="Create JupyterLab space" width="500px" />
 
@@ -61,7 +61,7 @@ The JupyterLab application is a web-based interactive development environment (I
 
 3. The list pane on the right will display the jobs created by running the cells in the notebooks. More specifically, you will observe at least two training jobs, whose names start with `amzn-sm-btd-`. SageMaker SDK created and ran the preprocessing and training jobs because of the presence of the @remote decorator. Note that the @remote decorator runs all of these steps as "training jobs".
 
-4. Feel free to explore the details of those training jobs. The details pane provides additional information, such as the run time (in seconds), the location of input and output artifacts in Amazon S3, and the training image used by SageMaker training jobs. 
+4. Feel free to explore the details of those jobs. The details pane provides additional information, such as the run time (in seconds), the location of input and output artifacts in Amazon S3, and the image used to run the SageMaker Training jobs. 
 
 	<img src="../images/module_01/training_jobs.png" alt="Explore training jobs" width="800px" />
 
