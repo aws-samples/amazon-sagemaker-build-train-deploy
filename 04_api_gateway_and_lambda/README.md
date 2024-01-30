@@ -144,7 +144,7 @@ Let's start building the HTTP API.
 
     <img src="../images/module_04/lambda_06.png" alt="Configure API Gateway" width="700px" />
 
-    > The API expects a POST HTTP request that contains a comma-delimited list of feature values in the body. If you try to naviagate to the API endpoint URL in the browser, the API will receive a GET request, so it will return HTTP status code 405 (Method Not Allowed).
+    > The API expects a POST HTTP request that contains a comma-delimited list of feature values in the body. If you try to navigate to the API endpoint URL in the browser, the API will receive a GET request, so it will return HTTP status code 405 (Method Not Allowed).
 
 ## Proceed to Module 5
 
