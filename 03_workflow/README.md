@@ -16,7 +16,7 @@
 
     <img src="../images/module_03/run_pipeline_script.png" alt="Open pipeline script" width="800px" />
 
-4. The Terminal window will show the progress of the exectuion. The last operation in the pipeline script will start the pipeline, and pipeline execution will continue in the background.
+4. The Terminal window will show the progress of the execution. The last operation in the pipeline script will start the pipeline, and pipeline execution will continue in the background.
 
 5. Go back to SageMaker Studio and choose **Pipelines** from the menu on the left.
 
