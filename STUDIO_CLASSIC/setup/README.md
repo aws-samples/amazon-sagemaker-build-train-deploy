@@ -23,15 +23,13 @@ If this is not the case, contact your AWS system administrator and ask for these
 ### Choose the networking mode
 Amazon SageMaker Studio allows you to configure networking in two modes:
 - **Default communication with the internet:** Only traffic to Amazon EFS volume goes through the specified VPC. Non-EFS traffic goes through a VPC managed by SageMaker, which allows internet access. 
-- **VPC only communication with the internet:** All traffic goes through the specified VPC. To allow the Studio notebook to access SageMaker API and runtime and other AWS services, you should  create VPC interface endpoints or provide access to the internet using a NAT gateway or via an AWS Transit Gateway that has a route to the internet.  
+- **VPC only communication with the internet:** All traffic goes through the specified VPC. To allow the Studio instances to access SageMaker API and runtime and other AWS services, you should either create VPC interface endpoints or provide access to the internet using a NAT gateway or via an AWS Transit Gateway that has a route to the internet.  
 
-For this workshop, you have two options for configuring internet access. Use the folder with the corresponding name:
-- **direct_mode:** Use the "default communication with the internet" to allow SageMaker domain to access the internet directly. Create a VPC for the traffic to the EFS volume.
-- **vpc_mode:** Use the "VPC only communication with the internet". Create a VPC for all traffic. The traffic to the EFS volume goes through the VPC. The VPC uses interface endpoints for SageMaker API and some other AWS services. The traffic to the internet goes through an AWS Network Firewall deployed in the same VPC. The outbound traffic to the internet is not allowed unless it is allowed by AWS Network Firewall's rule groups.
+For this workshop, you can choose the networking mode by using one of the following folders:
+- **direct_mode:** Uses the "default communication with the internet" option.
+- **vpc_mode:** Uses the "VPC only communication with the internet" option. After creating a new VPC, this option will create private and public subnets. It will use the private subnet for SageMajer and will deploy a NAT Gateway in the public subnets to allow internet access. If you want to restrict access to the internet, you should create VPC Endpoints to allow SageMaker Studio to access the required AWS services and then route all other traffic via a network firewall or a proxy server (not covered in this workshop). Refer to [AWS Network Firewall documentation](https://docs.aws.amazon.com/network-firewall/latest/developerguide/what-is-aws-network-firewall.html) to learn how to implement a security perimeter for your VPC.
 
-<img src="images/vpc_mode_architecture.png" alt="Create CloudFormation stack" width="700px" />
-
-Based on the networking mode you choose, you will create Workshop resources using two CloudFormation templates from the relevant folder in this repo:
+Based on the networking mode you choose, you will create workshop resources using two CloudFormation templates from the relevant folder in this repo:
 - `01_networking.yaml` will create the core networking resources such as VPCs and subnets
 - `02_sagemaker_studio.yaml`, will create the SageMaker Studio resources such as a SageMaker Studio domain, user profile, and applications.
 
