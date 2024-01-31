@@ -1,8 +1,18 @@
-# End-to-End Machine Learning with Amazon SageMaker
+# Scale complete ML development with Amazon SageMaker Studio
 
 In this workshop, you will go through the steps required to build a machine learning application on AWS using Amazon SageMaker. 
 
-You will learn how to start experimentation in the SageMaker Studio environment using a familiar Jupyter notebook experience, use Amazon SageMaker Processing Jobs for the preprocessing step, leverage Amazon SageMaker Training Jobs for the training step, deploy the model, and build an HTTP endpoint to serve inference requests. You will also learn how to automate the preprocessing and training step using Amazon SageMaker Pipelines. 
+You will learn how to start experimentation in the SageMaker Studio environment using a familiar JupyterLab notebook experience and run your local code as a SageMaker Training job using the remote function feature. You will also learn how to use SageMaker Studio's Code Editor, which is based on Visual Studio Code – Open Source (Code-OSS), to deploy the model into an endpoint and build an end to end pipeline. You wull also learn how to build an HTTP endpoint using AWS Lambda and Amazon API Gateway to serve inference requests from a web client.
+
+This workshop covers some of the new features announced at AWS re:Invent 2023. To learn more about the new features, watch the session recording.
+
+<a href="https://www.youtube.com/embed/stB-F6jswno?si=20oR_uX5CFLo9ebR">
+    <p align="center">
+        <img src="https://img.youtube.com/vi/stB-F6jswno/0.jpg" />
+        <br>
+        AWS re:Invent 2023 - Scale complete ML development with Amazon SageMaker Studio (AIM325)
+    </p>
+</a>
 
 ## The Machine Learning Process
 
@@ -27,14 +37,13 @@ Amazon SageMaker is a fully-managed service that enables developers and data sci
 
 Amazon SageMaker removes the complexity that holds back developer success with each of these steps; indeed, it includes modules that can be used together or independently to build, train, and deploy your machine learning models.
 
-
 ## The Machine Learning task
 
 You will use the <a href="https://archive.ics.uci.edu/ml/datasets/AI4I+2020+Predictive+Maintenance+Dataset">AI4I 2020 Predictive Maintenance Dataset</a> from the UCI Machine Learning Repository. This synthetic dataset reflects real predictive maintenance data encountered in industry.
 
-The dataset consists of 10,000 records and 14 features, representing some measurements that have been collected on the machinery, plus the indication of failure, if any. This is a basic dataset that oversimplifies the Predictive Maintenance task. However, it keeps this workshop easy to follow while being a good representative of the various steps of the machine learning workflow.
+The dataset consists of 10,000 records and 14 features, representing some measurements that have been collected on the machinery, plus the indication of failure, if any. This is a basic dataset that oversimplifies the Predictive Maintenance task. However, it keeps this workshop easy to follow while being a good representative of the various steps of the machine learning workflow. You can easily replicate the steps in this workshop and adapt to more complex tasks, including GenAI fine-tuning and deployment.
 
-Your goal is to build a simple machine learning model that predicts whether a piece of machinery is going to fail (<b>Predictive Maintenance</b>).
+Your goal is to build a simple machine learning model that predicts whether a piece of machinery is going to fail.
 
 Following is an excerpt from the dataset:
 
@@ -45,8 +54,7 @@ Following is an excerpt from the dataset:
 |3|L47182|L|298.1|308.5|...|0|
 |51|L47230|L|298.9|309.1|...|1|
 
-The target variable, **Machine failure**, is a binary attributes, so it suggests the problem is a binary classification problem.
-
+The binary (0 or 1) nature of the target variable, **Machine failure**, suggests you are solving a binary classification problem. In this workshop, you will build a logistic regression model, which will predict a continuous in the range [0,1). Using a regression model to solve a binary classification problem is a common approach. The predicted  score indicates the system’s certainty that the given observation belongs to the positive class. To make the decision about whether the observation should be classified as positive or negative, as a consumer of this score, you can interpret the score by picking a classification threshold (cut-off) and compare the score against it. Any observations with scores higher than the threshold are then predicted as the positive class and scores lower than the threshold are predicted as the negative class. To learn more about this approach, read https://docs.aws.amazon.com/machine-learning/latest/dg/binary-classification.html.
 
 ## Solution Architecture
 
@@ -56,29 +64,26 @@ This diagram shows what you will be building in this workshop:
 
 ## Modules
 
-This workshops consists of eight modules:
+This workshops consists of six modules:
 
-- **Module 0**: Access the AWS Console.
-- **Module 1**: Configure Amazon SageMaker Studio and clone the GitHub repository.
-- **Module 2**: Use Amazon SageMaker Studio Notebooks and standard Python libraries to perform fast experimentation.
-- **Module 3**: Perform data preprocessing and feature engineering using Amazon SageMaker Processing and SKLearn.
-- **Module 4**: Train a binary classification model with the Amazon SageMaker open-source XGBoost container; the model will predict whether the machinery is going to fail.
-- **Module 5**: Deploy the feature engineering and machine learning models as an inference pipeline using Amazon SageMaker hosting. Optionally, you can use Sagemaker Model Monitor to track data drift against the training data baseline.
-- **Module 6**: Build a HTTP API using Amazon API Gateway and an AWS Lambda function to invoke the Amazon SageMaker endpoint for inference.
-- **Module 7**: Use a web client to invoke the HTTP API and perform inference.
-- **Module 8**: Use Amazon SageMaker Pipelines to orchestrate the model build workflow and store models in model registry.
+- **Module 0**: Access the AWS Console and clone the GitHub repository.
+- **Module 1**: Use a JupyterLab space in SageMaker Studio to perform experimentation and feature engineering, and build and train a logistic regression model using XGBoost. The model will predict whether the machinery is going to fail.
+- **Module 2**: Use Code Editor in SageMaker Studio to deploy the model to an inference endpoint.
+- **Module 3**: Still using Code Editor, build an end-to-end pipeline to download the data source, perform feature engineering, train a model, register it in the model registry, and deploy it into an inference endpoint.
+- **Module 4**: Build a HTTP API using Amazon API Gateway and an AWS Lambda function to invoke the Amazon SageMaker endpoint for inference.
+- **Module 5**: Use a web client to invoke the HTTP API and perform inference.
 
 Please follow the order of modules because the modules depend on the results from the previous modules.
 
 ## Running this workshop
 
 ### AWS-run event using AWS Workshop Studio
-If you are attending a [End-to-End Machine Learning with Amazon SageMaker Workshop](https://catalog.workshops.aws/end-to-end-machine-learning-with-amazon-sagemaker) run by AWS, the AWS event facilitator provides you access to a temporary AWS account preconfigured for this workshop. Proceed to <a href="./01_configure_sagemaker_studio/README.md">**Module 01**</a>.
+If you are attending the **Scale complete ML development with Amazon SageMaker Studio** workshop run by AWS, the AWS event facilitator has provided you access to a temporary AWS account preconfigured for this workshop. Proceed to <a href="./00_open_sagemaker_studio/README.md">**Module 0: Open SageMaker Studio**</a>.
 
 ### Self-paced using your AWS account
 If you want to use your own AWS account, you'll have to execute some preliminary configuration steps as described in the **<a href="./setup/README.md">Setup Guide</a>**.
 
-> :warning: **Running this workshop in your AWS account will incur costs**. You will need to delete the resources you create to avoid incurring further costs after you have completed the workshop. Follow the [clean up steps](./cleanup/README.md).
+> :warning: **Running this workshop in your AWS account will incur costs**. You will need to delete the resources you create to avoid incurring further costs after you have completed the workshop. See the [clean up steps](./cleanup/README.md).
 
 ## Acknowledgements
 
@@ -89,6 +94,6 @@ Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ic
 [Giuseppe A. Porcelli](https://it.linkedin.com/in/giuporcelli) - Principal ML Specialist Solutions Architect - Amazon Web Services<br />
 [Antonio Duma](https://it.linkedin.com/in/antoniod82) - Senior Startup Solutions Architect - Amazon Web Services <br />
 [Hasan Poonawala](https://www.linkedin.com/in/hasanp) - Senior ML Specialist Solutions Architect - Amazon Web Services <br />
-[Mehran Nikoo](https://www.linkedin.com/in/mnikoo/) - Senior Digital Native Solutions Architect - Amazon Web Services <br />
+[Mehran Nikoo](https://www.linkedin.com/in/mnikoo/) - Senior Solutions Architect - Amazon Web Services <br />
 [Bruno Pistone](https://www.linkedin.com/in/bpistone) - AI/ML Specialist Solutions Architect - Amazon Web Services<br />
-[Durga Sury](https://www.linkedin.com/in/durgasury) - ML Solution Architect - Amazon Web Services<br />
+[Durga Sury](https://www.linkedin.com/in/durgasury) - ML Solutions Architect - Amazon Web Services<br />

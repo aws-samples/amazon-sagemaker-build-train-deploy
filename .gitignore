@@ -2,3 +2,10 @@
 **/.idea
 **/__pycache__
 .DS_Store
+**/model.tar.gz
+01_build_and_train/data/
+01_build_and_train/models/
+02_deploy/sklearn_model/
+02_deploy/xgboost_model/
+03_workflow/data/
+03_workflow/models/
