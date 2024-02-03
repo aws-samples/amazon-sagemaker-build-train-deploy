@@ -29,11 +29,9 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 ## Clone the GitHub repository
 
-1. As highlighted below, from the Explorer menu, choose **Terminal >> New Terminal**
+1. As highlighted below, from the Explorer menu, choose **Terminal >> New Terminal** to open a terminal window in the Code Editor interface.
 
 	<img src="../images/module_02/code_editor_new_terminal.png" alt="Code Editor New Terminal" width="800px" />
-
-	This will open a terminal window in the Code Editor interface.
 
 2. Execute the following command in the terminal:
 
@@ -45,7 +43,7 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 3. Choose "Open Folder" button. Alternatively, from the Explorer menu, choose **File >> Open Folder**. In the **Open folder** dialog box, choose **amazon-sagemaker-built-train-deploy**. Then Choose **OK**.
 
-	<img src="../images/module_02/code_editor_open_folder.png" alt="Clone repo in Code Editor" width="800px" />
+	<img src="../images/module_02/code_editor_open_folder.png" alt="Open folder" width="800px" />
 
 4. You will see a dialog box that asks "Do you trust the authors of the files in this folder?". 
 
@@ -60,7 +58,7 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 1. In the Explorer window, browse to the folder **02_deploy** and open the Python file **deploy.py**.
 
-	<img src="../images/module_02/code_editor_open_deploy_script.png" alt="Open the first notebook in SageMaker Studio" width="800px" />
+	<img src="../images/module_02/code_editor_open_deploy_script.png" alt="Open the deployment script" width="800px" />
 
 2. Make yourself familiar with the deployment steps. The deployment script performs the following steps:
 	- Load the featurizer (SKLearn) and logistic regression (XGBoost) models from the S3 bucket. The jobs you ran in Module 1 has stored the models in the S3 bucket.
@@ -96,7 +94,7 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 1. In the Explorer window, from folder **02_deploy**, open the Python file **test.py**.
 
-	<img src="../images/module_02/code_editor_open_test_script.png" alt="Open test script" width="800px" />
+	<img src="../images/module_02/code_editor_open_test_script.png" alt="Open the test script" width="800px" />
 
 2. Make yourself familiar with the test process in **test.py**:
 	- The test script uses the **Predictor** class from SageMaker Python SDK to predict scores based on the input feature values. The model pipeline behind the inference endpoint will first use the featurizer model to preprocess the features, and then pass the result to the XGBoost model to predict the score. 
@@ -110,7 +108,7 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 	cd ~/amazon-sagemaker-build-train-deploy/02_deploy && python3 test.py ENDPOINT_NAME
 	```
 
-	<img src="../images/module_02/test.png" alt="Open test script" width="800px" />
+	<img src="../images/module_02/test.png" alt="Run the test script" width="800px" />
 
 	You should see two inference results in the Terminal window.
 

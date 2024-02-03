@@ -1,12 +1,16 @@
 # Module 5: Invoke the HTTP API from the browser
 
-To perform inference, you will use the ReqBin website to send requests to the HTTP API you created in the previous module. 
+In this last module, you will you will use browser to invoke the HTTP API you created in the previous module.
+
+## Invoke the HTTP API
+
+You will use the ReqBin website to send inference requests from your browser to the HTTP API you created. 
 
 1. Go to https://reqbin.com/
 
 2. Configure the client as shown in the following screenshot:
 
-    <img src="../images/module_05/reqbin.png" alt="Invoke from client" />
+    <img src="../images/module_05/reqbin.png" alt="Invoke API from the browser" />
 
     Make sure you:
     - Provide the address of the Amazon API Gateway API you deployed in the previous module.
@@ -16,7 +20,7 @@ To perform inference, you will use the ReqBin website to send requests to the HT
 
     ```L, 298.4, 308.2, 1582, 70.7, 216```
 
-Then, click on **Send** to execute the request and get the inference result.
+3. Choose **Send** to execute the request and get the inference result.
 
 ## You have completed the workshop!
 

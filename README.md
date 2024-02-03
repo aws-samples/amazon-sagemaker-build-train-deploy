@@ -14,9 +14,9 @@ This workshop covers some of the new features announced at AWS re:Invent 2023. T
     </p>
 </a>
 
-## The Machine Learning Process
+## The machine learning process
 
-The Machine Learning process is an iterative process consisting of several steps:
+The machine mearning process is an iterative process consisting of several steps:
 
 - Identifying a business problem and the related machine learning problem
 - Data ingestion, integration and preparation
@@ -37,7 +37,7 @@ Amazon SageMaker is a fully-managed service that enables developers and data sci
 
 Amazon SageMaker removes the complexity that holds back developer success with each of these steps; indeed, it includes modules that can be used together or independently to build, train, and deploy your machine learning models.
 
-## The Machine Learning task
+## The machine learning task
 
 You will use the <a href="https://archive.ics.uci.edu/ml/datasets/AI4I+2020+Predictive+Maintenance+Dataset">AI4I 2020 Predictive Maintenance Dataset</a> from the UCI Machine Learning Repository. This synthetic dataset reflects real predictive maintenance data encountered in industry.
 
