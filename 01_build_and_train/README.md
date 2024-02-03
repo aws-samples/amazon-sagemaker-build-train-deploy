@@ -16,15 +16,15 @@ The JupyterLab application is a web-based interactive development environment (I
 
 3. A new page shows the settings for the new JupyterLab space you created. Wait for a few seconds until the **Run space** button becomes active. Then, make sure that SageMaker Distribution 1.2 (newer versions should still work well) is selected as image, and run the space. 
 
-	<img src="../images/module_01/run_space.png" alt="Create JupyterLab space" width="500px" />
+	<img src="../images/module_01/run_space.png" alt="Run JupyterLab space" width="500px" />
 
 4. Choose the **Open JupyterLab** when it appears.
 
-	<img src="../images/module_01/open_jupyterlab.png" alt="Create JupyterLab space" width="500px" />
+	<img src="../images/module_01/open_jupyterlab.png" alt="Open JupyterLab space" width="500px" />
 
 5.  The JupyterLab IDE will load. 
 
-	<img src="../images/module_01/jupyterlab_home.png" alt="Studio Classic IDE" width="700px" />
+	<img src="../images/module_01/jupyterlab_home.png" alt="JupyterLab home" width="700px" />
 
 
 ## Clone the GitHub repository
@@ -54,7 +54,7 @@ The JupyterLab application is a web-based interactive development environment (I
 
 2. Follow the instructions in the Jupyter notebook.
 
-## View SageMaker's training jobs created during experimentation
+## View SageMaker training jobs created during experimentation
 1. Go back to the SageMaker Studio tab/window in the browser where you ran the JupyterLab application from when you started this module.
 
 2. From the sidebar meny, choose **Jobs >> Training**.
