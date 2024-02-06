@@ -39,11 +39,9 @@ Amazon SageMaker removes the complexity that holds back developer success with e
 
 ## The machine learning task
 
-You will use the <a href="https://archive.ics.uci.edu/ml/datasets/AI4I+2020+Predictive+Maintenance+Dataset">AI4I 2020 Predictive Maintenance Dataset</a> from the UCI Machine Learning Repository. This synthetic dataset reflects real predictive maintenance data encountered in industry.
+You will use the [AI4I 2020 Predictive Maintenance Dataset](https://archive.ics.uci.edu/ml/datasets/AI4I+2020+Predictive+Maintenance+Dataset) from the UCI Machine Learning Repository. This synthetic dataset, which contains predictive maintenance data encountered in industry, consists of 10,000 records and 14 features. The features include various measurements collected from machinery and indication of whether the mechine is likely to fail. This basic dataset oversimplifies a predictive maintenance task. However, it keeps this workshop easy to follow while being a good representative of the various steps of the machine learning workflow. You can adapt the steps in this workshop to solve other machine learning tasks, including generative AI fine-tuning and deployment.
 
-The dataset consists of 10,000 records and 14 features, representing some measurements that have been collected on the machinery, plus the indication of failure, if any. This is a basic dataset that oversimplifies the Predictive Maintenance task. However, it keeps this workshop easy to follow while being a good representative of the various steps of the machine learning workflow. You can easily replicate the steps in this workshop and adapt to more complex tasks, including GenAI fine-tuning and deployment.
-
-Your goal is to build a simple machine learning model that predicts whether a piece of machinery is going to fail.
+In this workshop, your goal is to build a simple machine learning model that predicts whether a piece of machinery is going to fail.
 
 Following is an excerpt from the dataset:
 
