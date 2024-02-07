@@ -29,11 +29,11 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 ## Clone the GitHub repository
 
-1. As highlighted below, from the Explorer menu, choose **Terminal >> New Terminal** to open a terminal window in the Code Editor interface.
+1. From the **Explorer** menu, choose **Terminal >> New Terminal** to open a terminal window in the Code Editor interface.
 
 	<img src="../images/module_02/code_editor_new_terminal.png" alt="Code Editor New Terminal" width="800px" />
 
-2. Execute the following command in the terminal:
+2. Run the following command in the terminal:
 
 	```
 	git clone https://github.com/aws-samples/amazon-sagemaker-build-train-deploy.git
@@ -41,7 +41,7 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
     
 	<img src="../images/module_02/code_editor_clone_repo.png" alt="Clone repo in Code Editor" width="800px" />
 
-3. Choose "Open Folder" button. Alternatively, from the Explorer menu, choose **File >> Open Folder**. In the **Open folder** dialog box, choose **amazon-sagemaker-built-train-deploy**. Then Choose **OK**.
+3. Choose **Open Folder** button. Alternatively, from the Explorer menu, choose **File >> Open Folder**. In the **Open folder** dialog box, choose **amazon-sagemaker-built-train-deploy**. Then Choose **OK**.
 
 	<img src="../images/module_02/code_editor_open_folder.png" alt="Open folder" width="800px" />
 

@@ -14,7 +14,7 @@ The JupyterLab application is a web-based interactive development environment (I
 
 	<img src="../images/module_01/create_jupyterlab_space.png" alt="Create JupyterLab space" width="500px" />
 
-3. A new page shows the settings for the new JupyterLab space you created. Wait for a few seconds until the **Run space** button becomes active. Then, make sure that SageMaker Distribution 1.2 (newer versions should still work well) is selected as image, and run the space. 
+3. A new page shows the settings for the new JupyterLab space you created. Wait for a few seconds until the **Run space** button becomes active. Make sure that SageMaker Distribution 1.2 (newer versions should still work well) is selected, then run the space. 
 
 	<img src="../images/module_01/run_space.png" alt="Run JupyterLab space" width="500px" />
 
@@ -29,19 +29,19 @@ The JupyterLab application is a web-based interactive development environment (I
 
 ## Clone the GitHub repository
 
-1. In the **File** menu, choose **New >> Terminal**
+1. From the **File** menu, choose **New >> Terminal**
 
 	<img src="../images/module_01/studio_new_terminal.png" alt="Studio New Terminal" width="600px" />
 
-	This will open a terminal window in the Jupyter interface.
+	A new terminal window will open in the JupyterLab interface.
 
-2. Execute the following command in the terminal:
+2. Run the following command in the terminal:
 
 	```
 	git clone https://github.com/aws-samples/amazon-sagemaker-build-train-deploy.git
 	```
 
-    The cloned repository folder will appear in the file browser panel as shown below:
+    The cloned repository folder will appear in the file browser panel:
     
     <img src="../images/module_01/studio_clone_repo.png" alt="Clone repo in SageMaker Studio" width="800px" />
 	
@@ -55,9 +55,9 @@ The JupyterLab application is a web-based interactive development environment (I
 2. Follow the instructions in the Jupyter notebook.
 
 ## View SageMaker training jobs created during experimentation
-1. Go back to the SageMaker Studio tab/window in the browser where you ran the JupyterLab application from when you started this module.
+1. Go back to the SageMaker Studio tab/window in the browser where you ran the JupyterLab application from.
 
-2. From the sidebar meny, choose **Jobs >> Training**.
+2. From the sidebar menu, choose **Jobs >> Training**.
 
 3. The list pane on the right will display the jobs created by running the cells in the notebooks. More specifically, you will observe at least two training jobs, whose names start with `amzn-sm-btd-`. SageMaker SDK created and ran the preprocessing and training jobs because of the presence of the @remote decorator. Note that the @remote decorator runs all of these steps as "training jobs".
 

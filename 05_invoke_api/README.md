@@ -34,3 +34,11 @@ AWS Workshop Studio performs the clean up after the event, so you don't need to 
 
 ### Self-paced using your AWS account
 Follow the [clean up steps](../cleanup/README.md) to avoid incurring costs when you no longer require the resources.
+
+
+## Additional resources
+- [What is Amazon SageMaker](https://aws.amazon.com/sagemaker/?nc2=h_ql_prod_ml_sm)
+- [Amazon SageMaker FAQs](https://aws.amazon.com/sagemaker/faqs/?nc=sn&loc=4)
+- [Amazon SageMaker documentation](https://docs.aws.amazon.com/sagemaker/)
+- [Amazon SageMaker developer guide](https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html)
+- [Amazon SageMaker sample notebooks](https://github.com/aws/amazon-sagemaker-examples/blob/main/README.md)
