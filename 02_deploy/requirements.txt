@@ -1,2 +1,3 @@
 sagemaker==2.199.0
+scikit-learn==1.3.2
 s3fs
