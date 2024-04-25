@@ -56,4 +56,4 @@ This capability allows you to write your ML function as you would for any ML pro
 	<img src="../images/module_03/list_endpoints.png" alt="List of endpoints" width="800px" />
 
 ## Proceed to Module 4
-You have completed Module 3: Create a complete deployment pipeline. Please proceed to [Module 4: Build a HTTP API using Amazon API Gateway and AWS Lambda](../04_api_gateway_and_lambda/README.md).
+You have completed Module 3: Create a complete deployment pipeline. Please proceed to [Module 4: Build an HTTP API using Amazon API Gateway and AWS Lambda](../04_api_gateway_and_lambda/README.md).

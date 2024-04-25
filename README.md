@@ -52,7 +52,7 @@ Following is an excerpt from the dataset:
 |3|L47182|L|298.1|308.5|...|0|
 |51|L47230|L|298.9|309.1|...|1|
 
-The binary (0 or 1) nature of the target variable, **Machine failure**, suggests you are solving a binary classification problem. In this workshop, you will build a logistic regression model, which will predict a continuous in the range [0,1). Using a regression model to solve a binary classification problem is a common approach. The predicted  score indicates the system’s certainty that the given observation belongs to the positive class. To make the decision about whether the observation should be classified as positive or negative, as a consumer of this score, you can interpret the score by picking a classification threshold (cut-off) and compare the score against it. Any observations with scores higher than the threshold are then predicted as the positive class and scores lower than the threshold are predicted as the negative class. To learn more about this approach, read https://docs.aws.amazon.com/machine-learning/latest/dg/binary-classification.html.
+The binary (0 or 1) nature of the target variable, **Machine failure**, suggests you are solving a binary classification problem. In this workshop, you will build a logistic regression model, which will predict a continuous value in the range [0,1]. Using a regression model to solve a binary classification problem is a common approach. The predicted  score indicates the system’s certainty that the given observation belongs to the positive class. To make the decision about whether the observation should be classified as positive or negative, as a consumer of this score, you can interpret the score by picking a classification threshold (cut-off) and compare the score against it. Any observations with scores higher than the threshold are then predicted as the positive class and scores lower than the threshold are predicted as the negative class. To learn more about this approach, read https://docs.aws.amazon.com/machine-learning/latest/dg/binary-classification.html.
 
 ## Solution Architecture
 
@@ -68,7 +68,7 @@ This workshops consists of six modules:
 - **Module 1**: Use a JupyterLab space in SageMaker Studio to perform experimentation and feature engineering, and build and train a logistic regression model using XGBoost. The model will predict whether the machinery is going to fail.
 - **Module 2**: Use Code Editor in SageMaker Studio to deploy the model to an inference endpoint.
 - **Module 3**: Still using Code Editor, build an end-to-end pipeline to download the data source, perform feature engineering, train a model, register it in the model registry, and deploy it into an inference endpoint.
-- **Module 4**: Build a HTTP API using Amazon API Gateway and an AWS Lambda function to invoke the Amazon SageMaker endpoint for inference.
+- **Module 4**: Build an HTTP API using Amazon API Gateway and an AWS Lambda function to invoke the Amazon SageMaker endpoint for inference.
 - **Module 5**: Use a web client to invoke the HTTP API and perform inference.
 
 Please follow the order of modules because the modules depend on the results from the previous modules.
