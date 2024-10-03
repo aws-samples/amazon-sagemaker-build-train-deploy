@@ -17,6 +17,10 @@ from sagemaker.workflow.parameters import (
     ParameterFloat, ParameterInteger
 )
 
+import mlflow
+from sagemaker.workflow.execution_variables import ExecutionVariables
+from sagemaker.workflow.pipeline_definition_config import PipelineDefinitionConfig
+
 def download_data_and_upload_to_s3(bucket_name):
     file_name = "predictive_maintenance_raw_data_header.csv"
     s3_prefix = "sagemaker-btd"
@@ -37,15 +41,15 @@ def download_data_and_upload_to_s3(bucket_name):
 
 def create_steps(role, input_data_s3_uri, bucket_name,
                  model_package_group_name, model_approval_status,
-                 eta_parameter, max_depth_parameter, deploy_model_parameter):
+                 eta_parameter, max_depth_parameter, deploy_model_parameter, experiment_name, run_name, mlflow_arn):
 
-    preprocess_result = step(preprocess, name="Preprocess", keep_alive_period_in_seconds=300)(
-        input_data_s3_uri)
+    preprocess_result = step(preprocess, name="Preprocess", keep_alive_period_in_seconds=300, environment_variables={'MLFLOW_TRACKING_ARN':mlflow_arn})(
+        input_data_s3_uri, experiment_name, run_name)
 
-    train_result = step(train, name="Train", keep_alive_period_in_seconds=300)(
+    train_result = step(train, name="Train", keep_alive_period_in_seconds=300, environment_variables={'MLFLOW_TRACKING_ARN':mlflow_arn})(
         X_train=preprocess_result[0], y_train=preprocess_result[1], 
         X_val=preprocess_result[2], y_val=preprocess_result[3],
-        eta=eta_parameter, max_depth=max_depth_parameter)
+        eta=eta_parameter, max_depth=max_depth_parameter, experiment_name=experiment_name, run_name=run_name)
 
     test_result = step(test, name="Evaluate", keep_alive_period_in_seconds=300)(
         featurizer_model=preprocess_result[6], booster=train_result, 
@@ -66,13 +70,20 @@ def create_steps(role, input_data_s3_uri, bucket_name,
 if __name__ == "__main__":
     os.environ["SAGEMAKER_USER_CONFIG_OVERRIDE"] = os.getcwd()
 
+    mlflow_arn = os.environ['MLFLOW_TRACKING_ARN']
+    
     role=get_execution_role()
 
     bucket_name = Session().default_bucket()
-    pipeline_name = "sagemaker-btd-pipeline"
-    model_package_group_name = "sagemaker-btd-model-package-group"
+    project_prefix= "amzn"
+    pipeline_name = f"{project_prefix}-sm-btd-pipeline"
+    model_package_group_name = f"{project_prefix}-sm-btd-model-package-group"
     model_approval_status = "PendingManualApproval"
+    experiment_name = pipeline_name
+    run_name = ExecutionVariables.PIPELINE_EXECUTION_ID
 
+    
+    
     eta_parameter = ParameterFloat(
         name="eta", default_value=0.3
     )
@@ -86,12 +97,14 @@ if __name__ == "__main__":
     input_data_s3_uri = download_data_and_upload_to_s3(bucket_name)
     steps=create_steps(role, input_data_s3_uri, bucket_name, 
                        model_package_group_name, model_approval_status,
-                       eta_parameter, max_depth_parameter, deploy_model_parameter)
+                       eta_parameter, max_depth_parameter, deploy_model_parameter, pipeline_name, run_name, mlflow_arn)
 
+    
     pipeline = Pipeline(
         name=pipeline_name,
         parameters=[deploy_model_parameter, eta_parameter, max_depth_parameter],
-        steps=steps
+        steps=steps,
+        pipeline_definition_config=PipelineDefinitionConfig(use_custom_job_prefix=True)
     )
 
     pipeline.upsert(role_arn=role)
