@@ -1,3 +1,4 @@
+import os
 import boto3
 from sagemaker.model import ModelPackage
 from sagemaker.utils import unique_name_from_base
