@@ -24,6 +24,8 @@ from sagemaker.serve.builder.model_builder import ModelBuilder
 from sagemaker.serve.builder.schema_builder import SchemaBuilder
 from sagemaker.serve import CustomPayloadTranslator
 
+import mlflow
+
 # AWS Region
 session = boto3.session.Session()
 current_region = session.region_name

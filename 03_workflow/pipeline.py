@@ -70,7 +70,7 @@ def create_steps(role, input_data_s3_uri, project_prefix, bucket_name,
                         model_approval_status=model_approval_status, experiment_name=experiment_name, run_id=preprocess_result[7])
 
     deploy_result = step(deploy, name="Deploy", job_name_prefix=f"{project_prefix}-Deploy",
-                         keep_alive_period_in_seconds=300)(
+                         keep_alive_period_in_seconds=300, environment_variables=env_variables)(
                     role, project_prefix,model_package_arn=register_result, 
                     deploy_model=deploy_model_parameter, experiment_name=experiment_name, run_id=preprocess_result[7])
 
@@ -80,7 +80,7 @@ if __name__ == "__main__":
     os.environ["SAGEMAKER_USER_CONFIG_OVERRIDE"] = os.getcwd()
 
     mlflow_arn = os.environ['MLFLOW_TRACKING_ARN']
-    
+    local_mode = os.getenv('LOCAL_MODE', False)
     role=get_execution_role()
 
     bucket_name = Session().default_bucket()
@@ -110,14 +110,17 @@ if __name__ == "__main__":
                        eta_parameter, max_depth_parameter, deploy_model_parameter, pipeline_name, run_name, mlflow_arn)
 
     local_pipeline_session = LocalPipelineSession()
+
+    more_params = {}
+    if local_mode:
+        more_params["sagemaker_session"] = local_pipeline_session 
+    
     pipeline = Pipeline(
         name=pipeline_name,
         parameters=[deploy_model_parameter, eta_parameter, max_depth_parameter],
         steps=steps,
-        pipeline_definition_config=PipelineDefinitionConfig(use_custom_job_prefix=True),
-        pipeline_experiment_config=PipelineExperimentConfig("CustomExperimentName",
-                                                            ExecutionVariables.PIPELINE_EXECUTION_ID),     
-          # sagemaker_session=local_pipeline_session
+        pipeline_definition_config=PipelineDefinitionConfig(use_custom_job_prefix=True),        
+        **more_params
     )
 
     pipeline.upsert(role_arn=role)
