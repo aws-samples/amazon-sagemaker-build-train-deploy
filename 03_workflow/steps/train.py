@@ -17,17 +17,16 @@ def train(X_train, y_train, X_val, y_val,
           verbosity=0,
           objective='binary:logistic',
           eval_metric='auc',
-          num_boost_round=5, experiment_name="main_experiment", run_name="run-01"):
+          num_boost_round=5, experiment_name="main_experiment", run_id="run-01"):
 
     import mlflow
     import pandas as pd
 
     # Enable autologging in MLflow
-    mlflow.set_tracking_uri(mlflow.set_tracking_uri(os.environ['MLFLOW_TRACKING_ARN']))    
+    mlflow.set_tracking_uri(os.environ['MLFLOW_TRACKING_ARN'])    
     mlflow.set_experiment(experiment_name)
-    with mlflow.start_run(run_name=run_name) as run:
-        run_id = run.info.run_id
-        with mlflow.start_run(run_name="DataPreprocessing", nested=True):    
+    with mlflow.start_run(run_id=run_id) as run:        
+        with mlflow.start_run(run_name="Train", nested=True):    
             mlflow.autolog()
             print('Train features shape: {}'.format(X_train.shape))
             print('Train labels shape: {}'.format(y_train.shape))
@@ -51,7 +50,7 @@ def train(X_train, y_train, X_val, y_val,
                 "objective": objective,
                 "eval_metric": eval_metric
             }
-        
+            mlflow.log_dict(param_dist, "xgboost_params.json")
             xgb = xgboost.train(
                 params=param_dist,
                 dtrain=dtrain,

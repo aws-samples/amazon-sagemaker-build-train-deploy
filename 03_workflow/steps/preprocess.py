@@ -12,19 +12,19 @@ from sklearn.metrics import roc_auc_score
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
+import mlflow
 
 def preprocess(input_data_s3_uri: str, experiment_name="main_experiment", run_name="run-01") -> tuple :
-    import mlflow
-    import pandas as pd
+        
 
     # Enable autologging in MLflow
-    mlflow.set_tracking_uri(mlflow.set_tracking_uri(os.environ['MLFLOW_TRACKING_ARN']))    
+    mlflow.set_tracking_uri(os.environ['MLFLOW_TRACKING_ARN'])    
     mlflow.set_experiment(experiment_name)
     with mlflow.start_run(run_name=run_name) as run:
         run_id = run.info.run_id
+        print(run)
         with mlflow.start_run(run_name="DataPreprocessing", nested=True):    
-            mlflow.autolog()
-            
+            mlflow.autolog()            
             
             columns = ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]', 'Machine failure']
             cat_columns = ['Type']
@@ -42,7 +42,9 @@ def preprocess(input_data_s3_uri: str, experiment_name="main_experiment", run_na
             y = df[target_column]
         
             print(f'Splitting data training ({training_ratio}), validation ({validation_ratio}), and test ({test_ratio}) sets ')
-        
+            mlflow.log_param("training_ratio",training_ratio)
+            mlflow.log_param("test_ratio",training_ratio)
+            
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_ratio, random_state=0, stratify=y)
             X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=validation_ratio/(validation_ratio+training_ratio), random_state=2, stratify=y_train)
         
@@ -69,4 +71,4 @@ def preprocess(input_data_s3_uri: str, experiment_name="main_experiment", run_na
             os.makedirs(os.path.dirname(model_file_path), exist_ok=True)
             joblib.dump(featurizer_model, model_file_path)
 
-    return X_train, y_train, X_val, y_val, X_test, y_test, featurizer_model
+    return X_train, y_train, X_val, y_val, X_test, y_test, featurizer_model, run_id
