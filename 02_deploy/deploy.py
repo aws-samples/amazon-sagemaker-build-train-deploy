@@ -9,6 +9,7 @@ import pandas as pd
 
 import boto3
 
+import sagemaker
 from sagemaker import get_execution_role
 from sagemaker.s3 import S3Downloader
 from sagemaker.pipeline import PipelineModel
@@ -42,7 +43,10 @@ def get_model_artifacts_for_last_job(job_name_prefix):
         SortBy='CreationTime',
         SortOrder='Descending',
         MaxResults=1)
-    
+
+    if not 'ModelArtifacts' in search_response['Results'][0]['TrainingJob']:
+        print(f"No model artifact was found, make sure that there is a model artifact with prefix: {job_name_prefix}")
+        
     return search_response['Results'][0]['TrainingJob']['ModelArtifacts']['S3ModelArtifacts']
 
 def load_models(sklearn_job_prefix, xgboost_job_prefix):
@@ -68,7 +72,7 @@ def load_models(sklearn_job_prefix, xgboost_job_prefix):
 
     return featurizer, booster
 
-def build_sklearn_sagemaker_model(role, featurizer):
+def build_sklearn_sagemaker_model(role, featurizer, project_prefix):
     feature_columns_names = ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
     
     class SklearnRequestTranslator(CustomPayloadTranslator):
@@ -103,6 +107,10 @@ def build_sklearn_sagemaker_model(role, featurizer):
     os.makedirs(os.path.dirname(model_file_path), exist_ok=True)
     joblib.dump(featurizer, model_file_path)
 
+
+    bucket_name = sagemaker.Session().default_bucket()
+    bucket_prefix = f"s3://{bucket_name}/{project_prefix}"
+    
     model_builder = ModelBuilder(
         model_path="sklearn_model/",
         name="sklearn_featurizer",
@@ -111,11 +119,12 @@ def build_sklearn_sagemaker_model(role, featurizer):
         schema_builder=schema_builder,
         model_server=ModelServer.TORCHSERVE,
         inference_spec=SklearnModelSpec(),
-        role_arn=role)
+        role_arn=role,
+        s3_model_data_url=bucket_prefix)
     
     return model_builder.build()
 
-def build_xgboost_sagemaker_model(role, booster):
+def build_xgboost_sagemaker_model(role, booster, project_prefix):
 
     class RequestTranslator(CustomPayloadTranslator):
         # Convert the request dataframe to bytes - runs on the client side
@@ -140,12 +149,16 @@ def build_xgboost_sagemaker_model(role, booster):
     os.makedirs(os.path.dirname(model_file_path), exist_ok=True)
     booster.save_model(model_file_path)
 
+    bucket_name = sagemaker.Session().default_bucket()
+    bucket_prefix = f"s3://{bucket_name}/{project_prefix}"
+    
     model_builder = ModelBuilder(
         model=booster,
         model_path="xgboost_model/",
         dependencies={"requirements": "requirements_inference.txt"},
         schema_builder=schema_builder,
-        role_arn=role)
+        role_arn=role,
+        s3_model_data_url=bucket_prefix)
     
     return model_builder.build()
 
@@ -179,8 +192,8 @@ if __name__ == "__main__":
 
     featurizer, booster = load_models(sklearn_job_prefix, xgboost_job_prefix)
     
-    sklearn_model = build_sklearn_sagemaker_model(role, featurizer)
-    xgboost_model = build_xgboost_sagemaker_model(role, booster)
+    sklearn_model = build_sklearn_sagemaker_model(role, featurizer, project_prefix)
+    xgboost_model = build_xgboost_sagemaker_model(role, booster, project_prefix)
 
     pipeline_model = build_pipeline_model(role, project_prefix, sklearn_model, xgboost_model)
 
