@@ -149,8 +149,8 @@ def build_xgboost_sagemaker_model(role, booster):
     
     return model_builder.build()
 
-def build_pipeline_model(role, sklearn_model, xgboost_model):
-    pipeline_model_name = unique_name_from_base("sagemaker-btd-pipeline-model")
+def build_pipeline_model(role, project_prefix, sklearn_model, xgboost_model):
+    pipeline_model_name = unique_name_from_base(f"{project_prefix}-sm-btd-pipeline-model")
 
     pipeline_model = PipelineModel(
         name=pipeline_model_name, 
@@ -161,8 +161,8 @@ def build_pipeline_model(role, sklearn_model, xgboost_model):
 
     return pipeline_model
 
-def deploy_model(pipeline_model, instance_type, wait):
-    endpoint_name = unique_name_from_base("sagemaker-btd-endpoint")
+def deploy_model(pipeline_model, project_prefix, instance_type, wait):
+    endpoint_name = unique_name_from_base(f"{project_prefix}-sm-btd-endpoint")
     
     pipeline_model.deploy(initial_instance_count=1, 
                           instance_type=instance_type, 
@@ -173,14 +173,15 @@ if __name__ == "__main__":
     role=get_execution_role()
     print(f'Execution role is: {role}')
 
-    sklearn_job_prefix = "amzn-sm-btd-preprocess"
-    xgboost_job_prefix = "amzn-sm-btd-train"
+    project_prefix = "amzn"
+    sklearn_job_prefix = f"{project_prefix}-sm-btd-preprocess"
+    xgboost_job_prefix = f"{project_prefix}-sm-btd-train"
 
     featurizer, booster = load_models(sklearn_job_prefix, xgboost_job_prefix)
     
     sklearn_model = build_sklearn_sagemaker_model(role, featurizer)
     xgboost_model = build_xgboost_sagemaker_model(role, booster)
 
-    pipeline_model = build_pipeline_model(role, sklearn_model, xgboost_model)
+    pipeline_model = build_pipeline_model(role, project_prefix, sklearn_model, xgboost_model)
 
-    deploy_model(pipeline_model, "ml.m5.xlarge", wait=False)
+    deploy_model(pipeline_model, project_prefix, "ml.m5.xlarge", wait=False)
