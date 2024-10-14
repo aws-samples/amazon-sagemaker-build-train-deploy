@@ -12,6 +12,13 @@ Parameters:
   CoreNetworkingStackName:
     Description: Name of the networking stack you created earlier
     Type: String
+  OwnerID:
+    Type: String
+    Description: Owner identification to be written as a resource tag
+    Default: 'not-set'
+
+Conditions:
+  OwnerIDCondition: !Equals [ !Ref OwnerID, 'not-set' ]
 
 Mappings: 
   SageMakerImageRegionToAccountMap: 
@@ -119,6 +126,18 @@ Resources:
               Fn::Sub:
                 - 'arn:aws:sagemaker:${AWS::Region}:${AccountId}:image/sagemaker-data-science-310-v1'
                 - AccountId: !FindInMap [SageMakerImageRegionToAccountMap, !Ref 'AWS::Region', accountid]      
+  ### S3 Bucket similar to the one created by the create domain action in the UI
+  StudioS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Join
+        - "-"
+        - - "sagemaker-studio"
+          - !Ref AWS::AccountId
+          - !Select [ 0, !Split [ "-", !Select [ 2, !Split [ "/", !Ref AWS::StackId ] ] ] ]
+      Tags:
+        - Key: owner
+          Value: !If [ OwnerIDCondition, !Ref 'AWS::StackId', !Ref OwnerID ]
 
   SageMakerExecutionRole:
     Type: AWS::IAM::Role
@@ -153,6 +172,21 @@ Resources:
                   - kms:ListKeys
                   - kms:ListAliases
                 Resource: '*'
+        - PolicyName: mlflow-permissions
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+            -
+              Effect: Allow
+              Action:
+                - sagemaker-mlflow:*
+                - sagemaker:CreateMlflowTrackingServer
+                - sagemaker:UpdateMlflowTrackingServer
+                - sagemaker:DeleteMlflowTrackingServer
+                - sagemaker:StartMlflowTrackingServer
+                - sagemaker:StopMlflowTrackingServer
+                - sagemaker:CreatePresignedMlflowTrackingServerUrl
+              Resource: "*"
 
   LambdaInvokeSageMakerEndpointRole:
     Type: AWS::IAM::Role
@@ -179,6 +213,20 @@ Resources:
                 Action:
                   - sagemaker:InvokeEndpoint
                 Resource: '*'
+  MlFlowServer:
+    Type: AWS::SageMaker::MlflowTrackingServer
+#    Condition: CreateMLflowServerCondition
+    Properties:
+      ArtifactStoreUri: !Sub 's3://${StudioS3Bucket}/mlflow/${StudioDomain.DomainId}'
+      AutomaticModelRegistration: True
+      RoleArn: !GetAtt SageMakerExecutionRole.Arn
+      TrackingServerName: !Sub 'mlflow-${StudioDomain.DomainId}'
+      TrackingServerSize: Small
+      Tags:
+        - Key: domain-id
+          Value: !Ref StudioDomain
+        - Key: owner
+          Value: !If [ OwnerIDCondition, !Ref 'AWS::StackId', !Ref OwnerID ]
 
 Outputs:
   KMSKey:
