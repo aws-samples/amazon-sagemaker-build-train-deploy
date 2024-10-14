@@ -90,7 +90,11 @@ Resources:
     Type: AWS::SageMaker::Domain
     Properties:
       AuthMode: IAM
-      AppNetworkAccessType: "PublicInternetOnly"      
+      AppNetworkAccessType: "PublicInternetOnly"
+      DomainSettings:
+        DockerSettings:
+          EnableDockerAccess: ENABLED
+          VpcOnlyTrustedAccounts: ['885854791233']
       DefaultSpaceSettings:
         ExecutionRole: !GetAtt SageMakerExecutionRole.Arn      
       DefaultUserSettings:
