@@ -1,6 +1,7 @@
 import os
 import urllib
 
+import boto3
 from steps.preprocess import preprocess
 from steps.train import train
 from steps.test import test
@@ -76,10 +77,22 @@ def create_steps(role, input_data_s3_uri, project_prefix, bucket_name,
 
     return [deploy_result]
 
+def get_mlflow_server_arn():
+    r = boto3.client("sagemaker").list_mlflow_tracking_servers()['TrackingServerSummaries']
+
+    if len(r) < 1:
+        print("You don't have any running MLflow servers. Please create an MLflow server first.")
+    else:
+        mlflow_arn = r[0]['TrackingServerArn']        
+        print(f"You have {len(r)} running MLflow server(s). Get the first server. Details: {r[0]}")
+    return mlflow_arn    
+
 if __name__ == "__main__":
     os.environ["SAGEMAKER_USER_CONFIG_OVERRIDE"] = os.getcwd()
 
-    mlflow_arn = os.environ['MLFLOW_TRACKING_ARN']
+    mlflow_arn = os.environ.get('MLFLOW_TRACKING_ARN', get_mlflow_server_arn())
+    os.environ['MLFLOW_TRACKING_ARN'] = mlflow_arn
+
     local_mode = os.getenv('LOCAL_MODE', False)
     role=get_execution_role()
 
