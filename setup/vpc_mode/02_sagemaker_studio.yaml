@@ -183,8 +183,7 @@ Resources:
           PolicyDocument:
             Version: 2012-10-17
             Statement:
-            -
-              Effect: Allow
+            - Effect: Allow
               Action:
                 - sagemaker-mlflow:*
                 - sagemaker:CreateMlflowTrackingServer
@@ -194,7 +193,14 @@ Resources:
                 - sagemaker:StopMlflowTrackingServer
                 - sagemaker:CreatePresignedMlflowTrackingServerUrl
               Resource: "*"
-
+        - PolicyName: sagemaker-dist-accounts
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+            - Effect: Allow
+              Action:
+                - ssm:GetParameter
+              Resource: "arn:aws:ssm:*::parameter/aws/service/sagemaker-distribution/ecr-account-id"
   LambdaInvokeSageMakerEndpointRole:
     Type: AWS::IAM::Role
     Properties:
