@@ -49,7 +49,7 @@ This capability allows you to write your ML function as you would for any ML pro
 
 1. In SageMaker Studio, choose **Deployment >> Endpoints** from the menu on the left. 
 
-2. Locate the endpoints whose name starts with `sagemaker-btd-endpoint-`. Find the last deployed endpoint (note the **Created on** field)
+2. Locate the endpoints whose name starts with `amzn-sm-btd-endpoint-`. Find the last deployed endpoint (note the **Created on** field)
 
 3. Make note of the endpoint name. You will need to use this name in the next module.
 

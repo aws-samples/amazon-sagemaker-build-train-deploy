@@ -84,11 +84,11 @@ The [Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.ht
 
 	<img src="../images/module_02/deploy_output.png" alt="Deploy output" width="700px" />
 
-6. Check the deployment progress by going back to SageMaker Studio and choosing **Deployment >> Endpoints** from the menu on the left. Locate the endpoint whose name starts with `sagemaker-btd-endpoint-`. Choose the **Refresh** link every couple of minutes and wait until the **Status** column shows **InService**.
+6. Check the deployment progress by going back to SageMaker Studio and choosing **Deployment >> Endpoints** from the menu on the left. Locate the endpoint whose name starts with `amzn-sm-btd-endpoint-`. Choose the **Refresh** link every couple of minutes and wait until the **Status** column shows **InService**.
 
 	<img src="../images/module_02/view_endpoints.png" alt="List of endpoints" width="800px" />
 
-7. Make note of the name of the SageMaker endpoint you have just deployed. You will need the name in the next section. The endpoint name starts with `sagemaker-btd-endpoint-`.
+7. Make note of the name of the SageMaker endpoint you have just deployed. You will need the name in the next section. The endpoint name starts with `amzn-sm-btd-endpoint-`.
 
 ## Perform predictions using the deployed model
 
