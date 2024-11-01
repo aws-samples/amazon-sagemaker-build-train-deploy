@@ -14,7 +14,7 @@ The JupyterLab application is a web-based interactive development environment (I
 
 	<img src="../images/module_01/create_jupyterlab_space.png" alt="Create JupyterLab space" width="500px" />
 
-3. A new page shows the settings for the new JupyterLab space you created. Wait for a few seconds until the **Run space** button becomes active. Make sure that SageMaker Distribution 1.2 (newer versions should still work well) is selected, then run the space. 
+3. A new page shows the settings for the new JupyterLab space you created. Wait for a few seconds until the **Run space** button becomes active. Make sure that SageMaker Distribution 1.11 is selected, then run the space. 
 
 	<img src="../images/module_01/run_space.png" alt="Run JupyterLab space" width="500px" />
 
