@@ -108,7 +108,9 @@ def build_xgboost_sagemaker_model(role, booster):
         model_path="xgboost_model/",
         dependencies={"requirements": "requirements_inference.txt"},
         schema_builder=schema_builder,
-        role_arn=role)
+        role_arn=role,
+        image_uri=get_image_uri(framework="xgboost", region=current_region, version="1.7-1")
+        )
     
     return model_builder.build()
 
