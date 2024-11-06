@@ -24,6 +24,8 @@ from sagemaker.serve.builder.model_builder import ModelBuilder
 from sagemaker.serve.builder.schema_builder import SchemaBuilder
 from sagemaker.serve import CustomPayloadTranslator
 
+import mlflow
+
 # AWS Region
 session = boto3.session.Session()
 current_region = session.region_name
@@ -116,61 +118,68 @@ def build_xgboost_sagemaker_model(role, booster):
 
 def register(role, featurizer_model, booster, 
              bucket_name, model_report_dict,
-             model_package_group_name, model_approval_status):
+             model_package_group_name, model_approval_status, experiment_name="main_experiment", run_id="run-01"):
 
-    sklearn_model = build_sklearn_sagemaker_model(role, featurizer_model)
-    xgboost_model = build_xgboost_sagemaker_model(role, booster)
-
-    # Upload evaluation report to s3
-    eval_file_name = unique_name_from_base("evaluation")
-    eval_report_s3_uri = s3_path_join(
-        "s3://",
-        bucket_name,
-        model_package_group_name,
-        f"evaluation-report/{eval_file_name}.json",
-    )
-    
-    s3_fs = s3fs.S3FileSystem()
-    eval_report_str = json.dumps(model_report_dict)
-    with s3_fs.open(eval_report_s3_uri, "wb") as file:
-        file.write(eval_report_str.encode("utf-8"))
-    
-    # Create model_metrics as per evaluation report in Amazon S3
-    model_metrics = ModelMetrics(
-        model_statistics=MetricsSource(
-            s3_uri=eval_report_s3_uri,
-            content_type="application/json",
-        )
-    )
-
-    pipeline_model_name = unique_name_from_base("sagemaker-btd-pipeline-model")
-    pipeline_model = PipelineModel(
-        name=pipeline_model_name,
-        sagemaker_session=xgboost_model.sagemaker_session,
-        role=role,
-        models=[
-            sklearn_model, 
-            xgboost_model])
-
-    pipeline_model.register(
-        content_types=["text/csv"],
-        response_types=["application/x-npy"],
-        model_package_group_name=model_package_group_name,
-        approval_status=model_approval_status,
-        model_metrics=model_metrics)
-
-    sagemaker_client = boto3.client("sagemaker")
-    
-    response = sagemaker_client.list_model_packages(
-        MaxResults=100,
-        ModelPackageGroupName=model_package_group_name,
-        ModelPackageType='Versioned',
-        SortBy='CreationTime',
-        SortOrder='Descending'
-    )
-
-    model_package_arn = response["ModelPackageSummaryList"][0]["ModelPackageArn"]
-
-    print(f"Successfully registered model package {model_package_arn}.")
+    # Enable autologging in MLflow
+    mlflow.set_tracking_uri(os.environ['MLFLOW_TRACKING_ARN'])    
+    mlflow.set_experiment(experiment_name)
+    with mlflow.start_run(run_id=run_id) as run:        
+        with mlflow.start_run(run_name="Register", nested=True):    
+            mlflow.autolog()
+            
+            sklearn_model = build_sklearn_sagemaker_model(role, featurizer_model)
+            xgboost_model = build_xgboost_sagemaker_model(role, booster)
+        
+            # Upload evaluation report to s3
+            eval_file_name = unique_name_from_base("evaluation")
+            eval_report_s3_uri = s3_path_join(
+                "s3://",
+                bucket_name,
+                model_package_group_name,
+                f"evaluation-report/{eval_file_name}.json",
+            )
+            
+            s3_fs = s3fs.S3FileSystem()
+            eval_report_str = json.dumps(model_report_dict)
+            with s3_fs.open(eval_report_s3_uri, "wb") as file:
+                file.write(eval_report_str.encode("utf-8"))
+            
+            # Create model_metrics as per evaluation report in Amazon S3
+            model_metrics = ModelMetrics(
+                model_statistics=MetricsSource(
+                    s3_uri=eval_report_s3_uri,
+                    content_type="application/json",
+                )
+            )
+        
+            pipeline_model_name = unique_name_from_base("sagemaker-btd-pipeline-model")
+            pipeline_model = PipelineModel(
+                name=pipeline_model_name,
+                sagemaker_session=xgboost_model.sagemaker_session,
+                role=role,
+                models=[
+                    sklearn_model, 
+                    xgboost_model])
+        
+            pipeline_model.register(
+                content_types=["text/csv"],
+                response_types=["application/x-npy"],
+                model_package_group_name=model_package_group_name,
+                approval_status=model_approval_status,
+                model_metrics=model_metrics)
+        
+            sagemaker_client = boto3.client("sagemaker")
+            
+            response = sagemaker_client.list_model_packages(
+                MaxResults=100,
+                ModelPackageGroupName=model_package_group_name,
+                ModelPackageType='Versioned',
+                SortBy='CreationTime',
+                SortOrder='Descending'
+            )
+        
+            model_package_arn = response["ModelPackageSummaryList"][0]["ModelPackageArn"]
+        
+            print(f"Successfully registered model package {model_package_arn}.")
 
     return model_package_arn

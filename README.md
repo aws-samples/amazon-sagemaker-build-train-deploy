@@ -1,10 +1,29 @@
-# Scale complete ML development with Amazon SageMaker Studio
+# End-to-End ML Development with SageMaker Studio's New Experience and MLflow
 
-In this workshop, you will go through the steps required to build a machine learning application on AWS using Amazon SageMaker. 
+In this workshop, you will go through the steps required to build a machine learning application on AWS using Amazon SageMaker Studio Experience. 
 
-You will learn how to start experimentation in the SageMaker Studio environment using a familiar JupyterLab notebook experience and run your local code as a SageMaker Training job using the remote function feature. You will also learn how to use SageMaker Studio's Code Editor, which is based on Visual Studio Code – Open Source (Code-OSS), to deploy the model into an endpoint and build an end to end pipeline. You wull also learn how to build an HTTP endpoint using AWS Lambda and Amazon API Gateway to serve inference requests from a web client.
+[//]: # (You will learn how to start experimentation in the SageMaker Studio environment using a familiar JupyterLab notebook experience and run your local code as a SageMaker Training job using the remote function feature. You will also learn how to use SageMaker Studio's Code Editor, which is based on Visual Studio Code – Open Source &#40;Code-OSS&#41;, to deploy the model into an endpoint and build a complete pipeline. You wull also learn how to build an HTTP endpoint using AWS Lambda and Amazon API Gateway to serve inference requests from a web client.)
 
-This workshop covers some of the new features announced at AWS re:Invent 2023. To learn more about the new features, watch the session recording.
+### Modules and learning objectives
+
+* **01 - Build and train models:** Perform data preparation and analysis using the SageMaker Studio Jupyterlab notebook experience and run your local code as a SageMaker Training job using the remote function feature. MLflow will be used to track and observe the experiments.
+* **02 - Deploy models:** You will learn to use SageMaker Studio's Code Editor, which is based on Visual Studio Code – Open Source (Code-OSS), to deploy the model into an endpoint using [SageMaker ModelBuilder](https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works-modelbuilder-creation.html).
+* **03 - Complete a complete pipeline:** You will create a complete pipeline from a workflow consisting of multiple steps using SageMaker Studio's Code Editor.
+* **04 - Build HTTP API:** You will learn how to build an HTTP endpoint using AWS Lambda and Amazon API Gateway to serve inference requests from a web client.
+* **05 - Invoke HTTP API:** You will invoke the HTTP API from the browser.
+
+### SageMaker Features
+
+This workshop covers multiple of the new features announced at AWS re\:Invent 2023. To learn more about these new features, watch the recording for the breakout session Scale complete ML development with Amazon SageMaker Studio (AIM325):
+  * Remote and Step decorators for simple packaging and remote function calling.
+  * ModelBuilder for easier packaging, local testing and deployment of models.
+  * New SageMaker Studio Experience for Jupyterlab and Code Editor (based on Visual Studio Code - Code OSS).
+
+Update October 15, 2024: The workshop has been extended to cover the following features
+
+* MLflow for Experiments: Allows to utilize open source MLflow for observability through out your iterations.
+* SageMaker Local Mode: Allows you to run created pipelines also locally using Docker, which makes your development life cycle much faster.
+* Added Support for multi project isolation, by adding a custom project prefix for all resource like S3 buckets, training job names, inference endpoint names, pipeline names.   
 
 <a href="https://www.youtube.com/embed/stB-F6jswno?si=20oR_uX5CFLo9ebR">
     <p align="center">
@@ -59,20 +78,6 @@ The binary (0 or 1) nature of the target variable, **Machine failure**, suggests
 This diagram shows what you will be building in this workshop:
 <img src="images/architecture.png" alt="Architecture" />
 
-
-## Modules
-
-This workshops consists of six modules:
-
-- **Module 0**: Access the AWS Console and clone the GitHub repository.
-- **Module 1**: Use a JupyterLab space in SageMaker Studio to perform experimentation and feature engineering, and build and train a logistic regression model using XGBoost. The model will predict whether the machinery is going to fail.
-- **Module 2**: Use Code Editor in SageMaker Studio to deploy the model to an inference endpoint.
-- **Module 3**: Still using Code Editor, build an end-to-end pipeline to download the data source, perform feature engineering, train a model, register it in the model registry, and deploy it into an inference endpoint.
-- **Module 4**: Build an HTTP API using Amazon API Gateway and an AWS Lambda function to invoke the Amazon SageMaker endpoint for inference.
-- **Module 5**: Use a web client to invoke the HTTP API and perform inference.
-
-Please follow the order of modules because the modules depend on the results from the previous modules.
-
 ## Running this workshop
 
 ### AWS-run event using AWS Workshop Studio
@@ -92,6 +97,7 @@ Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ic
 [Giuseppe A. Porcelli](https://it.linkedin.com/in/giuporcelli) - Principal ML Specialist Solutions Architect - Amazon Web Services<br />
 [Antonio Duma](https://it.linkedin.com/in/antoniod82) - Senior Startup Solutions Architect - Amazon Web Services <br />
 [Hasan Poonawala](https://www.linkedin.com/in/hasanp) - Senior ML Specialist Solutions Architect - Amazon Web Services <br />
-[Mehran Nikoo](https://www.linkedin.com/in/mnikoo/) - Senior Solutions Architect - Amazon Web Services <br />
+[Mehran Nikoo](https://www.linkedin.com/in/mnikoo/) - ML & Generative AI Go-To-Market Specialist - Amazon Web Services <br />
 [Bruno Pistone](https://www.linkedin.com/in/bpistone) - AI/ML Specialist Solutions Architect - Amazon Web Services<br />
 [Durga Sury](https://www.linkedin.com/in/durgasury) - ML Solutions Architect - Amazon Web Services<br />
+[Arlind Nocaj](https://www.linkedin.com/in/ArlindNocaj) - Senior Solutions Architect - Amazon Web Services<br />

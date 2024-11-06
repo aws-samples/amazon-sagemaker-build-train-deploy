@@ -1,6 +1,7 @@
 import os
 import urllib
 
+import boto3
 from steps.preprocess import preprocess
 from steps.train import train
 from steps.test import test
@@ -16,6 +17,12 @@ from sagemaker.workflow.parameters import (
     ParameterBoolean,
     ParameterFloat, ParameterInteger
 )
+
+import mlflow
+from sagemaker.workflow.execution_variables import ExecutionVariables
+from sagemaker.workflow.pipeline_definition_config import PipelineDefinitionConfig
+from sagemaker.workflow.pipeline_experiment_config import PipelineExperimentConfig
+from sagemaker.workflow.pipeline_context import LocalPipelineSession
 
 def download_data_and_upload_to_s3(bucket_name):
     file_name = "predictive_maintenance_raw_data_header.csv"
@@ -35,44 +42,70 @@ def download_data_and_upload_to_s3(bucket_name):
 
     return upload_s3_uri
 
-def create_steps(role, input_data_s3_uri, bucket_name,
+def create_steps(role, input_data_s3_uri, project_prefix, bucket_name,
                  model_package_group_name, model_approval_status,
-                 eta_parameter, max_depth_parameter, deploy_model_parameter):
+                 eta_parameter, max_depth_parameter, deploy_model_parameter, experiment_name, run_name, mlflow_arn):
 
-    preprocess_result = step(preprocess, name="Preprocess", keep_alive_period_in_seconds=300)(
-        input_data_s3_uri)
+    env_variables={'MLFLOW_TRACKING_ARN':mlflow_arn}
+    
+    preprocess_result = step(preprocess, name="Preprocess", job_name_prefix=f"{project_prefix}-Preprocess", 
+                             keep_alive_period_in_seconds=300, environment_variables=env_variables)(
+                            input_data_s3_uri, experiment_name, run_name)
+    
+    train_result = step(train, name="Train", job_name_prefix=f"{project_prefix}-Train",
+                        keep_alive_period_in_seconds=300, environment_variables=env_variables)(
+                        X_train=preprocess_result[0], y_train=preprocess_result[1], 
+                        X_val=preprocess_result[2], y_val=preprocess_result[3],
+                        eta=eta_parameter, max_depth=max_depth_parameter, experiment_name=experiment_name, run_id=preprocess_result[7])
 
-    train_result = step(train, name="Train", keep_alive_period_in_seconds=300)(
-        X_train=preprocess_result[0], y_train=preprocess_result[1], 
-        X_val=preprocess_result[2], y_val=preprocess_result[3],
-        eta=eta_parameter, max_depth=max_depth_parameter)
+    test_result = step(test, name="Evaluate", job_name_prefix=f"{project_prefix}-Test",
+                       keep_alive_period_in_seconds=300, environment_variables=env_variables)(
+                        featurizer_model=preprocess_result[6], booster=train_result, 
+                        X_test=preprocess_result[4], y_test=preprocess_result[5], experiment_name=experiment_name, run_id=preprocess_result[7])
 
-    test_result = step(test, name="Evaluate", keep_alive_period_in_seconds=300)(
-        featurizer_model=preprocess_result[6], booster=train_result, 
-        X_test=preprocess_result[4], y_test=preprocess_result[5]
-    )
+    register_result = step(register, name="Register", job_name_prefix=f"{project_prefix}-Register",
+                           keep_alive_period_in_seconds=300, environment_variables=env_variables)(
+                        role,featurizer_model=preprocess_result[6], booster=train_result, 
+                        bucket_name=bucket_name, model_report_dict=test_result,
+                        model_package_group_name=model_package_group_name,
+                        model_approval_status=model_approval_status, experiment_name=experiment_name, run_id=preprocess_result[7])
 
-    register_result = step(register, name="Register", keep_alive_period_in_seconds=300)(role,
-        featurizer_model=preprocess_result[6], booster=train_result, 
-        bucket_name=bucket_name, model_report_dict=test_result,
-        model_package_group_name=model_package_group_name,
-        model_approval_status=model_approval_status)
-
-    deploy_result = step(deploy, name="Deploy", keep_alive_period_in_seconds=300)(role,
-        model_package_arn=register_result, deploy_model=deploy_model_parameter)
+    deploy_result = step(deploy, name="Deploy", job_name_prefix=f"{project_prefix}-Deploy",
+                         keep_alive_period_in_seconds=300, environment_variables=env_variables)(
+                    role, project_prefix,model_package_arn=register_result, 
+                    deploy_model=deploy_model_parameter, experiment_name=experiment_name, run_id=preprocess_result[7])
 
     return [deploy_result]
+
+def get_mlflow_server_arn():
+    r = boto3.client("sagemaker").list_mlflow_tracking_servers()['TrackingServerSummaries']
+
+    if len(r) < 1:
+        print("You don't have any running MLflow servers. Please create an MLflow server first.")
+    else:
+        mlflow_arn = r[0]['TrackingServerArn']        
+        print(f"You have {len(r)} running MLflow server(s). Get the first server. Details: {r[0]}")
+    return mlflow_arn    
 
 if __name__ == "__main__":
     os.environ["SAGEMAKER_USER_CONFIG_OVERRIDE"] = os.getcwd()
 
+    mlflow_arn = os.environ.get('MLFLOW_TRACKING_ARN', get_mlflow_server_arn())
+    os.environ['MLFLOW_TRACKING_ARN'] = mlflow_arn
+
+    local_mode = os.getenv('LOCAL_MODE', False)
     role=get_execution_role()
 
     bucket_name = Session().default_bucket()
-    pipeline_name = "sagemaker-btd-pipeline"
-    model_package_group_name = "sagemaker-btd-model-package-group"
+    project_prefix= "amzn"
+    pipeline_name = f"{project_prefix}-sm-btd-pipeline"
+    model_package_group_name = f"{project_prefix}-sm-btd-model-package-group"
     model_approval_status = "PendingManualApproval"
+    experiment_name = pipeline_name
+    run_name = ExecutionVariables.PIPELINE_EXECUTION_ID
 
+    
+    
     eta_parameter = ParameterFloat(
         name="eta", default_value=0.3
     )
@@ -83,15 +116,24 @@ if __name__ == "__main__":
         name="deploy_model", default_value=True
     )
     
-    input_data_s3_uri = download_data_and_upload_to_s3(bucket_name)
-    steps=create_steps(role, input_data_s3_uri, bucket_name, 
+    input_data_s3_uri = download_data_and_upload_to_s3(bucket_name)    
+    
+    steps=create_steps(role, input_data_s3_uri, project_prefix, bucket_name, 
                        model_package_group_name, model_approval_status,
-                       eta_parameter, max_depth_parameter, deploy_model_parameter)
+                       eta_parameter, max_depth_parameter, deploy_model_parameter, pipeline_name, run_name, mlflow_arn)
 
+    local_pipeline_session = LocalPipelineSession()
+
+    more_params = {}
+    if local_mode:
+        more_params["sagemaker_session"] = local_pipeline_session 
+    
     pipeline = Pipeline(
         name=pipeline_name,
         parameters=[deploy_model_parameter, eta_parameter, max_depth_parameter],
-        steps=steps
+        steps=steps,
+        pipeline_definition_config=PipelineDefinitionConfig(use_custom_job_prefix=True),        
+        **more_params
     )
 
     pipeline.upsert(role_arn=role)
