@@ -1,6 +1,6 @@
 # End-to-End ML Development with SageMaker Studio's New Experience and MLflow
 
-In this workshop, you will go through the steps required to build a machine learning application on AWS using Amazon SageMaker Studio Experience. 
+In this workshop, you will go through the steps required to build a machine learning application on AWS using the new experience in Amazon SageMaker Studio. 
 
 [//]: # (You will learn how to start experimentation in the SageMaker Studio environment using a familiar JupyterLab notebook experience and run your local code as a SageMaker Training job using the remote function feature. You will also learn how to use SageMaker Studio's Code Editor, which is based on Visual Studio Code – Open Source &#40;Code-OSS&#41;, to deploy the model into an endpoint and build a complete pipeline. You wull also learn how to build an HTTP endpoint using AWS Lambda and Amazon API Gateway to serve inference requests from a web client.)
 
@@ -14,16 +14,16 @@ In this workshop, you will go through the steps required to build a machine lear
 
 ### SageMaker Features
 
-This workshop covers multiple of the new features announced at AWS re\:Invent 2023. To learn more about these new features, watch the recording for the breakout session Scale complete ML development with Amazon SageMaker Studio (AIM325):
+This workshop covers several new features announced at AWS re\:Invent 2023. To learn more about these new features, watch the recording for the breakout session Scale complete ML development with Amazon SageMaker Studio (AIM325):
   * Remote and Step decorators for simple packaging and remote function calling.
   * ModelBuilder for easier packaging, local testing and deployment of models.
   * New SageMaker Studio Experience for Jupyterlab and Code Editor (based on Visual Studio Code - Code OSS).
 
-Update October 15, 2024: The workshop has been extended to cover the following features
+This workshop also cover the following features:
 
-* MLflow for Experiments: Allows to utilize open source MLflow for observability through out your iterations.
-* SageMaker Local Mode: Allows you to run created pipelines also locally using Docker, which makes your development life cycle much faster.
-* Added Support for multi project isolation, by adding a custom project prefix for all resource like S3 buckets, training job names, inference endpoint names, pipeline names.   
+* MLflow for Experiments: Utilize MLflow for observability throughout the end-to-end ML process.
+* SageMaker Local Mode: Run created pipelines locally using Docker to accelerate the development lifecycle.
+* Support for multi-project isolation by adding a custom project prefix for resources like S3 buckets, training jobs, inference endpoints, and pipelines.   
 
 <a href="https://www.youtube.com/embed/stB-F6jswno?si=20oR_uX5CFLo9ebR">
     <p align="center">
