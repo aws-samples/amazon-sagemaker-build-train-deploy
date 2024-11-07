@@ -1,6 +1,6 @@
-# End-to-End ML Development with SageMaker Studio's New Experience and MLflow
+# End-to-End ML Development with SageMaker Studio and MLflow
 
-In this workshop, you will go through the steps required to build a machine learning application on AWS using the new experience in Amazon SageMaker Studio. 
+In this workshop, you will go through the steps required to build a machine learning application on AWS using Amazon SageMaker Studio. 
 
 [//]: # (You will learn how to start experimentation in the SageMaker Studio environment using a familiar JupyterLab notebook experience and run your local code as a SageMaker Training job using the remote function feature. You will also learn how to use SageMaker Studio's Code Editor, which is based on Visual Studio Code – Open Source &#40;Code-OSS&#41;, to deploy the model into an endpoint and build a complete pipeline. You wull also learn how to build an HTTP endpoint using AWS Lambda and Amazon API Gateway to serve inference requests from a web client.)
 
